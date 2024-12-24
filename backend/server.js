@@ -11,14 +11,18 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Test the database connection (optional)
+// Test the database connection
 pool.query("SELECT NOW()", (err, res) => {
   if (err) {
-    console.error("Database connection test failed:", err);
+    console.error("Database connection test failed:", err.message);
   } else {
     console.log("Database connection test succeeded:", res.rows[0]);
   }
 });
+
+// API Routes
+const productRoutes = require("./routes/products");
+app.use("/api/products", productRoutes); // Mount product-related API routes
 
 // Serve static files from the React build directory
 app.use(express.static(path.join(__dirname, "../rem-react/build")));
