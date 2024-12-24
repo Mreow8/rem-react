@@ -1,13 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/home"; // Adjust path as needed
+import Home from "./components/home";
+import Products from "./components/products"; // Corrected import to use capital "P" for Products
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* Add more routes as needed */}
+        <Route path="/products" element={<Products />} />{" "}
+        {/* Corrected to match component name */}
       </Routes>
     </Router>
   );
