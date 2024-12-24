@@ -1,0 +1,72 @@
+body {
+  font-family: "Open Sans", sans-serif;
+}
+/* Floating Menu styling */
+.floating-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 1001;
+}
+
+.floating-menu p {
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.floating-menu a {
+  text-decoration: none;
+  color: #333;
+}
+
+.floating-menu button {
+  margin-top: 10px;
+
+  color: white;
+  border: none;
+
+  font-size: 14px;
+
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Navbar user logout container */
+.user-logout-container button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+  color: #333;
+}
+
+.user-logout-container button:hover {
+  color: #007bff;
+}
+
+.user-logout-container {
+  position: relative;
+}
+
+#store_link {
+  text-decoration: none;
+  color: #333;
+}
+
+#store_link p {
+  font-size: 16px;
+  margin: 0;
+}
+
+#store_link:hover {
+  text-decoration: underline;
+}

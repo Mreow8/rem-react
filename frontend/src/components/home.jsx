@@ -39,9 +39,9 @@ const Home = () => {
         <div className="background-text">
           <h1>Welcome to Resource Exchange Marketplace</h1>
           <p>Find and share secondhand books</p>
-          {/* <Link to="/products">
+          <Link to="/products">
             <button className="btn btn-primary">Shop Now</button>
-          </Link> */}
+          </Link>
         </div>
       </div>
     </div>
