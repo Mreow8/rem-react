@@ -1,18 +1,31 @@
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
+const connectDB = require("./config/db"); // Import the database connection
+
 const app = express();
+const PORT = process.env.PORT || 3001;
+
+// Load environment variables
+require("dotenv").config();
+
+// Connect to the database
+connectDB();
 
 // Middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors()); // Enable CORS if needed
+app.use(express.json()); // Parse JSON request bodies
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
 
-// Routes
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from the backend!" });
-});
+// // Serve static files from the React build directory
+// app.use(express.static(path.join(__dirname, "../rem-react/build")));
+
+// // Catch-all handler to serve React app for non-API routes
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../rem-react/build", "index.html"));
+// });
 
 // Start the server
-const PORT = 5000;
 app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
