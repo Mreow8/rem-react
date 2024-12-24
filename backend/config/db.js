@@ -8,17 +8,16 @@ const connectionOptions = {
   },
 };
 
-// Debugging: Log the connection options
-console.log("Connection Options:", connectionOptions);
-
 const pool = new Pool(connectionOptions);
 
+// Log when the pool connects
 pool.on("connect", () => {
   console.log("Connected to the PostgreSQL database successfully.");
 });
 
+// Log any errors from the pool
 pool.on("error", (err) => {
   console.error("Error with PostgreSQL connection:", err);
 });
 
-module.exports = pool;
+module.exports = pool; // Export the pool for querying
