@@ -1,0 +1,137 @@
+.container {
+  width: 100vw;
+  margin-left: -10px;
+  box-sizing: border-box;
+}
+
+/* Other styles below */
+
+#categories-container {
+  margin-top: 10vw;
+}
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap; /* Allows categories to wrap if there are too many */
+  list-style-type: none; /* Remove bullets */
+  padding: 0;
+  gap: 10px; /* Add some space between categories */
+}
+
+.category-item {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.category-item:hover {
+  background-color: #dcdcdc;
+}
+
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.text-decoration-none {
+  font-size: 14px;
+}
+
+.search-container {
+  position: relative;
+  display: inline-block;
+  border: 2px solid #ccc;
+  padding-right: 12px;
+  border-radius: 10px;
+}
+.search-input {
+  padding: 10px 40px 10px 10px;
+  border: none; /* Remove all borders */
+  border-right: 2px solid #ccc; /* Keep only the right border */
+  border-radius: 0; /* Remove rounded corners */
+  width: 250px;
+  outline: none;
+  transition: border-color 0.3s;
+  box-shadow: none; /* Remove any shadow */
+}
+
+.search-input:focus {
+  border-color: #007bff;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #007bff;
+  cursor: pointer;
+  pointer-events: none;
+}
+.product-price {
+  font-size: 10px;
+}
+.product-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 140px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #ffffff;
+}
+
+.product-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+  width: 100%;
+  height: 20vh;
+  border-radius: 10px 10px 0 0;
+  margin: 0;
+}
+
+.product-name {
+  font-size: 1rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.product-list {
+  font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin-top: 150px; /* Matches the navbar height for smaller screens */
+  }
+  .search-input {
+    display: none; /* Hide search input on small screens */
+  }
+  /* You can also adjust other styles for smaller screens */
+  .search-container {
+    display: flex;
+    justify-content: center;
+  }
+  .products-container {
+    margin-top: -100px;
+  }
+  #categories-container {
+    margin-top: 17vw;
+  }
+}
+@media (max-width: 400px) {
+  .product-item {
+    width: 100px;
+    height: 5%;
+  }
+}
