@@ -36,7 +36,6 @@ pool.query("SELECT NOW()", (err, res) => {
 app.use("/api/products", productRoutes); // Mount product-related API routes
 app.use("/api/auth", authRoutes); // Mount authentication-related API routes
 
-// Serve static files from the React dist directory
 app.use(express.static(path.join(__dirname, "../rem-react/dist")));
 
 // Catch-all handler for serving React app
