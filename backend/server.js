@@ -10,6 +10,8 @@ const CORS_ORIGIN = "https://rem-react.onrender.com"; // Hardcoded CORS origin
 // Import routes
 const productRoutes = require("./routes/products");
 const authRoutes = require("./routes/auth"); // Import auth routes
+app.use(express.json()); // Parse JSON requests
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 
 // Middleware
 app.use(
@@ -20,8 +22,6 @@ app.use(
     credentials: true, // Enable sending credentials (cookies, headers)
   })
 );
-app.use(express.json()); // Parse JSON requests
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 
 // Test the database connection
 pool.query("SELECT NOW()", (err, res) => {
