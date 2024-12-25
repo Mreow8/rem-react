@@ -6,6 +6,7 @@ import backgroundImage from "../assets/green_background.jfif"; // Adjust the pat
 
 const SignUp = () => {
   const [error, setError] = useState(""); // Use useState to manage error state
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission
@@ -57,6 +58,11 @@ const SignUp = () => {
     } catch (error) {
       console.error("Error signing up:", error); // Handle errors
     }
+  };
+
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle the state
   };
 
   return (
@@ -126,14 +132,26 @@ const SignUp = () => {
               <label htmlFor="passwordInput" className="form-label">
                 Password
               </label>
-              <input
-                type="password"
-                className="form-control"
-                id="passwordInput"
-                name="passwordInput"
-                placeholder="Enter your password"
-                required
-              />
+              <div className="input-group">
+                <input
+                  type={showPassword ? "text" : "password"} // Toggle input type between text and password
+                  className="form-control"
+                  id="passwordInput"
+                  name="passwordInput"
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  className="btn btn-light"
+                  onClick={togglePasswordVisibility}
+                >
+                  <i
+                    className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
+                  ></i>{" "}
+                  {/* Bootstrap icon for eye */}
+                </button>
+              </div>
             </div>
             <button type="submit" className="btn btn-success w-100">
               SIGN UP
