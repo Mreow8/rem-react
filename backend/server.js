@@ -6,6 +6,10 @@ const pool = require("./config/db"); // Import the database connection pool
 const app = express();
 const PORT = 3001; // Hardcoded port
 
+// Import routes
+const productRoutes = require("./routes/products");
+const authRoutes = require("./routes/auth"); // Import auth routes
+
 // Middleware
 app.use(
   cors({
@@ -28,8 +32,8 @@ pool.query("SELECT NOW()", (err, res) => {
 });
 
 // API Routes
-const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes); // Mount product-related API routes
+app.use("/api/auth", authRoutes); // Mount authentication-related API routes
 
 // Serve static files from the React dist directory
 app.use(express.static(path.join(__dirname, "../rem-react/dist")));
