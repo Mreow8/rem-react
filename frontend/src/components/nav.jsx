@@ -6,7 +6,7 @@ import {
   faMagnifyingGlass,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
-import remLogo from "../assets/remlogo.png";
+// import remLogo from "../assets/remlogo.png";
 
 const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -92,7 +92,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
   return (
     <nav className="navbar navbar-light bg-white shadow w-100 fixed-top">
       <div className="container-fluid">
-        <Link to="/products">
+        {/* <Link to="/products">
           <img
             src={remLogo}
             alt="Logo"
@@ -100,7 +100,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
             height="60"
             className="d-inline-block align-text-top"
           />
-        </Link>
+        </Link> */}
 
         <div className="auth-cart-container text-end">
           {username ? (

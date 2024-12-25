@@ -31,12 +31,12 @@ pool.query("SELECT NOW()", (err, res) => {
 const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes); // Mount product-related API routes
 
-// Serve static files from the React build directory
-app.use(express.static(path.join(__dirname, "../rem-react/build")));
+// Serve static files from the React dist directory
+app.use(express.static(path.join(__dirname, "../rem-react/dist")));
 
 // Catch-all handler for serving React app
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../rem-react/build", "index.html"));
+  res.sendFile(path.join(__dirname, "../rem-react/dist", "index.html"));
 });
 
 // Start the server

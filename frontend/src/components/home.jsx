@@ -11,13 +11,13 @@ const Home = () => {
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             {/* Adjusted the logo source */}
-            <img
+            {/* <img
               src="/remlogo.png" // If the logo is in the public folder
               alt="Resource Exchange Marketplace Logo"
               width="60"
               height="70"
               className="d-inline-block align-text-top"
-            />
+            /> */}
           </Link>
           <p className="text-end mb-0">
             <Link to="/help" className="text-decoration-none">
