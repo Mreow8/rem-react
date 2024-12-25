@@ -1,40 +1,38 @@
-import React, { useState } from "react"; // Import useState
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../css/signup.css"; // Adjust the path as necessary
+import "../css/signup.css";
 import { Link } from "react-router-dom";
-import backgroundImage from "../assets/green_background.jfif"; // Adjust the path as necessary
+import backgroundImage from "../assets/green_background.jfif";
 
 const SignUp = () => {
-  const [error, setError] = useState(""); // Use useState to manage error state
-  const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
 
-    const phone = event.target.phoneInput.value;
-    const password = event.target.passwordInput.value;
-    const username = event.target.usernameInput.value; // Get the username input value
+    const phone = event.target.phoneInput.value.trim();
+    const password = event.target.passwordInput.value.trim();
+    const username = event.target.usernameInput.value.trim();
 
-    // Log the values before sending them in the request
-    console.log("Phone:", phone);
-    console.log("Password:", password);
-    console.log("Username:", username);
-
-    // Phone validation: starts with '09' and has exactly 11 digits
+    // Validate phone number
     if (
       !phone.startsWith("09") ||
       phone.length !== 11 ||
       !/^\d+$/.test(phone)
     ) {
-      setError("Input a valid phone number");
+      setError(
+        "Please enter a valid phone number (starting with '09' and 11 digits)."
+      );
       return;
     }
 
+    // Validate password
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(password)) {
       setError(
-        "Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character."
+        "Password must be at least 8 characters long and include an uppercase letter, a number, and a special character."
       );
       return;
     }
@@ -44,32 +42,29 @@ const SignUp = () => {
         "https://rem-react.onrender.com/api/signup",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ phone, password, username }), // Send data to server
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone, password, username }),
         }
       );
 
-      // Log the response status and data for debugging
-      console.log("Response Status:", response.status);
       const responseData = await response.json();
-      console.log("Response Data:", responseData);
 
       if (!response.ok) {
-        alert(responseData.message); // Show error message
-        return; // Stop execution if there's an error
+        setError(responseData.message);
+        return;
       }
 
-      alert(responseData.message); // Show success message
+      alert(responseData.message);
     } catch (error) {
-      console.error("Error signing up:", error); // Handle errors
+      console.error("Error signing up:", error);
+      setError(
+        "An error occurred while processing your request. Please try again later."
+      );
     }
   };
 
-  // Toggle password visibility
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // Toggle the state
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -79,7 +74,7 @@ const SignUp = () => {
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
-          backgroundPosition: "center center",
+          backgroundPosition: "center",
           height: "100vh",
         }}
       ></div>
@@ -87,7 +82,7 @@ const SignUp = () => {
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
             <img
-              src="rem logo.png" // Ensure the path is correct
+              src="rem_logo.png"
               alt="Logo"
               width="60"
               height="60"
@@ -134,14 +129,13 @@ const SignUp = () => {
                 required
               />
             </div>
-
             <div className="mb-3">
               <label htmlFor="passwordInput" className="form-label">
                 Password
               </label>
               <div className="input-group">
                 <input
-                  type={showPassword ? "text" : "password"} // Toggle input type between text and password
+                  type={showPassword ? "text" : "password"}
                   className="form-control"
                   id="passwordInput"
                   name="passwordInput"
@@ -155,8 +149,7 @@ const SignUp = () => {
                 >
                   <i
                     className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
-                  ></i>{" "}
-                  {/* Bootstrap icon for eye */}
+                  ></i>
                 </button>
               </div>
             </div>
@@ -164,21 +157,14 @@ const SignUp = () => {
               SIGN UP
             </button>
           </form>
-
           {error && (
             <p
-              style={{
-                color: "red",
-                fontSize: "13px",
-                textAlign: "justify",
-                width: "230px",
-              }}
+              className="text-danger mt-2"
+              style={{ fontSize: "13px", textAlign: "justify" }}
             >
               {error}
             </p>
           )}
-
-          {/* Display error if any */}
           <p className="text-center mt-3">
             Already have an account? <Link to="/login">Log In</Link>
           </p>
