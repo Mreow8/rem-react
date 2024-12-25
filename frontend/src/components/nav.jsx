@@ -6,7 +6,7 @@ import {
   faMagnifyingGlass,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
-import remLogo from "../assets/rem_logo.png";
+import remLogo from "../assets/remlogo.png";
 
 const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
