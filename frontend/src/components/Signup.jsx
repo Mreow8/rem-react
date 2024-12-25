@@ -38,14 +38,11 @@ const SignUp = () => {
     }
 
     try {
-      const response = await fetch(
-        "https://rem-react.onrender.com/api/signup",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ phone, password, username }),
-        }
-      );
+      const response = await fetch("https://rem-react.onrender.com/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone, password, username }),
+      });
 
       const responseData = await response.json();
       console.log("Response data from the server:", responseData);
