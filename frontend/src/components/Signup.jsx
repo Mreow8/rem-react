@@ -47,6 +47,9 @@ const SignUp = () => {
       const responseData = await response.json();
       console.log("Response data from the server:", responseData);
       if (!response.ok) {
+        const errorText = await response.text(); // Capture the raw error message if the response is not OK
+        console.error("Failed request:", errorText);
+
         setError(responseData.message);
         return;
       }
