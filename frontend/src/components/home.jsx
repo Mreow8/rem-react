@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../css/home.css"; // Ensure your CSS file is correctly linked
+import "../css/home.css";
 import backgroundImage from "../assets/girlreading.webp"; // Adjust the path as necessary
 
 const Home = () => {
@@ -12,7 +12,7 @@ const Home = () => {
           <Link className="navbar-brand" to="/">
             {/* Adjusted the logo source */}
             <img
-              src="/rem logo.png" // If the logo is in the public folder
+              src="/remlogo.png" // If the logo is in the public folder
               alt="Resource Exchange Marketplace Logo"
               width="60"
               height="70"
