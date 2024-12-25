@@ -15,6 +15,11 @@ const SignUp = () => {
     const password = event.target.passwordInput.value;
     const username = event.target.usernameInput.value; // Get the username input value
 
+    // Log the values before sending them in the request
+    console.log("Phone:", phone);
+    console.log("Password:", password);
+    console.log("Username:", username);
+
     // Phone validation: starts with '09' and has exactly 11 digits
     if (
       !phone.startsWith("09") ||
@@ -46,15 +51,17 @@ const SignUp = () => {
         }
       );
 
+      // Log the response status and data for debugging
+      console.log("Response Status:", response.status);
+      const responseData = await response.json();
+      console.log("Response Data:", responseData);
+
       if (!response.ok) {
-        const errorData = await response.json(); // Parse the error response
-        console.error("Error response:", errorData);
-        alert(errorData.message);
+        alert(responseData.message); // Show error message
         return; // Stop execution if there's an error
       }
 
-      const data = await response.json();
-      alert(data.message); // Show success message
+      alert(responseData.message); // Show success message
     } catch (error) {
       console.error("Error signing up:", error); // Handle errors
     }
