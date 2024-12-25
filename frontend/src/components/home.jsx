@@ -43,6 +43,9 @@ const Home = () => {
           <Link to="/products">
             <button className="btn btn-primary">Shop Now</button>
           </Link>
+          <Link to="/login">
+            <button className="btn btn-primary">Login</button>
+          </Link>
         </div>
       </div>
     </div>
