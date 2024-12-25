@@ -5,6 +5,7 @@ const pool = require("./config/db"); // Import the database connection pool
 
 const app = express();
 const PORT = 3001; // Hardcoded port
+const CORS_ORIGIN = "https://rem-react.onrender.com"; // Hardcoded CORS origin
 
 // Import routes
 const productRoutes = require("./routes/products");
@@ -13,7 +14,7 @@ const authRoutes = require("./routes/auth"); // Import auth routes
 // Middleware
 app.use(
   cors({
-    origin: "https://rem-react.onrender.com", // Replace with the URL of your frontend
+    origin: CORS_ORIGIN, // Use the hardcoded CORS origin
     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
     credentials: true, // Enable sending credentials (cookies, headers)

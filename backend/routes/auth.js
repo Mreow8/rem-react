@@ -53,6 +53,8 @@ router.post("/login", async (req, res) => {
     }
 
     const user = rows[0];
+
+    // Compare passwords directly (no hashing)
     if (user.password !== password) {
       return res.status(401).json({ message: "Incorrect password." });
     }
