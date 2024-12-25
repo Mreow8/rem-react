@@ -7,18 +7,16 @@ const app = express();
 const PORT = 3001; // Hardcoded port
 
 // Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: "https://rem-react.onrender.com", // Replace with the URL of your frontend
     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+    credentials: true, // Enable sending credentials (cookies, headers)
   })
 );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Parse JSON requests
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 
 // Test the database connection
 pool.query("SELECT NOW()", (err, res) => {

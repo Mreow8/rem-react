@@ -10,8 +10,9 @@ const Home = () => {
       <nav className="navbar navbar-light bg-white shadow w-100 fixed-top">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
+            {/* Adjusted the logo source */}
             <img
-              src="rem logo.png" // Ensure the path to the logo is correct
+              src="/rem logo.png" // If the logo is in the public folder
               alt="Resource Exchange Marketplace Logo"
               width="60"
               height="70"
