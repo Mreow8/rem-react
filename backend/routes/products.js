@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Routes
+// Routes for handling products
 router.post("/", upload.single("product_image"), async (req, res) => {
   const {
     store_id,
@@ -75,6 +75,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
   }
 });
 
+// Route to get all products
 router.get("/", async (req, res) => {
   try {
     const result = await db.query(`
@@ -86,7 +87,7 @@ router.get("/", async (req, res) => {
     const products = result.rows.map((product) => ({
       ...product,
       product_image: product.product_image
-        ? `http://localhost:3001/uploads/${product.product_image}`
+        ? `http://localhost:3001/uploads/${product.product_image}` // This can be moved to an environment variable
         : null,
       seller_image: product.seller_image
         ? `http://localhost:3001/seller_images/${product.seller_image}`
@@ -97,6 +98,19 @@ router.get("/", async (req, res) => {
   } catch (error) {
     console.error("Error retrieving products:", error);
     res.status(500).json({ message: "Error retrieving products" });
+  }
+});
+
+// Categories route
+router.get("/categories", async (req, res) => {
+  const query = "SELECT DISTINCT category AS name FROM products"; // Adjust query if needed
+
+  try {
+    const { rows } = await db.query(query); // Query the database for distinct categories
+    res.status(200).json(rows); // Return the list of categories
+  } catch (error) {
+    console.error("Error retrieving categories from database:", error);
+    res.status(500).json({ message: "Error retrieving categories." });
   }
 });
 

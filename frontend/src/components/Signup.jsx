@@ -57,6 +57,7 @@ const SignUp = () => {
         responseData = {};
       }
 
+      console.log("Response data from the server:", responseData);
       if (!response.ok) {
         const errorText = responseText;
         console.error("Failed request:", errorText);
