@@ -42,7 +42,7 @@ app.post("/api/signup", async (req, res) => {
   }
 
   try {
-    const checkUserQuery = "SELECT * FROM users WHERE username = $1";
+    const checkUserQuery = "SELECT * FROM users WHERE username = ?";
     const { rows } = await pool.query(checkUserQuery, [username]);
 
     if (rows.length > 0) {
@@ -50,7 +50,7 @@ app.post("/api/signup", async (req, res) => {
     }
 
     const insertUserQuery =
-      "INSERT INTO users (phone, password, username) VALUES ($1, $2, $3)";
+      "INSERT INTO users (phone, password, username) VALUES (?, ?, ?)";
     await pool.query(insertUserQuery, [phone, password, username]);
 
     return res.status(201).json({ message: "User created successfully!" });
