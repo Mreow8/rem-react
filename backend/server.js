@@ -23,7 +23,6 @@ app.use(
 );
 
 // Mount the auth routes at /api/auth
-app.use("/api/profile", authRoutes);
 
 // Test the database connection
 pool.query("SELECT NOW()", (err, res) => {
@@ -33,6 +32,7 @@ pool.query("SELECT NOW()", (err, res) => {
     console.log("Database connection test succeeded:", res.rows[0]);
   }
 });
+app.use("/api/profile", authRoutes);
 
 // // Serve static files (if needed)
 // app.use(express.static(path.join(__dirname, "build"))); // Serve static React files

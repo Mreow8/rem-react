@@ -1,26 +1,30 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/db");
+const pool = require("../config/db"); // Importing the pool for database queries
 
 // Signup Route
 router.post("/signup", async (req, res) => {
   const { phone, password, username } = req.body;
 
+  // Check if all fields are provided
   if (!phone || !password || !username) {
     return res.status(400).json({ message: "All fields are required." });
   }
 
   try {
+    // Query to check if the username already exists
     const checkUserQuery = "SELECT * FROM users WHERE username = $1";
-    const { rows } = await db.query(checkUserQuery, [username]);
+    const { rows } = await pool.query(checkUserQuery, [username]);
 
+    // If username already exists, return a conflict error
     if (rows.length > 0) {
       return res.status(409).json({ message: "Username already exists." });
     }
 
+    // Insert new user into the database
     const insertUserQuery =
       "INSERT INTO users (phone, password, username) VALUES ($1, $2, $3)";
-    await db.query(insertUserQuery, [phone, password, username]);
+    await pool.query(insertUserQuery, [phone, password, username]);
 
     res.status(201).json({ message: "User created successfully!" });
   } catch (error) {
@@ -37,6 +41,7 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { identifier, password } = req.body;
 
+  // Validate if both identifier and password are provided
   if (!identifier || !password) {
     return res
       .status(400)
@@ -44,24 +49,28 @@ router.post("/login", async (req, res) => {
   }
 
   try {
+    // Query to fetch user details from either username, email, or phone
     const query = `
       SELECT users.*, sellers.store_name, sellers.store_id
       FROM users
       LEFT JOIN sellers ON users.user_id = sellers.user_id
       WHERE users.username = $1 OR users.email = $1 OR users.phone = $1
     `;
-    const { rows } = await db.query(query, [identifier]);
+    const { rows } = await pool.query(query, [identifier]);
 
+    // If user doesn't exist, return an error message
     if (rows.length === 0) {
       return res.status(401).json({ message: "User does not exist." });
     }
 
     const user = rows[0];
 
+    // Check if the password matches
     if (user.password !== password) {
       return res.status(401).json({ message: "Incorrect password." });
     }
 
+    // Respond with user data on successful login
     res.status(200).json({
       message: "Login successful",
       user_id: user.user_id,
@@ -78,4 +87,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router; // Export the router to be used in server.js
