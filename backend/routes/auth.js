@@ -2,32 +2,32 @@ const express = require("express");
 const router = express.Router();
 const { db } = require("../config/db");
 
-// Signup route// Signup route
-router.post("/signup", async (req, res) => {
-  const { phone, password, username } = req.body;
+// // Signup route// Signup route
+// router.post("/signup", async (req, res) => {
+//   const { phone, password, username } = req.body;
 
-  if (!phone || !password || !username) {
-    return res.status(400).json({ message: "All fields are required." });
-  }
+//   if (!phone || !password || !username) {
+//     return res.status(400).json({ message: "All fields are required." });
+//   }
 
-  try {
-    const checkUserQuery = "SELECT * FROM users WHERE username = $1";
-    const { rows } = await db.query(checkUserQuery, [username]);
+//   try {
+//     const checkUserQuery = "SELECT * FROM users WHERE username = $1";
+//     const { rows } = await db.query(checkUserQuery, [username]);
 
-    if (rows.length > 0) {
-      return res.status(409).json({ message: "Username already exists." });
-    }
+//     if (rows.length > 0) {
+//       return res.status(409).json({ message: "Username already exists." });
+//     }
 
-    const insertUserQuery =
-      "INSERT INTO users (phone, password, username) VALUES ($1, $2, $3)";
-    await db.query(insertUserQuery, [phone, password, username]);
+//     const insertUserQuery =
+//       "INSERT INTO users (phone, password, username) VALUES ($1, $2, $3)";
+//     await db.query(insertUserQuery, [phone, password, username]);
 
-    return res.status(201).json({ message: "User created successfully!" });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Internal server error." });
-  }
-});
+//     return res.status(201).json({ message: "User created successfully!" });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ message: "Internal server error." });
+//   }
+// });
 
 // Login route
 router.post("/login", async (req, res) => {
