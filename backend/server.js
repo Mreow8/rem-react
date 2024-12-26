@@ -34,49 +34,10 @@ pool.query("SELECT NOW()", (err, res) => {
 });
 
 // Signup Route
-app.post("/api/signup", async (req, res) => {
-  console.log("POST /api/signup - Request received");
-  const { phone, password, username } = req.body;
-
-  if (!phone || !password || !username) {
-    console.error("Missing required fields.");
-    return res.status(400).json({ message: "All fields are required." });
-  }
-
-  try {
-    const checkUserQuery = "SELECT * FROM users WHERE username = $1"; // Fixed placeholder syntax for PostgreSQL
-    const { rows } = await pool.query(checkUserQuery, [username]);
-
-    if (rows.length > 0) {
-      console.log("Username already exists.");
-      return res.status(409).json({ message: "Username already exists." });
-    }
-
-    const insertUserQuery =
-      "INSERT INTO users (phone, password, username) VALUES ($1, $2, $3)";
-    await pool.query(insertUserQuery, [phone, password, username]);
-
-    console.log("User created successfully.");
-    return res.status(201).json({ message: "User created successfully!" });
-  } catch (error) {
-    console.error("Error in /signup route:", error.message);
-    return res.status(500).json({ message: "Internal server error." });
-  }
-});
-
 // API Routes
 app.use("/api/products", productRoutes); // Mount product-related API routes
 app.use("/api/auth", authRoutes);
 
-// Static file serving for frontend (commented out for local testing, uncomment when needed)
-// app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-// // Catch-all handler for serving React app (commented out for local testing, uncomment when needed)
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
-// });
-
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
