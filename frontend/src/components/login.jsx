@@ -49,13 +49,16 @@ const Login = () => {
     // Validate password (for simplicity, just check length here)
 
     try {
-      const response = await fetch("https://rem-react.onrender.com/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ identifier, password }),
-      });
+      const response = await fetch(
+        "https://rem-reacts.onrender.com/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ identifier, password }),
+        }
+      );
 
       // Check if the response is not OK
       if (!response.ok) {
