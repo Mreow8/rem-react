@@ -74,13 +74,13 @@ const ProductList = () => {
 
   return (
     <div className="product-list" style={{ fontFamily: "Roboto, sans-serif" }}>
-      {/* <Nav
+      <Nav
         username={username}
         handleLogout={handleLogout}
         searchQuery={searchQuery}
         handleSearchChange={handleSearchChange}
         // storeName={sellerStoreName} // Commented out because it's unused
-      /> */}
+      />
       <div id="categories-container">
         <ul className="categories-list">
           {categories.map((cat, idx) => (
