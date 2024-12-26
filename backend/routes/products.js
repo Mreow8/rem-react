@@ -76,30 +76,21 @@ router.post("/", upload.single("product_image"), async (req, res) => {
 });
 
 // Route to get all products
-
 router.get("/", async (req, res) => {
   try {
     const result = await db.query(`
-    SELECT products.*, stores.store_name, stores.image AS seller_image
-FROM products
-INNER JOIN stores ON products.store_id = stores.store_id
-
+      SELECT products.*, stores.store_name
+      FROM products
+      INNER JOIN stores ON products.store_id = stores.store_id
     `);
 
-    // const products = result.rows.map((product) => ({
-    //   ...product,
-    //   product_image: product.product_image
-    //     ? `http://localhost:3001/uploads/${product.product_image}` // This can be moved to an environment variable
-    //     : null,
-    //   seller_image: product.seller_image
-    //     ? `http://localhost:3001/seller_images/${product.seller_image}`
-    //     : null,
-    // }));
-
-    res.status(200).json(products);
+    // Directly return the rows from the query
+    res.status(200).json(result.rows);
   } catch (error) {
     console.error("Error retrieving products:", error);
-    res.status(500).json({ message: "Error retrieving products" });
+    res
+      .status(500)
+      .json({ message: "Error retrieving products", error: error.message });
   }
 });
 
