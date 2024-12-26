@@ -51,9 +51,9 @@ router.post("/login", async (req, res) => {
   try {
     // Query to fetch user details from either username, email, or phone
     const query = `
-      SELECT users.*, sellers.store_name, sellers.store_id
+      SELECT users.*, stores.store_name, stores.store_id
       FROM users
-      LEFT JOIN sellers ON users.user_id = sellers.user_id
+      LEFT JOIN stores ON users.user_id = stores.user_id
       WHERE users.username = $1 OR users.email = $1 OR users.phone = $1
     `;
     const { rows } = await pool.query(query, [identifier]);
