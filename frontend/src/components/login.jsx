@@ -50,7 +50,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://rem-reacts.onrender.com/api/login",
+        "https://rem-reacts.onrender.com/api/profile/login",
         {
           method: "POST",
           headers: {
