@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const { db } = require("./config/db"); // Database connection
+const pool = require("./config/db"); // Correct import for pool
 const authRoutes = require("./routes/auth"); // Import auth routes
 
 const app = express();
 const PORT = process.env.PORT || 3001; // Use environment port or 3001
-const CORS_ORIGIN = "https://rem-react.onrender.com"; // Replace with your frontend URL
+const CORS_ORIGIN = process.env.CORS_ORIGIN || "https://rem-react.onrender.com"; // Dynamically set CORS origin
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
@@ -26,7 +26,7 @@ app.use(
 app.use("/api/auth", authRoutes);
 
 // Test the database connection
-db.query("SELECT NOW()", (err, res) => {
+pool.query("SELECT NOW()", (err, res) => {
   if (err) {
     console.error("Database connection failed:", err.message);
   } else {
@@ -35,7 +35,7 @@ db.query("SELECT NOW()", (err, res) => {
 });
 
 // Serve static files (if needed)
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "build"))); // Serve static React files
 
 // Start the server
 app.listen(PORT, () => {
