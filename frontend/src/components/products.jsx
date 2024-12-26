@@ -81,6 +81,7 @@ const ProductList = () => {
         handleSearchChange={handleSearchChange}
         // storeName={sellerStoreName} // Commented out because it's unused
       /> */}
+      <Nav />
       <div id="categories-container">
         <ul className="categories-list">
           {categories.map((cat, idx) => (
