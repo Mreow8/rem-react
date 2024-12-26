@@ -39,7 +39,7 @@ const SignUp = () => {
 
     try {
       const response = await fetch(
-        "https://rem-react.onrender.com/api/auth/signup",
+        "https://rem-react.onrender.com/api/signup",
 
         {
           method: "POST",
