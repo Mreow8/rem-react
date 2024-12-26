@@ -48,10 +48,18 @@ const SignUp = () => {
         }
       );
 
-      const responseData = await response.json();
+      const responseText = await response.text();
+      let responseData;
+      try {
+        responseData = responseText ? JSON.parse(responseText) : {};
+      } catch (error) {
+        console.error("Failed to parse JSON response:", error);
+        responseData = {};
+      }
+
       console.log("Response data from the server:", responseData);
       if (!response.ok) {
-        const errorText = await response.text(); // Capture the raw error message if the response is not OK
+        const errorText = responseText;
         console.error("Failed request:", errorText);
 
         setError(responseData.message);
