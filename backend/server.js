@@ -64,12 +64,12 @@ app.post("/api/signup", async (req, res) => {
 app.use("/api/products", productRoutes); // Mount product-related API routes
 app.use("/api/auth", authRoutes);
 
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+// app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-// Catch-all handler for serving React app
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
-});
+// // Catch-all handler for serving React app
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+// });
 
 // Start the server
 app.listen(PORT, () => {
