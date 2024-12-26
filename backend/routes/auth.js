@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/db"); // Relative path to the config folder
+const { db } = require("../config/db");
 
-// Signup Route
 router.post("/signup", async (req, res) => {
   const { phone, password, username } = req.body;
 

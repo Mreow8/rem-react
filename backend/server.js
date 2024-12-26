@@ -24,6 +24,9 @@ app.use(
   })
 );
 
+app.use("/api/products", productRoutes); // Mount product-related API routes
+app.use("/api/auth", authRoutes);
+
 // Test the database connection
 pool.query("SELECT NOW()", (err, res) => {
   if (err) {
@@ -32,11 +35,6 @@ pool.query("SELECT NOW()", (err, res) => {
     console.log("Database connection test succeeded:", res.rows[0]);
   }
 });
-
-// Signup Route
-// API Routes
-app.use("/api/products", productRoutes); // Mount product-related API routes
-app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
