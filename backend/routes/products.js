@@ -80,9 +80,10 @@ router.post("/", upload.single("product_image"), async (req, res) => {
 router.get("/products", async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT products.*, stores.store_name, stores.image AS seller_image
-      FROM products
-      INNER JOIN stores ON products.store_id = stores.store_id
+    SELECT products.*, stores.store_name, stores.image AS seller_image
+FROM products
+INNER JOIN stores ON products.store_id = stores.store_id
+
     `);
 
     const products = result.rows.map((product) => ({
