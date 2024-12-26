@@ -1,6 +1,3 @@
-body {
-  font-family: "Open Sans", sans-serif;
-}
 /* Floating Menu styling */
 .floating-menu {
   position: absolute;
@@ -69,4 +66,7 @@ body {
 
 #store_link:hover {
   text-decoration: underline;
+}
+.navbar {
+  height: 100px;
 }
