@@ -77,7 +77,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
 
 // Route to get all products
 
-router.get("/products", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const result = await db.query(`
     SELECT products.*, stores.store_name, stores.image AS seller_image
