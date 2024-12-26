@@ -5,8 +5,8 @@ const pool = require("./config/db"); // Correct import for pool
 const authRoutes = require("./routes/auth"); // Import auth routes
 
 const app = express();
-const PORT = process.env.PORT || 3001; // Use environment port or 3001
-const CORS_ORIGIN = process.env.CORS_ORIGIN || "https://rem-react.onrender.com"; // Dynamically set CORS origin
+const PORT = 3001; // Use environment port or 3001
+const CORS_ORIGIN = "https://rem-react.onrender.com"; // Dynamically set CORS origin
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
