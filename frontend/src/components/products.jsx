@@ -30,7 +30,7 @@ const ProductList = () => {
       try {
         const [productRes, categoryRes] = await Promise.all([
           fetch("https://rem-reacts.onrender.com/api/products"),
-          fetch("https://rem-reacts.onrender.com/api/categories"),
+          fetch("https://rem-reacts.onrender.com/api/products/categories"),
         ]);
         if (!productRes.ok || !categoryRes.ok) {
           throw new Error("Error fetching data");

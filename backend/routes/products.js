@@ -86,15 +86,15 @@ INNER JOIN stores ON products.store_id = stores.store_id
 
     `);
 
-    const products = result.rows.map((product) => ({
-      ...product,
-      product_image: product.product_image
-        ? `http://localhost:3001/uploads/${product.product_image}` // This can be moved to an environment variable
-        : null,
-      seller_image: product.seller_image
-        ? `http://localhost:3001/seller_images/${product.seller_image}`
-        : null,
-    }));
+    // const products = result.rows.map((product) => ({
+    //   ...product,
+    //   product_image: product.product_image
+    //     ? `http://localhost:3001/uploads/${product.product_image}` // This can be moved to an environment variable
+    //     : null,
+    //   seller_image: product.seller_image
+    //     ? `http://localhost:3001/seller_images/${product.seller_image}`
+    //     : null,
+    // }));
 
     res.status(200).json(products);
   } catch (error) {
