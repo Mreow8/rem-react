@@ -1,41 +1,43 @@
 const express = require("express");
-const path = require("path");
 const cors = require("cors");
-const pool = require("./config/db"); // Import the database connection pool
-
-const app = express();
-const PORT = 3001; // Hardcoded port
-const CORS_ORIGIN = "https://rem-react.onrender.com"; // Hardcoded CORS origin
-
-// Import routes
-const productRoutes = require("./routes/products");
+const path = require("path");
+const { db } = require("./config/db"); // Database connection
 const authRoutes = require("./routes/auth"); // Import auth routes
 
-app.use(express.json()); // Parse JSON requests
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
+const app = express();
+const PORT = process.env.PORT || 3001; // Use environment port or 3001
+const CORS_ORIGIN = "https://rem-react.onrender.com"; // Replace with your frontend URL
 
-// Middleware
+// Middleware to parse incoming JSON requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// CORS middleware to handle cross-origin requests
 app.use(
   cors({
     origin: CORS_ORIGIN,
-    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
-    credentials: true, // Enable sending credentials (cookies, headers)
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+    credentials: true, // Allow cookies/credentials
   })
 );
 
-app.use("/api/products", productRoutes); // Mount product-related API routes
+// Mount the auth routes at /api/auth
 app.use("/api/auth", authRoutes);
 
 // Test the database connection
-pool.query("SELECT NOW()", (err, res) => {
+db.query("SELECT NOW()", (err, res) => {
   if (err) {
-    console.error("Database connection test failed:", err.message);
+    console.error("Database connection failed:", err.message);
   } else {
     console.log("Database connection test succeeded:", res.rows[0]);
   }
 });
 
+// Serve static files (if needed)
+app.use(express.static(path.join(__dirname, "public")));
+
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
