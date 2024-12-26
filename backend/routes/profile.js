@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { db } = require("../config/db");
 
+// Signup Route
 router.post("/signup", async (req, res) => {
   const { phone, password, username } = req.body;
 
@@ -24,7 +25,11 @@ router.post("/signup", async (req, res) => {
     res.status(201).json({ message: "User created successfully!" });
   } catch (error) {
     console.error("Error in /signup route:", error.message);
-    res.status(500).json({ message: "Internal server error." });
+    res.status(500).json({
+      message: "Internal server error.",
+      error: error.message, // Detailed error message for debugging
+      stack: process.env.NODE_ENV === "development" ? error.stack : undefined, // Include stack trace in development
+    });
   }
 });
 
@@ -65,7 +70,11 @@ router.post("/login", async (req, res) => {
     });
   } catch (error) {
     console.error("Error in /login route:", error.message);
-    res.status(500).json({ message: "Internal server error." });
+    res.status(500).json({
+      message: "Internal server error.",
+      error: error.message, // Detailed error message for debugging
+      stack: process.env.NODE_ENV === "development" ? error.stack : undefined, // Include stack trace in development
+    });
   }
 });
 
