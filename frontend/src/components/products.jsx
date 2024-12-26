@@ -13,10 +13,6 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const navigate = useNavigate();
 
-  // Commented out the unused code
-  // const [sellerStoreName, setSellerStoreName] = useState("");
-  // const [isMenuOpen, setIsMenuOpen] = useState(false); // Toggle state for menu
-
   useEffect(() => {
     // Retrieve the username from localStorage
     const storedUsername = localStorage.getItem("username");
@@ -46,17 +42,17 @@ const ProductList = () => {
     fetchData();
   }, []);
 
-  // Handle Logout
-  const handleLogout = () => {
-    localStorage.removeItem("username");
-    setUsername("");
-    navigate("/login");
-  };
+  // // Handle Logout
+  // const handleLogout = () => {
+  //   localStorage.removeItem("username");
+  //   setUsername("");
+  //   navigate("/login");
+  // };
 
-  // Handle search input change
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  // // Handle search input change
+  // const handleSearchChange = (e) => {
+  //   setSearchQuery(e.target.value);
+  // };
 
   const filteredProducts = products.filter(
     (product) =>
@@ -78,13 +74,13 @@ const ProductList = () => {
 
   return (
     <div className="product-list" style={{ fontFamily: "Roboto, sans-serif" }}>
-      <Nav
+      {/* <Nav
         username={username}
         handleLogout={handleLogout}
         searchQuery={searchQuery}
         handleSearchChange={handleSearchChange}
         // storeName={sellerStoreName} // Commented out because it's unused
-      />
+      /> */}
       <div id="categories-container">
         <ul className="categories-list">
           {categories.map((cat, idx) => (
