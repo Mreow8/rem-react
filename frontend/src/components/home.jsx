@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import backgroundImage from "../assets/girlreading.webp";
-import "../css/homes.css";
+
 const Home = () => {
   return (
     <div className="home-page">
@@ -38,12 +37,69 @@ const Home = () => {
       >
         <div className="background-text">
           <h1>Welcome to Resource Exchange Marketplace</h1>
-          <p className="text">Find and share secondhand books</p>
+          <p>Find and share secondhand books</p>
           <Link to="/products">
             <button className="btn btn-primary">Shop Now</button>
           </Link>
         </div>
       </div>
+
+      {/* Inline styles */}
+      <style>{`
+        .background-image-container {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center;
+        }
+
+        .background-image-container::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(17, 16, 16, 0.664);
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center;
+        }
+
+        .background-text {
+          color: white;
+          z-index: 5;
+          padding: 20px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+        }
+
+        .navbar {
+          z-index: 3; /* Ensures the navbar stays above the background */
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 768px) {
+          .background-text {
+            width: 90%;
+            font-size: 16px;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .background-text {
+            padding: 10px;
+            font-size: 14px;
+          }
+        }
+      `}</style>
     </div>
   );
 };
