@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../css/home.css";
+import "../css/home.css"; // Ensure your CSS file is correctly linked
 import backgroundImage from "../assets/girlreading.webp"; // Adjust the path as necessary
 
 const Home = () => {
@@ -10,14 +10,13 @@ const Home = () => {
       <nav className="navbar navbar-light bg-white shadow w-100 fixed-top">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            {/* Adjusted the logo source */}
-            {/* <img
-              src="/remlogo.png" // If the logo is in the public folder
+            <img
+              src="rem logo.png" // Ensure the path to the logo is correct
               alt="Resource Exchange Marketplace Logo"
-              width="60"
-              height="70"
+              width="50"
+              height="50"
               className="d-inline-block align-text-top"
-            /> */}
+            />
           </Link>
           <p className="text-end mb-0">
             <Link to="/help" className="text-decoration-none">
@@ -39,12 +38,9 @@ const Home = () => {
       >
         <div className="background-text">
           <h1>Welcome to Resource Exchange Marketplace</h1>
-          <p>Find and share secondhand books</p>
+          <p className="text">Find and share secondhand books</p>
           <Link to="/products">
             <button className="btn btn-primary">Shop Now</button>
-          </Link>
-          <Link to="/login">
-            <button className="btn btn-primary">Login</button>
           </Link>
         </div>
       </div>
