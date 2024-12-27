@@ -29,6 +29,7 @@
   position: absolute; /* Ensures it's above the overlay */
   z-index: 5;
   padding: 20px;
+  color: white;
 }
 
 /* Navbar adjustments */
