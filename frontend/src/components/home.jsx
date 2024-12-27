@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import backgroundImage from "../assets/girlreading.webp";
-import "../css/homes.css";
+import "../css/homes.module.css";
 const Home = () => {
   return (
     <div className="home-page">
