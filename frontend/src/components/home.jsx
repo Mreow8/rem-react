@@ -27,7 +27,7 @@ const Home = () => {
       </nav>
 
       {/* Background Section */}
-      <div
+      {/* <div
         className="background-image-container"
         style={{
           backgroundImage: `url(${backgroundImage})`,
@@ -35,16 +35,16 @@ const Home = () => {
           backgroundPosition: "center center",
           height: "100vh",
         }}
-      >
-        <div className="background-text">
-          <h1>Welcome to Resource Exchange Marketplace</h1>
-          <p className="text">Find and share secondhand books</p>
-          <Link to="/products">
-            <button className="btn btn-primary">Shop Now</button>
-          </Link>
-        </div>
+      > */}
+      <div className="background-text">
+        <h1>Welcome to Resource Exchange Marketplace</h1>
+        <p className="text">Find and share secondhand books</p>
+        <Link to="/products">
+          <button className="btn btn-primary">Shop Now</button>
+        </Link>
       </div>
     </div>
+    // </div>
   );
 };
 
