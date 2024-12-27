@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../css/home.css";
+import "../css/homes.css";
 import backgroundImage from "../assets/girlreading.webp";
 
 const Home = () => {
