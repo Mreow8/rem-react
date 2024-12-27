@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../css/home.css"; // Ensure your CSS file is correctly linked
+
 import backgroundImage from "../assets/girlreading.webp"; // Adjust the path as necessary
 
 const Home = () => {
