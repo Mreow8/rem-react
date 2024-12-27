@@ -26,11 +26,9 @@
 }
 /* Styles for the background text */
 .background-text {
-  position: relative; /* Ensures it's above the overlay */
-  z-index: 2;
+  position: absolute; /* Ensures it's above the overlay */
+  z-index: 5;
   padding: 20px;
-
-  border-radius: 10px; /* Rounds the edges of the text container */
 }
 
 /* Navbar adjustments */
