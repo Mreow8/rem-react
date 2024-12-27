@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="home-page">
       {/* Navbar */}
-      <nav className="navbar navbar-light bg-white shadow w-100 fixed-top">
+      <nav className="navbar">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img
@@ -15,7 +15,6 @@ const Home = () => {
               alt="Resource Exchange Marketplace Logo"
               width="50"
               height="50"
-              className="d-inline-block align-text-top"
             />
           </Link>
           <p className="text-end mb-0">
@@ -31,16 +30,13 @@ const Home = () => {
         className="background-image-container"
         style={{
           backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center center",
-          height: "100vh",
         }}
       >
         <div className="background-text">
           <h1>Welcome to Resource Exchange Marketplace</h1>
-          <p className="text">Find and share secondhand books</p>
+          <p>Find and share secondhand books</p>
           <Link to="/products">
-            <button className="btn btn-primary">Shop Now</button>
+            <button className="btn">Shop Now</button>
           </Link>
         </div>
       </div>
