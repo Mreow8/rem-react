@@ -27,17 +27,12 @@
 /* Background Text */
 .background-text {
   position: relative; /* Relative to the parent container */
-  z-index: 10; /* Ensure it is above both the overlay and background image */
+  z-index: 10;
   padding: 20px;
   color: white;
   text-align: center;
   margin-top: 10%;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.5
-  ); /* Optional: Add a semi-transparent background for better visibility */
+
   border-radius: 8px;
 }
 
