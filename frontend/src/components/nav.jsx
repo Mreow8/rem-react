@@ -151,7 +151,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
               />
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
-                style={{ fontSize: "25px", marginLeft: "10px" }}
+                style={{ fontSize: "20px", marginLeft: "10px" }}
                 aria-hidden="true"
               />
             </div>
