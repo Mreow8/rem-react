@@ -11,7 +11,7 @@ const Home = () => {
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img
-              src="rem logo.png" // Ensure the path to the logo is correct
+              src="remlogo.png"
               alt="Resource Exchange Marketplace Logo"
               width="50"
               height="50"
