@@ -70,3 +70,9 @@
 .navbar {
   height: 100px;
 }
+.search-input {
+  height: 40px; /* Adjust this value to your desired height */
+  padding: 5px; /* Add some padding for better visual appearance */
+  border-radius: 5px; /* Optional: rounding the corners */
+  border: 1px solid #ccc; /* Optional: border styling */
+}
