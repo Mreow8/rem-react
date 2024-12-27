@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../css/nav.css";
-import { Link, useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
@@ -13,22 +13,12 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
   const [username, setUsername] = useState(null);
   const [sellerStoreName, setSellerStoreName] = useState(null);
   const [sellerStoreId, setSellerStoreId] = useState(null);
-  const navigate = useNavigate(); // Use useNavigate for navigation
+  const navigate = useNavigate();
 
   useEffect(() => {
     setUsername(localStorage.getItem("username"));
     setSellerStoreName(localStorage.getItem("sellerStoreName"));
     setSellerStoreId(localStorage.getItem("sellerStoreId"));
-
-    console.log("Retrieved Username:", localStorage.getItem("username"));
-    console.log(
-      "Retrieved Seller Store Name:",
-      localStorage.getItem("sellerStoreName")
-    );
-    console.log(
-      "Retrieved Seller Store ID:",
-      localStorage.getItem("sellerStoreId")
-    );
 
     // Add event listener to close the menu if the user clicks anywhere on the page
     const handleClickOutside = (event) => {
@@ -62,7 +52,6 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
   };
 
   const handleLoginClick = () => {
-    // Prevent navigation if the user is logged in
     if (!username) {
       navigate("/login"); // Navigate to login if not logged in
     }
@@ -102,7 +91,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
           />
         </Link>
 
-        <div className="auth-cart-container text-end">
+        <div className="auth-cart-container d-flex align-items-center justify-content-end">
           {username ? (
             <div className="user-logout-container">
               <button onClick={toggleMenu} className="mb-0" id="btn_username">
@@ -139,7 +128,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
             </p>
           )}
 
-          <div className="search-cart-container d-flex align-items-center">
+          <div className="search-cart-container d-flex align-items-center ms-3">
             <div className="search-container">
               <input
                 type="text"
@@ -159,11 +148,11 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
               <FontAwesomeIcon
                 icon={faShoppingCart}
                 style={{
-                  fontSize: "25px", // Increase the size
-                  color: "black", // Change the color
-                  marginLeft: "15px", // Adjust margin if needed
-                  cursor: "pointer", // Make it clickable
-                  transition: "color 0.3s", // Add smooth transition on hover
+                  fontSize: "25px",
+                  color: "black",
+                  marginLeft: "15px",
+                  cursor: "pointer",
+                  transition: "color 0.3s",
                 }}
                 aria-hidden="true"
               />
@@ -171,15 +160,6 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
           </div>
         </div>
       </div>
-      <style jsx>{`
-        .navbar.fixed-top {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 1000;
-        }
-      `}</style>
     </nav>
   );
 };
