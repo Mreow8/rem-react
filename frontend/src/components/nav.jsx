@@ -159,7 +159,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
               <FontAwesomeIcon
                 icon={faShoppingCart}
                 style={{
-                  fontSize: "30px", // Increase the size
+                  fontSize: "25px", // Increase the size
                   color: "black", // Change the color
                   marginLeft: "15px", // Adjust margin if needed
                   cursor: "pointer", // Make it clickable
