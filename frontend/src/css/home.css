@@ -1,47 +1,17 @@
-/* Background Image Container */
-.background-image-container {
-  position: fixed; /* Fix the background so it stays in place */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  filter: grayscale(0.4) brightness(0.6);
-  z-index: -1; /* Ensure it stays behind all content */
-}
-
-/* Overlay */
-.background-image-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(165, 239, 175, 0.5); /* Add the overlay */
-  z-index: 1; /* Ensure it appears above the image but below text */
-}
-
-/* Background Text */
+/* Styles for the background text */
 .background-text {
-  position: relative; /* Relative to the parent container */
-  z-index: 10;
+  position: absolute;
+  z-index: 5;
   padding: 20px;
   color: white;
-  text-align: center;
-  margin-top: 10%;
-
-  border-radius: 8px;
 }
 
-/* Navbar Adjustments */
+/* Navbar adjustments */
 .navbar {
-  z-index: 20; /* Ensure the navbar stays above everything */
+  z-index: 3; /* Ensures the navbar stays above the background */
 }
 
-/* Responsive Styles for Smaller Screens */
+/* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .background-text {
     width: 90%;
