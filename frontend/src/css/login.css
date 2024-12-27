@@ -4,7 +4,6 @@ body {
   height: 100vh;
   font-family: Arial, sans-serif;
   position: relative;
-  background-color: #9b9b9b;
 }
 
 .navbar.fixed-top {

@@ -1,55 +1,27 @@
-/* General styles for the home page */
-.home-page {
+/* General styles for the background image container */
+.background-image-container {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
+  overflow: hidden;
   color: white;
   text-align: center;
 }
 
-/* Navbar adjustments */
-.navbar {
-  z-index: 3;
-  background-color: white;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-.navbar-brand {
-  display: flex;
-  align-items: center;
-}
-
-.background-image-container {
-  background-size: cover;
-  background-position: center center;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
+/* Styles for the background text */
 .background-text {
-  position: relative;
+  position: relative; /* Ensures it's above the overlay */
   z-index: 2;
   padding: 20px;
-  border-radius: 10px;
+
+  border-radius: 10px; /* Rounds the edges of the text container */
 }
 
-.btn {
-  background-color: #007bff;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #0056b3;
+/* Navbar adjustments */
+.navbar {
+  z-index: 3; /* Ensures the navbar stays above the background */
 }
 
 /* Responsive styles for smaller screens */
