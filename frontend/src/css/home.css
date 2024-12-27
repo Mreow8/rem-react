@@ -1,61 +1,51 @@
-/* Reset margins and paddings for full height effect */
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden;
-}
-
-.background-image-content {
-  flex: 1;
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
-  background-image: url("../assets/girlreading.webp"); /* Path to the image */
-  background-repeat: no-repeat;
-  background-size: cover; /* Ensure the image covers the whole screen */
-  background-position: center; /* Keep the image centered */
-  filter: grayscale(0.6) brightness(0.6);
+/* General styles for the background image container */
+.background-image-container {
+  position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  overflow: hidden;
   color: white;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Style for text inside the background section */
-.background-image-content h1 {
-  font-size: 3rem;
-  margin: 0.5em 0; /* Add some margin for spacing */
-  text-align: center; /* Center-align text */
-}
-
-.background-image-content p {
-  font-size: 1.5rem;
-  margin: 0.5em 0;
   text-align: center;
 }
 
-.background-image-content button {
-  margin-top: 1em;
-  padding: 0.8em 1.5em;
-  font-size: 1rem;
-  color: white;
-  background-color: rgba(
-    0,
-    123,
-    255,
-    0.8
-  ); /* Semi-transparent blue background */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+/* Overlay to darken the background image */
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Adjust opacity as needed */
+  z-index: 1; /* Ensures it stays below the text */
 }
 
-.background-image-content button:hover {
-  background-color: rgba(0, 123, 255, 1); /* Slightly darker on hover */
+/* Styles for the background text */
+.background-text {
+  position: relative; /* Ensures it's above the overlay */
+  z-index: 2;
+  padding: 20px;
+
+  border-radius: 10px; /* Rounds the edges of the text container */
+}
+
+/* Navbar adjustments */
+.navbar {
+  z-index: 3; /* Ensures the navbar stays above the background */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .background-text {
+    width: 90%;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .background-text {
+    padding: 10px;
+    font-size: 14px;
+  }
 }
