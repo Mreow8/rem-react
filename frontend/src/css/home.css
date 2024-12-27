@@ -1,28 +1,3 @@
-.background-image-container {
-  position: fixed; /* Fix the background so it stays in place */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-.background-image-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  z-index: -1;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  background-color: rgba(165, 239, 175, 0.5);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  filter: grayscale(0.4) brightness(0.6);
-}
 /* Styles for the background text */
 .background-text {
   position: absolute;
