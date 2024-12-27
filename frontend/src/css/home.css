@@ -1,3 +1,4 @@
+/* Background Image Container */
 .background-image-container {
   position: fixed; /* Fix the background so it stays in place */
   top: 0;
@@ -8,36 +9,44 @@
   background-size: cover;
   background-position: center;
   filter: grayscale(0.4) brightness(0.6);
+  z-index: -1; /* Ensure it stays behind all content */
 }
+
+/* Overlay */
 .background-image-container::before {
   content: "";
   position: absolute;
   top: 0;
-  z-index: -1;
   left: 0;
   right: 0;
   bottom: 0;
-
-  background-color: rgba(165, 239, 175, 0.5);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  filter: grayscale(0.4) brightness(0.6);
+  background-color: rgba(165, 239, 175, 0.5); /* Add the overlay */
+  z-index: 1; /* Ensure it appears above the image but below text */
 }
-/* Styles for the background text */
+
+/* Background Text */
 .background-text {
-  position: absolute; /* Ensures it's above the overlay */
-  z-index: 5;
+  position: relative; /* Relative to the parent container */
+  z-index: 10; /* Ensure it is above both the overlay and background image */
   padding: 20px;
   color: white;
+  text-align: center;
+  margin-top: 10%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Optional: Add a semi-transparent background for better visibility */
+  border-radius: 8px;
 }
 
-/* Navbar adjustments */
+/* Navbar Adjustments */
 .navbar {
-  z-index: 3; /* Ensures the navbar stays above the background */
+  z-index: 20; /* Ensure the navbar stays above everything */
 }
 
-/* Responsive styles for smaller screens */
+/* Responsive Styles for Smaller Screens */
 @media (max-width: 768px) {
   .background-text {
     width: 90%;
