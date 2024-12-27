@@ -126,7 +126,7 @@
   outline: none;
   transition: border-color 0.3s;
   box-shadow: none; /* Remove any shadow */
-  font-size: 10px;
+  font-size: 15px;
 }
 
 .search-input:focus {
