@@ -158,7 +158,13 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
             <Link to="/add_to_cart" aria-label="View Cart">
               <FontAwesomeIcon
                 icon={faShoppingCart}
-                style={{ fontSize: "25px", marginLeft: "10px" }}
+                style={{
+                  fontSize: "30px", // Increase the size
+                  color: "black", // Change the color
+                  marginLeft: "15px", // Adjust margin if needed
+                  cursor: "pointer", // Make it clickable
+                  transition: "color 0.3s", // Add smooth transition on hover
+                }}
                 aria-hidden="true"
               />
             </Link>
