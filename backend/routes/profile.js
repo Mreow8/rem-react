@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../config/db"); // Importing the pool for database queries
 
-// Signup Route
 router.post("/signup", async (req, res) => {
   const { phone, password, username } = req.body;
 

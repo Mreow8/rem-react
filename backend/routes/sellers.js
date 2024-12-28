@@ -2,7 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const { v2: cloudinary } = require("cloudinary");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const pool = require("./config/db"); // PostgreSQL connection pool
+const pool = require("../config/db"); // PostgreSQL connection pool
 
 // Cloudinary configuration
 cloudinary.config({
@@ -17,18 +17,16 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "sellers",
     allowedFormats: ["jpg", "jpeg", "png"],
-
     public_id: (req, file) => Date.now() + "-" + file.originalname,
   },
 });
 
 const upload = multer({ storage });
 
-const app = express();
+const router = express.Router(); // Create a new router
 
-app.use(express.json()); // Middleware to parse JSON requests
-
-app.post("/", upload.single("store_image"), async (req, res) => {
+// POST route to create a new seller
+router.post("/", upload.single("store_image"), async (req, res) => {
   const {
     user_id,
     store_name,
@@ -90,4 +88,4 @@ app.post("/", upload.single("store_image"), async (req, res) => {
   }
 });
 
-module.exports = app;
+module.exports = router; // Export the router
