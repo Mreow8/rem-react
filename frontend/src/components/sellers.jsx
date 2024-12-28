@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import "../css/sellers.css";
 import { useNavigate } from "react-router-dom";
 
@@ -79,14 +80,35 @@ const StoreForm = () => {
         localStorage.setItem("sellerStoreId", sellerStoreId);
         localStorage.setItem("storeName", formData.storeName);
 
-        navigate(`/store/${sellerStoreId}`);
+        // SweetAlert Success Message
+        Swal.fire({
+          title: "Success!",
+          text: "You have successfully registered as a seller.",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then(() => {
+          // Navigate after success
+          navigate(`/store/${sellerStoreId}`);
+        });
       } else {
         const errorData = await response.json();
         console.error("Error:", errorData.message);
         // Optionally, display an error message to the user here
+        Swal.fire({
+          title: "Error",
+          text: errorData.message || "Something went wrong.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
+      Swal.fire({
+        title: "Error",
+        text: "An unexpected error occurred.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
 
