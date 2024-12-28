@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
       .status(400)
       .json({ message: "Username, email, phone, and password are required." });
   }
-
+  console.log("identifier", identifier);
   try {
     // Query to fetch user details from either username, email, or phone
     const query = `

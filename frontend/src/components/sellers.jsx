@@ -76,7 +76,7 @@ const StoreForm = () => {
         const data = await response.json();
         console.log("Seller added successfully:", data);
 
-        const sellerStoreId = data.storeId;
+        const sellerStoreId = data.sellerId;
         localStorage.setItem("sellerStoreId", sellerStoreId);
         localStorage.setItem("storeName", formData.storeName);
 
