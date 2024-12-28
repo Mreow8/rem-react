@@ -62,7 +62,7 @@ router.post("/", upload.single("store_image"), async (req, res) => {
   const query = `
     INSERT INTO stores (user_id, store_name, phone, email, region, province, city, barangay, postal_code, image)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-    RETURNING id;`;
+   `;
 
   try {
     const result = await pool.query(query, [
@@ -94,11 +94,9 @@ router.post("/", upload.single("store_image"), async (req, res) => {
 
     if (error.code === "ECONNREFUSED") {
       // Handle connection error
-      return res
-        .status(503)
-        .json({
-          message: "Database connection failed. Please try again later.",
-        });
+      return res.status(503).json({
+        message: "Database connection failed. Please try again later.",
+      });
     }
 
     // General server error
