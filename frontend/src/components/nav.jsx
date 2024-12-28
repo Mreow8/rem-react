@@ -101,10 +101,11 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
               {isMenuOpen && (
                 <div id="menu" className="floating-menu">
                   <Link to="/profile">
-                    <p>My Profile</p>
+                    <p style={{ fontSize: "15px" }}>My Profile</p>
                   </Link>
                   {renderSellerSection()}
                   <button
+                    style={{ fontSize: "15px" }}
                     onClick={handleLogoutClick}
                     className="btn btn-sm ms-3"
                   >
