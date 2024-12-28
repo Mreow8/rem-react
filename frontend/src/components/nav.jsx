@@ -114,7 +114,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
               )}
             </div>
           ) : (
-            <p className="login-sign mb-0">
+            <p className="login-sign mb-0" style={{ fontSize: "12px" }}>
               <span
                 className="text-dark cursor-pointer"
                 onClick={handleLoginClick}
@@ -140,7 +140,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
               />
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
-                style={{ fontSize: "20px", marginLeft: "10px", padding: "5px" }}
+                style={{ fontSize: "20px", marginLeft: "10px" }}
                 aria-hidden="true"
               />
             </div>
