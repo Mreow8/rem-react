@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/green_background.jfif";
 import remLogo from "../assets/remlogo.png";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -41,7 +43,6 @@ const SignUp = () => {
     try {
       const response = await fetch(
         "https://rem-reacts.onrender.com/api/profile/signup",
-
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -62,12 +63,23 @@ const SignUp = () => {
       if (!response.ok) {
         const errorText = responseText;
         console.error("Failed request:", errorText);
-
         setError(responseData.message);
         return;
       }
 
-      alert(responseData.message);
+      // Show success alert with SweetAlert
+      Swal.fire({
+        title: "Success!",
+        text: responseData.message,
+        icon: "success",
+        confirmButtonText: "OK",
+        timer: 2000, // Automatically close after 2 seconds
+        timerProgressBar: true,
+        willClose: () => {
+          // Redirect to login page after 2 seconds
+          navigate("/login");
+        },
+      });
     } catch (error) {
       console.error("Error signing up:", error);
       setError(
