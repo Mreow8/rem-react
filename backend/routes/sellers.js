@@ -60,7 +60,7 @@ router.post("/", upload.single("store_image"), async (req, res) => {
 
   // SQL query to insert seller details
   const query = `
-    INSERT INTO sellers (user_id, store_name, phone, email, region, province, city, barangay, postal_code, image)
+    INSERT INTO stores (user_id, store_name, phone, email, region, province, city, barangay, postal_code, image)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     RETURNING id;`;
 
