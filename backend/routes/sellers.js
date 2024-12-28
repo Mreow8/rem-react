@@ -61,7 +61,7 @@ router.post("/", upload.single("store_image"), async (req, res) => {
   // SQL query to insert seller details
   const query = `
     INSERT INTO stores (user_id, store_name, phone, email, region, province, city, barangay, postal_code, image)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING store_id;
    `;
 
   try {
@@ -80,7 +80,7 @@ router.post("/", upload.single("store_image"), async (req, res) => {
 
     res.status(201).json({
       message: "Seller added successfully!",
-      sellerId: result.rows[0].id, // Return the inserted seller's ID
+      sellerId: result.rows[0].store_id,
     });
   } catch (error) {
     console.error("Error saving seller data:", error.message);
