@@ -1,0 +1,66 @@
+/* Sellers CSS */
+body,
+html {
+  height: 100%; /* Make sure the body and html take up the full height of the screen */
+  margin: 0;
+}
+
+.seller-container-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
+  height: 100vh; /* Full viewport height */
+}
+
+.seller-container {
+  display: block;
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.seller-container div {
+  margin-bottom: 15px; /* Space between divs */
+}
+
+.seller-container label {
+  display: inline-block;
+  width: 150px; /* Fixed width for labels */
+  vertical-align: middle;
+}
+
+.seller-container input,
+.seller-container select {
+  display: inline-block;
+  width: calc(100% - 160px); /* Input takes remaining width */
+  vertical-align: middle;
+  padding: 8px;
+}
+
+.seller-container button {
+  display: block;
+  margin: 20px 0;
+  padding: 10px 15px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.seller-container button:hover {
+  background-color: #e65c00;
+}
+
+.seller-container img {
+  margin-top: 10px;
+}
+
+.seller-container input[type="file"] {
+  padding: 8px;
+  border: none;
+}

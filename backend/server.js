@@ -4,6 +4,7 @@ const path = require("path");
 const pool = require("./config/db");
 const authRoutes = require("./routes/profile");
 const productsRoutes = require("./routes/products");
+const sellersRoutes = require("./routes/sellers");
 
 const app = express();
 const PORT = 3001; // Use environment port or 3001
@@ -35,6 +36,7 @@ pool.query("SELECT NOW()", (err, res) => {
 });
 app.use("/api/profile", authRoutes);
 app.use("/api/products", productsRoutes);
+app.use("/api/sellers", sellersRoutes);
 
 // // Serve static files (if needed)
 // app.use(express.static(path.join(__dirname, "build"))); // Serve static React files
