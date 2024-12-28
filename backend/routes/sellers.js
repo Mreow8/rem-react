@@ -84,6 +84,24 @@ router.post("/", upload.single("store_image"), async (req, res) => {
     });
   } catch (error) {
     console.error("Error saving seller data:", error.message);
+
+    if (error.code === "23505") {
+      // Handle unique violation error (for example, duplicate email or phone)
+      return res
+        .status(409)
+        .json({ message: "Conflict: A seller with this data already exists." });
+    }
+
+    if (error.code === "ECONNREFUSED") {
+      // Handle connection error
+      return res
+        .status(503)
+        .json({
+          message: "Database connection failed. Please try again later.",
+        });
+    }
+
+    // General server error
     res.status(500).json({ message: "Error saving seller data" });
   }
 });
