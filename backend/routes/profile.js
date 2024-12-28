@@ -12,12 +12,24 @@ router.post("/signup", async (req, res) => {
 
   try {
     // Query to check if the username already exists
-    const checkUserQuery = "SELECT * FROM users WHERE username = $1";
-    const { rows } = await pool.query(checkUserQuery, [username]);
+    const checkUsernameQuery = "SELECT * FROM users WHERE username = $1";
+    const { rows: usernameRows } = await pool.query(checkUsernameQuery, [
+      username,
+    ]);
 
-    // If username already exists, return a conflict error
-    if (rows.length > 0) {
+    // Query to check if the phone number already exists
+    const checkPhoneQuery = "SELECT * FROM users WHERE phone = $1";
+    const { rows: phoneRows } = await pool.query(checkPhoneQuery, [phone]);
+
+    // If either username or phone already exists, return a conflict error
+    if (usernameRows.length > 0 && phoneRows.length > 0) {
+      return res
+        .status(409)
+        .json({ message: "Username and Phone number already exist." });
+    } else if (usernameRows.length > 0) {
       return res.status(409).json({ message: "Username already exists." });
+    } else if (phoneRows.length > 0) {
+      return res.status(409).json({ message: "Phone number already exists." });
     }
 
     // Insert new user into the database
@@ -53,7 +65,7 @@ router.post("/login", async (req, res) => {
       SELECT users.*, stores.store_name, stores.store_id
       FROM users
       LEFT JOIN stores ON users.user_id = stores.user_id
-      WHERE users.username = $1 OR users.email = $1 OR users.phone = $1
+      WHERE users.email = $1 OR users.phone = $1
     `;
     const { rows } = await pool.query(query, [identifier]);
 

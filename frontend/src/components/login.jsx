@@ -44,11 +44,9 @@ const Login = () => {
       !isValidEmail(identifier) &&
       identifier.length < 3
     ) {
-      setError("Please enter a valid phone number, email, or username.");
+      setError("Please enter a valid phone number, email, ");
       return;
     }
-
-    // Validate password (for simplicity, just check length here)
 
     try {
       const response = await fetch(
@@ -62,7 +60,6 @@ const Login = () => {
         }
       );
 
-      // Check if the response is not OK
       if (!response.ok) {
         const data = await response.json();
 
@@ -77,7 +74,6 @@ const Login = () => {
       const data = await response.json();
       console.log("Response data:", data);
 
-      // Store the username and user ID in localStorage
       localStorage.setItem("username", identifier);
       localStorage.setItem("userId", data.user_id);
       localStorage.setItem("sellerStoreName", data.store_name);
@@ -136,13 +132,13 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="identifier" className="form-label">
-                Username, Email, or Phone
+                Email, or Phone
               </label>
               <input
                 type="text"
                 className="form-control"
                 id="identifier"
-                placeholder="Enter your username/email/phone"
+                placeholder="Enter your email/phone"
                 value={credentials.identifier}
                 onChange={handleChange}
                 required
