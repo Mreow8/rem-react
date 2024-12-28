@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/signup.css";
 import { Link } from "react-router-dom";
 import backgroundImage from "../assets/green_background.jfif";
+import remLogo from "../assets/remlogo.png";
 
 const SignUp = () => {
   const [error, setError] = useState("");
@@ -94,7 +95,7 @@ const SignUp = () => {
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
             <img
-              src="rem_logo.png"
+              src={remLogo}
               alt="Logo"
               width="60"
               height="60"
@@ -161,6 +162,7 @@ const SignUp = () => {
                 >
                   <i
                     className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
+                    style={{ fontSize: "18px", color: "#000" }}
                   ></i>
                 </button>
               </div>

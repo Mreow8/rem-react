@@ -3,7 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/login.css"; // Ensure this path is correct
 import { Link, useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/green_background.jfif"; // Adjust the path as necessary
-import Nav from "./nav";
+
+import remLogo from "../assets/remlogo.png";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -11,6 +12,7 @@ const Login = () => {
     password: "",
   });
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -92,6 +94,11 @@ const Login = () => {
     }
   };
 
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="login-page">
       <div
@@ -108,7 +115,7 @@ const Login = () => {
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
             <img
-              src="rem logo.png"
+              src={remLogo}
               alt="Logo"
               width="60"
               height="60"
@@ -145,15 +152,27 @@ const Login = () => {
               <label htmlFor="password" className="form-label">
                 Password
               </label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Enter your password"
-                value={credentials.password}
-                onChange={handleChange}
-                required
-              />
+              <div className="input-group">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="form-control"
+                  id="password"
+                  placeholder="Enter your password"
+                  value={credentials.password}
+                  onChange={handleChange}
+                  required
+                />
+                <button
+                  type="button"
+                  className="btn btn-light"
+                  onClick={togglePasswordVisibility}
+                >
+                  <i
+                    className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
+                    style={{ fontSize: "18px", color: "#000" }}
+                  ></i>
+                </button>
+              </div>
             </div>
             <button type="submit" className="btn btn-primary w-100">
               LOGIN
