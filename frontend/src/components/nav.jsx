@@ -114,7 +114,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
               )}
             </div>
           ) : (
-            <p className="mb-0">
+            <p className="login-sign mb-0">
               <span
                 className="text-dark cursor-pointer"
                 onClick={handleLoginClick}

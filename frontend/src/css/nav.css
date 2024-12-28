@@ -12,7 +12,9 @@
   align-items: flex-start;
   z-index: 1001;
 }
-
+.loginin-sign {
+  font-size: 10px;
+}
 .floating-menu p {
   margin: 5px 0;
   cursor: pointer;
