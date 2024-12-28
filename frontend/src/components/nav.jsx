@@ -72,7 +72,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
     } else {
       return (
         <Link to="/seller">
-          <p>Start Selling</p>
+          <p style={{ fontSize: "15px" }}>Start Selling</p>
         </Link>
       );
     }
@@ -105,7 +105,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
                   </Link>
                   {renderSellerSection()}
                   <button
-                    style={{ fontSize: "15px" }}
+                    style={{ fontSize: "15px", padding: "0px" }}
                     onClick={handleLogoutClick}
                     className="btn btn-sm ms-3"
                   >
