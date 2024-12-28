@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../css/nav.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,22 +10,21 @@ import remLogo from "../assets/remlogo.png";
 
 const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [username, setUsername] = useState(null);
-  const [sellerStoreName, setSellerStoreName] = useState(null);
-  const [sellerStoreId, setSellerStoreId] = useState(null);
+  const [username, setUsername] = useState(localStorage.getItem("username")); // Store username in state
+  const [sellerStoreName, setSellerStoreName] = useState(
+    localStorage.getItem("sellerStoreName")
+  );
+  const [sellerStoreId, setSellerStoreId] = useState(
+    localStorage.getItem("sellerStoreId")
+  );
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setUsername(localStorage.getItem("username"));
-    setSellerStoreName(localStorage.getItem("sellerStoreName"));
-    setSellerStoreId(localStorage.getItem("sellerStoreId"));
+  const menuRef = useRef(null);
 
+  useEffect(() => {
     // Add event listener to close the menu if the user clicks anywhere on the page
     const handleClickOutside = (event) => {
-      if (
-        event.target.closest("#menu") === null &&
-        event.target.id !== "btn_username"
-      ) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsMenuOpen(false); // Close the menu if clicked outside
       }
     };
@@ -44,7 +43,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
     localStorage.removeItem("username");
     localStorage.removeItem("sellerStoreName");
     localStorage.removeItem("sellerStoreId");
-    setUsername(null);
+    setUsername(null); // Reset the username state
   };
 
   const toggleMenu = () => {
@@ -58,12 +57,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
   };
 
   const renderSellerSection = () => {
-    if (
-      sellerStoreId &&
-      sellerStoreId !== "null" &&
-      sellerStoreName &&
-      sellerStoreName !== "null"
-    ) {
+    if (sellerStoreId && sellerStoreId !== "null" && sellerStoreName) {
       return (
         <Link to={`/store/${sellerStoreId}`} id="store_link">
           <p>{sellerStoreName}</p>
@@ -99,7 +93,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
               </button>
 
               {isMenuOpen && (
-                <div id="menu" className="floating-menu">
+                <div ref={menuRef} className="floating-menu">
                   <Link to="/profile">
                     <p style={{ fontSize: "15px" }}>My Profile</p>
                   </Link>
