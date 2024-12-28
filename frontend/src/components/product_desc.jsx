@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Nav from "./nav";
 import "../css/product_desc.css";
-
+import Loading from "./loading";
 const ProductDesc = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -91,9 +91,8 @@ const ProductDesc = () => {
   };
 
   if (loading) {
-    return <div className="loading-message">Loading product details...</div>;
+    return <Loading />; // Show the Loading screen while data is being fetched
   }
-
   if (error) {
     return <div className="error-message">Error: {error}</div>;
   }
