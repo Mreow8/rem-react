@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/products.css";
 import Nav from "./nav";
+import Loading from "./loading"; // Import Loading component
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -42,18 +43,6 @@ const ProductList = () => {
     fetchData();
   }, []);
 
-  // // Handle Logout
-  // const handleLogout = () => {
-  //   localStorage.removeItem("username");
-  //   setUsername("");
-  //   navigate("/login");
-  // };
-
-  // // Handle search input change
-  // const handleSearchChange = (e) => {
-  //   setSearchQuery(e.target.value);
-  // };
-
   const filteredProducts = products.filter(
     (product) =>
       (selectedCategory === "" || product.category === selectedCategory) && // Filter by category
@@ -61,7 +50,7 @@ const ProductList = () => {
   );
 
   if (loading) {
-    return <div className="loading-message">Loading products...</div>; // Loading state
+    return <Loading />; // Show the Loading screen while data is being fetched
   }
 
   if (error) {
@@ -74,13 +63,6 @@ const ProductList = () => {
 
   return (
     <div className="product-list" style={{ fontFamily: "Roboto, sans-serif" }}>
-      {/* <Nav
-        username={username}
-        handleLogout={handleLogout}
-        searchQuery={searchQuery}
-        handleSearchChange={handleSearchChange}
-        // storeName={sellerStoreName} // Commented out because it's unused
-      /> */}
       <Nav />
       <div id="categories-container">
         <ul className="categories-list">
