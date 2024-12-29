@@ -2,6 +2,7 @@
 body {
   background-color: #f4f4f4;
 }
+
 /* Store Container */
 .store-container {
   margin-top: 6vw;
@@ -9,7 +10,6 @@ body {
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-
   position: relative; /* Needed for absolute positioning of button */
 }
 
@@ -19,7 +19,6 @@ body {
   align-items: center;
   margin-bottom: 20px;
   padding: 45px 20px 20px 20px;
-
   width: 100%;
   background-color: white;
   gap: 15px; /* Space between image and text */
@@ -46,25 +45,27 @@ body {
   color: #555;
 }
 
-/* Add Product Button - Positioned to the Right Corner */
-.button {
+/* Add Product Button */
+.add-product-btn-container {
   position: absolute;
-  top: 20px; /* Distance from the top of the page */
-  right: 20px; /* Distance from the right of the page */
+  top: 20px; /* Adjust to position at the top */
+  right: 20px; /* Adjust to position at the right */
 }
 
-.btn-product {
+.add-product-btn {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #28a745; /* Green for add button */
   color: white;
+  font-size: 1rem;
+  font-weight: bold;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.btn-product:hover {
-  background-color: #0056b3;
+.add-product-btn:hover {
+  background-color: #218838; /* Darker green on hover */
 }
 
 /* Loading and Error Messages */
@@ -82,6 +83,44 @@ body {
   color: #777;
   text-align: center;
 }
+
 .product-list {
   margin-left: 50px;
+}
+
+/* Product Card Styles */
+.product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.product-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: #555;
 }
