@@ -65,7 +65,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
       sellerStoreName !== "null"
     ) {
       return (
-        <Link to={`/store/${sellerStoreId}`} id="store_link">
+        <Link to={`/sellerprofile/${sellerStoreId}`} id="store_link">
           <p>{sellerStoreName}</p>
         </Link>
       );
@@ -95,7 +95,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
           {username ? (
             <div className="user-logout-container">
               <button onClick={toggleMenu} className="mb-0" id="btn_username">
-                {username}!
+                {username}
               </button>
 
               {isMenuOpen && (

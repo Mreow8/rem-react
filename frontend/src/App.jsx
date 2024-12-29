@@ -5,6 +5,7 @@ import Products from "./components/products";
 import Signup from "./components/Signup";
 import Seller from "./components/sellers";
 import Login from "./components/login";
+import SellerProfile from "./components/seller_profile";
 import Product_desc from "./components/product_desc";
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />{" "}
         <Route path="/seller" element={<Seller />} />{" "}
         <Route path="/product_desc/:id" element={<Product_desc />} />{" "}
+        <Route path="/sellerprofile/:id" element={<SellerProfile />} />{" "}
       </Routes>
     </Router>
   );
