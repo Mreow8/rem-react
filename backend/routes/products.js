@@ -34,7 +34,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     product_quantity,
     product_author,
     product_description,
-    product_category,
+    category,
   } = req.body;
 
   const productImage = req.file ? req.file.path : null; // Cloudinary file URL
@@ -50,13 +50,13 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     product_quantity,
     product_author,
     product_description,
-    product_category,
+    category,
     productImage,
   });
 
   // SQL query to insert product details
   const query = `
-    INSERT INTO products (store_id, product_name, product_price, product_quantity, product_author, product_description, product_category, image)
+    INSERT INTO products (store_id, product_name, product_price, product_quantity, product_author, product_description, category, image)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING product_id;
   `;
 
@@ -68,7 +68,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
       product_quantity,
       product_author,
       product_description,
-      product_category,
+      category,
       productImage,
     ]);
 
