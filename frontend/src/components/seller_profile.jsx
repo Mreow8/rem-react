@@ -14,6 +14,10 @@ const Shop = () => {
   const [error, setError] = useState(null);
   const [showAddProductForm, setShowAddProductForm] = useState(false); // State to show/hide the add product form
 
+  // Fetch seller data from localStorage
+  const sellerStoreId = localStorage.getItem("sellerStoreId");
+  const sellerStoreName = localStorage.getItem("sellerStoreName");
+
   useEffect(() => {
     const fetchStoreData = async () => {
       try {
@@ -25,16 +29,17 @@ const Shop = () => {
         }
         const data = await response.json();
 
+        // Assuming products have seller details
         if (data.length > 0) {
           setSeller({
-            name: data[0].store_name,
+            name: sellerStoreName || data[0].store_name, // Use sellerStoreName from localStorage or fallback to data[0].store_name
             image: data[0].seller_image || "placeholder_seller_image.png", // Use seller image or placeholder
             region: data[0].region,
             province: data[0].province,
           });
         }
 
-        setProducts(data);
+        setProducts(data); // Set the list of products
       } catch (error) {
         setError(error.message);
       } finally {
@@ -43,7 +48,7 @@ const Shop = () => {
     };
 
     fetchStoreData();
-  }, [id]);
+  }, [id, sellerStoreId, sellerStoreName]);
 
   if (loading) {
     return <div className="loading-message">Loading products...</div>;
