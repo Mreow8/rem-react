@@ -68,6 +68,9 @@ const Shop = () => {
           <p>
             {seller.region}, {seller.province}
           </p>
+          <button>
+            <Link to="/addproducts">Back to Products</Link>
+          </button>
         </div>
       )}
       {/* Product List */}

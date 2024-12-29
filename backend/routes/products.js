@@ -3,6 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const { Pool } = require("pg");
+const cloudinary = require("cloudinary").v2;
 
 const router = express.Router();
 const db = new Pool({
@@ -11,25 +12,25 @@ const db = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-// Ensure uploads directory exists
-const uploadsDir = path.join(__dirname, "../uploads");
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir);
-}
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: "dejfzfdk0", // Replace with your Cloudinary Cloud Name
+  api_key: "567128668369977",
+  api_secret: "-5FfUruzAK7jEpBKdZ3Xn1RXVU8",
+});
 
 // Configure Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, uploadsDir);
+    cb(null, path.join(__dirname, "../uploads"));
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
-
 const upload = multer({ storage });
 
-// Routes for handling products
+// POST Route to Create Product
 router.post("/", upload.single("product_image"), async (req, res) => {
   const {
     store_id,
@@ -47,9 +48,19 @@ router.post("/", upload.single("product_image"), async (req, res) => {
       .json({ message: "All fields and an image are required." });
   }
 
-  const productImage = req.file.filename;
-
   try {
+    // Upload image to Cloudinary
+    const cloudinaryResult = await cloudinary.uploader.upload(req.file.path, {
+      folder: "product_images",
+    });
+
+    // Cleanup local temporary file
+    fs.unlink(req.file.path, (err) => {
+      if (err) console.error("Error deleting temporary file:", err);
+    });
+
+    const productImageUrl = cloudinaryResult.secure_url;
+
     const query = `
       INSERT INTO products 
       (store_id, product_image, product_name, product_price, product_quantity, product_author, product_description, created_at, updated_at, category) 
@@ -57,7 +68,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     `;
     await db.query(query, [
       store_id,
-      productImage,
+      productImageUrl,
       product_name,
       product_price,
       product_quantity,
@@ -75,7 +86,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
   }
 });
 
-// Route to get all products
+// GET Route to Retrieve All Products
 router.get("/", async (req, res) => {
   try {
     const result = await db.query(`
@@ -83,8 +94,6 @@ router.get("/", async (req, res) => {
       FROM products
       INNER JOIN stores ON products.store_id = stores.store_id
     `);
-
-    // Directly return the rows from the query
     res.status(200).json(result.rows);
   } catch (error) {
     console.error("Error retrieving products:", error);
@@ -94,50 +103,50 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Categories route
+// GET Route for Categories
 router.get("/categories", async (req, res) => {
-  const query = "SELECT DISTINCT category AS name FROM products"; // Adjust query if needed
-
   try {
-    const { rows } = await db.query(query); // Query the database for distinct categories
-    res.status(200).json(rows); // Return the list of categories
+    const { rows } = await db.query(
+      "SELECT DISTINCT category AS name FROM products"
+    );
+    res.status(200).json(rows);
   } catch (error) {
-    console.error("Error retrieving categories from database:", error);
+    console.error("Error retrieving categories:", error);
     res.status(500).json({ message: "Error retrieving categories." });
   }
 });
 
-router.get("/:id", (req, res) => {
+// GET Route for Single Product by ID
+router.get("/:id", async (req, res) => {
   const productId = parseInt(req.params.id);
 
-  const query =
-    "SELECT products.*, stores.store_name, stores.province, stores.image AS seller_image FROM products inner join stores on stores.store_id = products.store_id WHERE user_id = ?";
+  try {
+    const query = `
+      SELECT products.*, stores.store_name, stores.province, stores.image AS seller_image 
+      FROM products 
+      INNER JOIN stores ON stores.store_id = products.store_id 
+      WHERE products.product_id = $1
+    `;
+    const { rows } = await db.query(query, [productId]);
 
-  db.query(query, [productId], (error, results) => {
-    if (error) {
-      console.error("Error retrieving product:", error);
-      return res.status(500).json({ message: "Error retrieving product" });
-    }
-
-    if (results.length === 0) {
+    if (rows.length === 0) {
       return res
         .status(404)
         .json({ message: `Product not found for ID: ${productId}` });
     }
 
     const product = {
-      ...results[0],
-      product_image: results[0].product_image
-        ? `http://localhost:${process.env.PORT}/uploads/${results[0].product_image}`
-        : null,
-      seller_image: results[0].seller_image
-        ? `http://localhost:${process.env.PORT}/seller_images/${results[0].seller_image}`
-        : null,
+      ...rows[0],
+      product_image: rows[0].product_image,
+      seller_image: rows[0].seller_image,
     };
 
     res.json(product);
-  });
+  } catch (error) {
+    console.error("Error retrieving product:", error);
+    res.status(500).json({ message: "Error retrieving product" });
+  }
 });
 
-// Export the router
+// Export the Router
 module.exports = router;

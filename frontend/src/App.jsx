@@ -7,6 +7,7 @@ import Seller from "./components/sellers";
 import Login from "./components/login";
 import SellerProfile from "./components/seller_profile";
 import Product_desc from "./components/product_desc";
+import Add_Product from "./components/addproducts";
 
 const App = () => {
   return (
@@ -18,7 +19,8 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />{" "}
         <Route path="/seller" element={<Seller />} />{" "}
         <Route path="/product_desc/:id" element={<Product_desc />} />{" "}
-        <Route path="/sellerprofile/:id" element={<SellerProfile />} />{" "}
+        <Route path="/sellerprofile/:id" element={<SellerProfile />} />
+        <Route path="/addproducts" element={<Add_Product />} />
       </Routes>
     </Router>
   );

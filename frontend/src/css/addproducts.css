@@ -1,0 +1,12 @@
+.bodybackground {
+  background-color: white;
+  min-height: 100vh;
+  z-index: 3;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
