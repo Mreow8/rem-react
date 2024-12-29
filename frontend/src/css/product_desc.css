@@ -5,9 +5,10 @@
   margin-top: 8vw;
   width: 100vw;
   padding: 20px;
+  color: white;
 }
 
-.product-containers {
+.product-container {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -15,17 +16,19 @@
 }
 
 .product-details {
-  flex: 0 0 60%;
-  margin-left: 20px;
+  flex: 0 0 60%; /* Adjust width for better alignment */
 }
 
 .product-description {
   flex: 0 0 40%;
+  margin-top: 10px;
 }
 
 .card {
-  background: #ffffff;
-
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 40px;
   min-height: 30vh;
 
   margin-bottom: 10px; /* Fix margin for consistent spacing */
@@ -88,7 +91,7 @@
 
 .seller-image {
   width: 100px;
-
+  height: 100px;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -129,9 +132,11 @@
 
   .product-details,
   .product-description {
-    flex: 0 0 100%; /* Take full width */
+    flex: 0 0 100%;
   }
-
+  .product-description {
+    margin-top: -30px;
+  }
   .product-card {
     flex-direction: column; /* Stack image and content vertically */
     align-items: center;
@@ -161,23 +166,28 @@
     /* Your styles here */
     width: 30px;
   }
-  .seller-info .card {
+  .seller-info .cards {
     width: 90%;
+  }
+  .cards {
+    margin-left: -50px;
   }
 }
 .seller-info {
-  width: 100%; /* Full width */
-  /* Add space below product container */
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: -20px;
 }
 
-.seller-info .card {
+.seller-info .cards {
   display: flex;
   flex-direction: row; /* Align items horizontally */
   align-items: center;
   justify-content: space-between; /* Add spacing between content */
   padding: 20px;
   width: 100%; /* Match product details width */
-  background: #fa6262;
+  background: #fff;
 }
 
 .seller-image {
@@ -201,9 +211,4 @@
 
 .seller-info-content p {
   margin: 5px 0;
-}
-
-.seller-info .button-group {
-  display: flex;
-  gap: 10px;
 }

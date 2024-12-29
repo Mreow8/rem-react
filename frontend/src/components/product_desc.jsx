@@ -114,7 +114,7 @@ const ProductDesc = () => {
   return (
     <div className="product-desc-container">
       <Nav username={username} />
-      <div className="product-container">
+      <div className="product-containers">
         <div>
           {/* Product Details Section */}
           <div className="product-details">
@@ -145,17 +145,25 @@ const ProductDesc = () => {
             </div>
           </div>
           <div className="seller-info">
-            <img
-              src={product.seller_image || "placeholder_image.png"}
-              className="seller-image"
-              alt="Seller"
-            />
-            <p className="store-name">{product.store_name}</p>
-            <p>{product.province}</p>
-            <button>Message</button>
-            <button onClick={openShop} className="open-shop">
-              Shop
-            </button>
+            <div className="cards">
+              <img
+                src={product.seller_image || "placeholder_image.png"}
+                className="seller-image"
+                alt="Seller"
+              />
+              <div className="seller-info-content">
+                <div className="seller-name-location">
+                  <p className="store-name">{product.store_name}</p>
+                  <p className="location">{product.province}</p>
+                </div>
+                <div className="button-group">
+                  <button>Message</button>
+                  <button onClick={openShop} className="open-shop">
+                    Shop
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         {/* Product Description and Synopsis Section */}
