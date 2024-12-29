@@ -64,48 +64,50 @@ const ProductList = () => {
   return (
     <div className="product-list" style={{ fontFamily: "Roboto, sans-serif" }}>
       <Nav />
-      <div id="categories-container">
-        <ul className="categories-list">
-          {categories.map((cat, idx) => (
-            <li
-              key={idx}
-              className="category-item"
-              onClick={() => handleCategoryClick(cat.name)}
-            >
-              {cat.name}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <div className="products-main">
+        <div id="categories-container">
+          <ul className="categories-list">
+            {categories.map((cat, idx) => (
+              <li
+                key={idx}
+                className="category-item"
+                onClick={() => handleCategoryClick(cat.name)}
+              >
+                {cat.name}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      <div className="container">
-        <div className="products-container">
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => {
-              const imageUrl =
-                product.product_image ||
-                "/path_to_placeholder/placeholder_image.png";
+        <div className="container">
+          <div className="products-container">
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => {
+                const imageUrl =
+                  product.product_image ||
+                  "/path_to_placeholder/placeholder_image.png";
 
-              return (
-                <Link
-                  to={`/product_desc/${product.id}`}
-                  key={product.id}
-                  className="product-item"
-                  style={{ textDecoration: "none" }}
-                >
-                  <img
-                    src={imageUrl}
-                    alt={product.product_name || "Product Image"}
-                    className="product-image"
-                  />
-                  <p className="product-name">{product.product_name}</p>
-                  <p className="product-price">Php {product.product_price}</p>
-                </Link>
-              );
-            })
-          ) : (
-            <p>No products available.</p>
-          )}
+                return (
+                  <Link
+                    to={`/product_desc/${product.id}`}
+                    key={product.id}
+                    className="product-item"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <img
+                      src={imageUrl}
+                      alt={product.product_name || "Product Image"}
+                      className="product-image"
+                    />
+                    <p className="product-name">{product.product_name}</p>
+                    <p className="product-price">Php {product.product_price}</p>
+                  </Link>
+                );
+              })
+            ) : (
+              <p>No products available.</p>
+            )}
+          </div>
         </div>
       </div>
     </div>

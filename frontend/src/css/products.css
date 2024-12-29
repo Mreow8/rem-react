@@ -3,7 +3,9 @@
   margin-left: -10px;
   box-sizing: border-box;
 }
-
+.products-main {
+  top: 50px;
+}
 .categories-list {
   list-style: none;
   padding: 0;
