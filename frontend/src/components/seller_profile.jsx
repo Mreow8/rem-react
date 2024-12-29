@@ -4,6 +4,7 @@ import Nav from "./nav";
 import "../css/seller_profile.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import "bootstrap-icons/font/bootstrap-icons.css";
+import AddProductForm from "./AddProductForm"; // Import the AddProductForm
 
 const Shop = () => {
   const { id } = useParams();
@@ -11,6 +12,7 @@ const Shop = () => {
   const [seller, setSeller] = useState(null); // To hold seller information
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showAddProductForm, setShowAddProductForm] = useState(false); // State to show/hide the add product form
 
   // Cloudinary base URL for images
   const CLOUDINARY_BASE_URL =
@@ -68,10 +70,14 @@ const Shop = () => {
           <p>
             {seller.region}, {seller.province}
           </p>
-          <button>
-            <Link to="/addproducts">Back to Products</Link>
+          <button onClick={() => setShowAddProductForm(true)}>
+            Add Product
           </button>
         </div>
+      )}
+      {/* If showAddProductForm is true, display the floating AddProductForm */}
+      {showAddProductForm && (
+        <AddProductForm setShowAddProductForm={setShowAddProductForm} />
       )}
       {/* Product List */}
       <div className="product-list">
