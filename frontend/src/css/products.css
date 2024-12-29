@@ -139,7 +139,9 @@ a {
   .categories-list {
     font-size: 10px;
   }
-
+  #categories-container {
+    margin-top: 100px;
+  }
   .loading-message,
   .error-message {
     font-size: 10px;
@@ -152,7 +154,8 @@ a {
   .container {
     position: absolute;
     left: 0;
-    top: 20px;
+    margin-left: -100px;
+    top: 0;
     z-index: 10; /* Ensure it stays on top if needed */
   }
 }
