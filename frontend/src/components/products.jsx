@@ -99,9 +99,7 @@ const ProductList = () => {
                     className="product-image"
                   />
                   <p className="product-name">{product.product_name}</p>
-                  <p className="product-price" style={{ fontSize: "10px" }}>
-                    Php {product.product_price}
-                  </p>
+                  <p className="product-price">Php {product.product_price}</p>
                 </Link>
               );
             })

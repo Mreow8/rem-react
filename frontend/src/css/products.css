@@ -124,7 +124,7 @@ a {
   }
 
   .product-item {
-    width: 40%;
+    width: 30%;
     flex-direction: column;
     justify-content: space-between;
   }
@@ -140,9 +140,7 @@ a {
   .categories-list {
     font-size: 10px;
   }
-  #categories-container {
-    margin-top: 20px;
-  }
+
   .loading-message,
   .error-message {
     font-size: 10px;
