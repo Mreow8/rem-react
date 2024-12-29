@@ -11,13 +11,21 @@
   display: flex; /* Use flexbox to arrange items inline */
   flex-wrap: wrap; /* Allow wrapping of items to the next line if needed */
 }
-
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(250px, 1fr)
+  ); /* Grid layout with flexible columns */
+  gap: 20px;
+}
 .category-item {
   margin-right: 15px; /* Add space between category items */
   padding: 5px 10px;
   background-color: #f8f9fa; /* Light background for categories */
   border-radius: 5px;
   cursor: pointer;
+  font-size: 15px;
   transition: background-color 0.3s;
 }
 #categories-container {
@@ -28,13 +36,13 @@
   font-size: 10px;
 }
 .product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 140px;
+  padding: 10px;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 .product-item:hover {
@@ -50,13 +58,13 @@
 }
 
 .product-name {
-  font-size: 1rem;
+  font-size: 16px;
   margin: 10px 0;
   color: #333;
 }
 
 .product-list {
-  font-size: 1.25rem;
+  font-size: 16px;
 }
 
 @media (max-width: 768px) {
@@ -72,10 +80,36 @@
     justify-content: center;
   }
   .products-container {
-    margin-top: -100px;
+    display: flex; /* Use flexbox instead of grid for small screens */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 10px; /* Adjust gap between items */
   }
+
+  .product-item {
+    width: 48%; /* Adjust the width to make the items wider */
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   #categories-container {
     margin-top: 17vw;
+  }
+  .product-name {
+    font-size: 14px; /* Make the product name font smaller on smaller screens */
+  }
+
+  .product-price {
+    font-size: 14px; /* Make the product price font smaller on smaller screens */
+  }
+
+  /* Adjust other elements as needed */
+  .categories-list {
+    font-size: 12px; /* Smaller font size for category list */
+  }
+
+  .loading-message,
+  .error-message {
+    font-size: 14px; /* Smaller loading and error messages */
   }
 }
 
