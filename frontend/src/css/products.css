@@ -38,7 +38,8 @@ a {
 }
 
 .product-price {
-  font-size: 10px;
+  font-size: 15px;
+  color: #ca2727;
 }
 
 .product-item {
@@ -122,7 +123,7 @@ a {
   }
 
   .product-item {
-    width: 48%; /* Ensures two items fit per row */
+    width: 40%;
     flex-direction: column;
     justify-content: space-between;
   }
@@ -147,5 +148,11 @@ a {
   .product-image {
     max-width: 100%;
     height: auto;
+  }
+  .conatiner {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    z-index: 10; /* Ensure it stays on top if needed */
   }
 }
