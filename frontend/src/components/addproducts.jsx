@@ -86,7 +86,7 @@ function App() {
   };
 
   return (
-    <div className="bodybackground d-flex align-items-center justify-content-center">
+    <div className="overlay">
       <div className="form-container shadow-lg p-5 rounded">
         <h2 className="text-center mb-4">Add New Product</h2>
         <form onSubmit={handleSubmit}>
