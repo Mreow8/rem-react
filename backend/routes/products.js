@@ -2,15 +2,10 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const pool = require("../config/db");
+const pool = require("../config/db"); // This should be the correct import
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const router = express.Router();
-const db = new Pool({
-  connectionString:
-    "postgresql://rem_p4tm_user:Tu6m6KfFKADijl8ubmAYrHoxIkbDbCC0@dpg-ctg0cat2ng1s738oeq9g-a.singapore-postgres.render.com/rem_p4tm",
-  ssl: { rejectUnauthorized: false },
-});
 
 cloudinary.config({
   cloud_name: "dejfzfdk0", // Replace with your Cloudinary Cloud Name
@@ -102,10 +97,11 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     res.status(500).json({ message: "Error saving product data" });
   }
 });
+
 // GET Route to Retrieve All Products
 router.get("/", async (req, res) => {
   try {
-    const result = await db.query(`
+    const result = await pool.query(`
       SELECT products.*, stores.store_name
       FROM products
       INNER JOIN stores ON products.store_id = stores.store_id
@@ -122,7 +118,7 @@ router.get("/", async (req, res) => {
 // GET Route for Categories
 router.get("/categories", async (req, res) => {
   try {
-    const { rows } = await db.query(
+    const { rows } = await pool.query(
       "SELECT DISTINCT category AS name FROM products"
     );
     res.status(200).json(rows);
@@ -143,7 +139,7 @@ router.get("/:id", async (req, res) => {
       INNER JOIN stores ON stores.store_id = products.store_id 
       WHERE products.product_id = $1
     `;
-    const { rows } = await db.query(query, [productId]);
+    const { rows } = await pool.query(query, [productId]);
 
     if (rows.length === 0) {
       return res
