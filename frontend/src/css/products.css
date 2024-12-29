@@ -117,33 +117,33 @@ a {
 @media screen and (max-width: 480px) {
   .products-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
     gap: 10px;
   }
 
   .product-item {
-    width: 90%;
+    width: 48%; /* Ensures two items fit per row */
     flex-direction: column;
     justify-content: space-between;
     padding: 15px;
   }
 
   .product-name {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .product-price {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .categories-list {
-    font-size: 12px;
+    font-size: 10px;
   }
 
   .loading-message,
   .error-message {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .product-image {
