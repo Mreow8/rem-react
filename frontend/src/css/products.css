@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
 .categories-list {
   list-style: none;
   padding: 0;
@@ -35,7 +30,7 @@ a {
 }
 
 #categories-container {
-  margin-top: 10vw;
+  margin-top: 50px;
 }
 
 .product-price {
