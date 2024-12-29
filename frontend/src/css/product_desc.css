@@ -1,212 +1,35 @@
 .product-desc-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 15vw;
-  width: 100vw;
+  gap: 20px;
   padding: 20px;
-  color: white;
+}
+
+.product-containers {
+  display: flex;
+  gap: 20px;
 }
 
 .product-container {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 20px; /* Add gap between sections */
-}
-
-.product-details {
-  flex: 0 0 60%; /* Adjust width for better alignment */
+  flex: 1;
 }
 
 .product-description {
-  flex: 0 0 40%;
+  flex: 1;
+}
+
+.seller-info {
+  width: 100%; /* Ensures it's the same width as product-container */
+  margin-top: 20px;
 }
 
 .card {
-  background: #530303;
   border: 1px solid #ddd;
+  padding: 15px;
   border-radius: 8px;
-  padding: 40px;
-  min-height: 30vh;
-
-  margin-bottom: 10px; /* Fix margin for consistent spacing */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.product-card {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  right: 25px;
-  width: 100%;
-}
-
-.product-card img {
-  width: 30%;
-  height: 40vh;
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-.product-card-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin-left: 50px;
-
-  gap: 15px; /* Space between stacked items */
-}
-
-.font-size {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-.input-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.input-group button {
-  padding: 5px 10px;
-  font-size: 1rem;
-}
-
-.input-group input {
-  text-align: center;
-  width: 50px;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.button-group {
-  display: flex;
-
-  gap: 10px; /* Space between buttons */
-}
-
-.seller-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.store-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.back-to-products {
-  margin-top: 10px;
-  text-decoration: none;
-  color: #007bff;
-  text-align: center; /* Center align the link */
-}
-
-.back-to-products:hover {
-  text-decoration: underline;
-}
-
-.loading-message,
-.error-message,
-.no-product-message {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #555;
-}
-
-/* Media Query for Responsive Design */
-@media (max-width: 768px) {
-  .product-desc-container {
-    margin-top: 10%; /* Adjust vertical margin for smaller screens */
-  }
-  .product-container {
-    flex-direction: column; /* Stack sections vertically */
-    margin-top: 10vw;
-  }
-
-  .product-details,
-  .product-description {
-    flex: 0 0 100%;
-  }
-  .product-description {
-    margin-top: -30px;
-  }
-  .product-card {
-    flex-direction: column; /* Stack image and content vertically */
-    align-items: center;
-    gap: 15px;
-  }
-
-  .product-card img {
-    width: 50%; /* Adjust image width */
-    object-fit: cover;
-    height: auto;
-  }
-
-  .button-group {
-    align-items: stretch; /* Stretch buttons to full width */
-  }
-
-  .back-to-products {
-    text-align: center; /* Center align the link */
-  }
-  .input-group {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    gap: 10px;
-  }
-  .input-group input[type="text"] {
-    /* Your styles here */
-    width: 30px;
-  }
-  .seller-info .cards {
-    width: 90%;
-  }
-  .cards {
-    margin-left: -50px;
-  }
-}
-.seller-info {
-  width: 100%;
-  margin: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.seller-info .cards {
-  display: flex;
-  flex-direction: row; /* Align items horizontally */
-  align-items: center;
-  justify-content: space-between; /* Add spacing between content */
-  padding: 20px;
-  width: 100%; /* Match product details width */
-}
-
-.seller-image {
-  width: 120px; /* Larger image */
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.store-name {
-  font-size: 1.5rem; /* Increase font size */
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-/* Center seller info card text content */
-.seller-info-content {
-  flex: 1;
-  margin-left: 20px;
-}
-
-.seller-info-content p {
-  margin: 5px 0;
+.button-group button {
+  margin-right: 10px;
 }
