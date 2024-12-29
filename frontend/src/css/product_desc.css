@@ -23,9 +23,8 @@
 }
 
 .card {
-  background: #fff;
+  background: #d33030;
 
-  padding: 40px;
   min-height: 30vh;
 
   margin-bottom: 10px; /* Fix margin for consistent spacing */
@@ -88,7 +87,7 @@
 
 .seller-image {
   width: 100px;
-  height: 100px;
+
   object-fit: cover;
   border-radius: 50%;
 }
@@ -177,7 +176,7 @@
   justify-content: space-between; /* Add spacing between content */
   padding: 20px;
   width: 100%; /* Match product details width */
-  background: #fff;
+  background: #fa6262;
 }
 
 .seller-image {
