@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 .products-main {
-  top: 50px;
+  top: 0;
 }
 .categories-list {
   list-style: none;
@@ -71,7 +71,7 @@
 
 @media (max-width: 768px) {
   .container {
-    margin-top: 100px;
+    top: 50px;
   }
 
   .search-input {
@@ -118,7 +118,7 @@
   }
 
   .product-item {
-    width: 45%;
+    width: 40%;
     flex-direction: column;
     justify-content: space-between;
   }
@@ -139,7 +139,9 @@
   .error-message {
     font-size: 10px;
   }
-
+  .categories-container {
+    top: 50px;
+  }
   .product-image {
     max-width: 100%;
     height: auto;
@@ -148,7 +150,7 @@
     position: absolute;
     left: 0;
     margin-left: -100px;
-    top: 0;
+    top: 10px;
     z-index: 10; /* Ensure it stays on top if needed */
   }
 }
