@@ -118,7 +118,7 @@
   }
 
   .product-item {
-    width: 40%;
+    width: 45%;
     flex-direction: column;
     justify-content: space-between;
   }
@@ -149,8 +149,9 @@
   .container {
     position: absolute;
     left: 0;
-    margin-left: -100px;
-    top: 10px;
+    margin-left: -130px;
+    top: 100px;
+    font-size: 10px;
     z-index: 10; /* Ensure it stays on top if needed */
   }
 }
