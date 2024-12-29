@@ -5,10 +5,21 @@
 }
 
 .categories-list {
-  list-style-type: none;
-  font-size: 15px;
+  list-style: none; /* Remove the default list styles */
+  padding: 0;
+  margin: 0;
+  display: flex; /* Use flexbox to arrange items inline */
+  flex-wrap: wrap; /* Allow wrapping of items to the next line if needed */
 }
 
+.category-item {
+  margin-right: 15px; /* Add space between category items */
+  padding: 5px 10px;
+  background-color: #f8f9fa; /* Light background for categories */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 #categories-container {
   margin-top: 10vw;
 }
@@ -67,6 +78,7 @@
     margin-top: 17vw;
   }
 }
+
 @media (max-width: 400px) {
   .product-item {
     width: 100px;
