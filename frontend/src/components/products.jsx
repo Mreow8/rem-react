@@ -91,14 +91,17 @@ const ProductList = () => {
                   to={`/product_desc/${product.id}`}
                   key={product.id}
                   className="product-item"
+                  style={{ textDecoration: "none" }}
                 >
                   <img
                     src={imageUrl}
                     alt={product.product_name || "Product Image"}
                     className="product-image"
                   />
-                  <h3 className="product-name">{product.product_name}</h3>
-                  <p className="product-price">Php {product.product_price}</p>
+                  <p className="product-name">{product.product_name}</p>
+                  <p className="product-price" style={{ fontSize: "10px" }}>
+                    Php {product.product_price}
+                  </p>
                 </Link>
               );
             })

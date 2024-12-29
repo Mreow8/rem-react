@@ -119,14 +119,12 @@ a {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 10px;
   }
 
   .product-item {
     width: 48%; /* Ensures two items fit per row */
     flex-direction: column;
     justify-content: space-between;
-    padding: 15px;
   }
 
   .product-name {
