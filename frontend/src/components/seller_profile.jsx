@@ -14,10 +14,6 @@ const Shop = () => {
   const [error, setError] = useState(null);
   const [showAddProductForm, setShowAddProductForm] = useState(false); // State to show/hide the add product form
 
-  // Cloudinary base URL for images
-  const CLOUDINARY_BASE_URL =
-    "https://res.cloudinary.com/dejfzfdk0/image/upload/";
-
   useEffect(() => {
     const fetchStoreData = async () => {
       try {
@@ -30,12 +26,9 @@ const Shop = () => {
         const data = await response.json();
 
         if (data.length > 0) {
-          const folder = "seller_images"; // Cloudinary folder for seller images
           setSeller({
             name: data[0].store_name,
-            image: data[0].seller_image
-              ? `${CLOUDINARY_BASE_URL}${folder}/${data[0].seller_image}`
-              : "placeholder_seller_image.png", // Placeholder if no image
+            image: data[0].seller_image || "placeholder_seller_image.png", // Use seller image or placeholder
             region: data[0].region,
             province: data[0].province,
           });
@@ -85,22 +78,15 @@ const Shop = () => {
         <div className="products-container">
           {products.length > 0 ? (
             products.map((product) => {
-              const productFolder = "product_images"; // Cloudinary folder for product images
-              const imageUrl = product.product_image
-                ? `${CLOUDINARY_BASE_URL}${productFolder}/${product.product_image}`
-                : "placeholder_image.png"; // Placeholder if no image
-
-              // Debugging: Log the image URL
-              console.log("Image URL:", imageUrl);
-
               return (
                 <div key={product.id} className="product-item">
+                  {/* Link to product details page */}
                   <Link
                     to={`/product_desc/${product.id}`}
                     className="product-item-link"
                   >
                     <img
-                      src={imageUrl}
+                      src={product.product_image || "placeholder_image.png"}
                       alt={product.product_name || "Product Image"}
                       className="product-image"
                     />
