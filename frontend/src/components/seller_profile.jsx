@@ -30,7 +30,7 @@ const Shop = () => {
         const data = await response.json();
 
         if (data.length > 0) {
-          const folder = "seller_images"; // Replace with your Cloudinary folder name if different
+          const folder = "seller_images"; // Cloudinary folder for seller images
           setSeller({
             name: data[0].store_name,
             image: data[0].seller_image
@@ -85,10 +85,13 @@ const Shop = () => {
         <div className="products-container">
           {products.length > 0 ? (
             products.map((product) => {
-              const productFolder = "product_images"; // Replace with your Cloudinary folder name if different
+              const productFolder = "product_images"; // Cloudinary folder for product images
               const imageUrl = product.product_image
                 ? `${CLOUDINARY_BASE_URL}${productFolder}/${product.product_image}`
                 : "placeholder_image.png"; // Placeholder if no image
+
+              // Debugging: Log the image URL
+              console.log("Image URL:", imageUrl);
 
               return (
                 <div key={product.id} className="product-item">

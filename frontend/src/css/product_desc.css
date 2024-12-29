@@ -8,7 +8,7 @@
   color: white;
 }
 #productss {
-  margin-left: 10px;
+  margin-left: 50px;
   margin-top: 20px;
 }
 
@@ -141,7 +141,7 @@
     flex: 0 0 100%;
   }
   .product-description {
-    margin-top: 100px;
+    margin-top: 20px;
   }
   .product-card {
     flex-direction: column; /* Stack image and content vertically */
@@ -173,7 +173,7 @@
     width: 30px;
   }
   .seller-info .cards {
-    width: 90%;
+    width: 100%;
     margin-left: -20px;
   }
   .cards {
