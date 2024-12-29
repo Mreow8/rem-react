@@ -7,6 +7,10 @@
   padding: 20px;
   color: white;
 }
+.product-containers div {
+  margin-left: 10px;
+  margin-top: 20px;
+}
 
 .product-containers {
   display: flex;
@@ -168,6 +172,7 @@
   }
   .seller-info .cards {
     width: 90%;
+    margin-left: -20px;
   }
   .cards {
     margin-left: -50px;
