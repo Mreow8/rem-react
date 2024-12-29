@@ -115,36 +115,58 @@ const ProductDesc = () => {
     <div className="product-desc-container">
       <Nav username={username} />
       <div className="product-containers">
-        {/* Product Details Section */}
-        <div className="product-container">
-          <div className="card product-card">
-            <img
-              src={product.product_image || "placeholder_image.png"}
-              alt={product.product_name}
-              className="img-fluid"
-            />
-            <div className="product-card-content">
-              <p className="font-size">{product.product_name}</p>
-              <p className="text-danger">Php {product.product_price}</p>
+        <div>
+          {/* Product Details Section */}
+          <div className="product-details">
+            <div className="card product-card">
+              <img
+                src={product.product_image || "placeholder_image.png"}
+                alt={product.product_name}
+                className="img-fluid"
+              />
+              <div className="product-card-content">
+                <p className="font-size">{product.product_name}</p>
+                <p className="text-danger">Php {product.product_price}</p>
 
-              <div className="input-group">
-                <p>Quantity</p>
-                <button onClick={decreaseQuantity}>-</button>
-                <input type="text" value={quantity} readOnly />
-                <button onClick={increaseQuantity}>+</button>
+                <div className="input-group">
+                  <p>Quantity</p>
+                  <button onClick={decreaseQuantity}>-</button>
+                  <input type="text" value={quantity} readOnly />
+                  <button onClick={increaseQuantity}>+</button>
+                </div>
+                <div className="button-group">
+                  <button onClick={handleBuyNow}>Buy Now</button>
+                  <button onClick={handleAddToCart}>Add to Cart</button>
+                </div>
+                <Link to="/products" className="back-to-products">
+                  Back to Products
+                </Link>
               </div>
-              <div className="button-group">
-                <button onClick={handleBuyNow}>Buy Now</button>
-                <button onClick={handleAddToCart}>Add to Cart</button>
+            </div>
+          </div>
+          <div className="seller-info">
+            <div className="cards">
+              <img
+                src={product.seller_image || "placeholder_image.png"}
+                className="seller-image"
+                alt="Seller"
+              />
+              <div className="seller-info-content">
+                <div className="seller-name-location">
+                  <p className="store-name">{product.store_name}</p>
+                  <p className="location">{product.province}</p>
+                </div>
+                <div className="button-group">
+                  <button>Message</button>
+                  <button onClick={openShop} className="open-shop">
+                    Shop
+                  </button>
+                </div>
               </div>
-              <Link to="/products" className="back-to-products">
-                Back to Products
-              </Link>
             </div>
           </div>
         </div>
-
-        {/* Product Description Section */}
+        {/* Product Description and Synopsis Section */}
         <div className="product-description">
           <div className="card">
             <p>Product Description</p>
@@ -157,28 +179,7 @@ const ProductDesc = () => {
         </div>
       </div>
 
-      {/* Seller Info Section */}
-      <div className="seller-info">
-        <div className="cards">
-          <img
-            src={product.seller_image || "placeholder_image.png"}
-            className="seller-image"
-            alt="Seller"
-          />
-          <div className="seller-info-content">
-            <div className="seller-name-location">
-              <p className="store-name">{product.store_name}</p>
-              <p className="location">{product.province}</p>
-            </div>
-            <div className="button-group">
-              <button>Message</button>
-              <button onClick={openShop} className="open-shop">
-                Shop
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Seller Information Section */}
     </div>
   );
 };
