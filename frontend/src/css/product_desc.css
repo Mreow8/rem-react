@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 8vw;
+  margin-top: 15vw;
   width: 100vw;
   padding: 20px;
   color: white;
@@ -21,11 +21,10 @@
 
 .product-description {
   flex: 0 0 40%;
-  margin-top: 10px;
 }
 
 .card {
-  background: #fff;
+  background: #530303;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 40px;
@@ -175,9 +174,9 @@
 }
 .seller-info {
   width: 100%;
+  margin: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin-bottom: -20px;
 }
 
 .seller-info .cards {
