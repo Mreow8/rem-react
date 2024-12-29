@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css"; // Import custom CSS
 
 function App() {
   const [formData, setFormData] = useState({
@@ -65,7 +66,6 @@ function App() {
       }
 
       const data = await response.json();
-      console.log("Response from server:", data);
       alert("Product added successfully!");
 
       // Reset form
@@ -86,102 +86,104 @@ function App() {
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">Add New Product</h2>
-      <form onSubmit={handleSubmit} className="shadow p-4 rounded">
-        <div className="form-group">
-          <label htmlFor="product_image">Product Image</label>
-          <input
-            type="file"
-            id="product_image"
-            name="product_image"
-            className="form-control"
-            onChange={handleImageChange}
-            accept="image/*"
-          />
-        </div>
+    <div className="bodybackground d-flex align-items-center justify-content-center">
+      <div className="form-container shadow-lg p-5 rounded">
+        <h2 className="text-center mb-4">Add New Product</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="product_image">Product Image</label>
+            <input
+              type="file"
+              id="product_image"
+              name="product_image"
+              className="form-control"
+              onChange={handleImageChange}
+              accept="image/*"
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="product_name">Product Name</label>
-          <input
-            type="text"
-            id="product_name"
-            name="product_name"
-            className="form-control"
-            placeholder="Product Name"
-            value={formData.product_name}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="product_name">Product Name</label>
+            <input
+              type="text"
+              id="product_name"
+              name="product_name"
+              className="form-control"
+              placeholder="Product Name"
+              value={formData.product_name}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="product_price">Product Price</label>
-          <input
-            type="number"
-            id="product_price"
-            name="product_price"
-            className="form-control"
-            placeholder="Product Price"
-            value={formData.product_price}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="product_price">Product Price</label>
+            <input
+              type="number"
+              id="product_price"
+              name="product_price"
+              className="form-control"
+              placeholder="Product Price"
+              value={formData.product_price}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="product_quantity">Product Quantity</label>
-          <input
-            type="number"
-            id="product_quantity"
-            name="product_quantity"
-            className="form-control"
-            placeholder="Product Quantity"
-            value={formData.product_quantity}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="product_quantity">Product Quantity</label>
+            <input
+              type="number"
+              id="product_quantity"
+              name="product_quantity"
+              className="form-control"
+              placeholder="Product Quantity"
+              value={formData.product_quantity}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="product_category">Product Category</label>
-          <input
-            type="text"
-            id="product_category"
-            name="product_category"
-            className="form-control"
-            placeholder="Product Category"
-            value={formData.product_category}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="product_category">Product Category</label>
+            <input
+              type="text"
+              id="product_category"
+              name="product_category"
+              className="form-control"
+              placeholder="Product Category"
+              value={formData.product_category}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="product_author">Product Author</label>
-          <input
-            type="text"
-            id="product_author"
-            name="product_author"
-            className="form-control"
-            placeholder="Product Author"
-            value={formData.product_author}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="product_author">Product Author</label>
+            <input
+              type="text"
+              id="product_author"
+              name="product_author"
+              className="form-control"
+              placeholder="Product Author"
+              value={formData.product_author}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="product_description">Product Description</label>
-          <textarea
-            id="product_description"
-            name="product_description"
-            className="form-control"
-            placeholder="Product Description"
-            value={formData.product_description}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="product_description">Product Description</label>
+            <textarea
+              id="product_description"
+              name="product_description"
+              className="form-control"
+              placeholder="Product Description"
+              value={formData.product_description}
+              onChange={handleChange}
+            />
+          </div>
 
-        <button type="submit" className="btn btn-primary btn-block">
-          Add Product
-        </button>
-      </form>
+          <button type="submit" className="btn btn-primary btn-block">
+            Add Product
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
