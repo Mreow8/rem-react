@@ -57,7 +57,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
   // SQL query to insert product details
   const query = `
     INSERT INTO products (store_id, product_name, product_price, product_quantity, product_author, product_description, category, product_image)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING product_id;
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;
   `;
 
   try {
@@ -74,7 +74,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
 
     res.status(201).json({
       message: "Product added successfully!",
-      productId: result.rows[0].product_id,
+      productId: result.rows[0].id,
     });
   } catch (error) {
     console.error("Error saving product data:", error.message);
@@ -137,7 +137,7 @@ router.get("/:id", async (req, res) => {
       SELECT products.*, stores.store_name, stores.province, stores.image AS seller_image 
       FROM products 
       INNER JOIN stores ON stores.store_id = products.store_id 
-      WHERE products.product_id = $1
+      WHERE products.id = $1
     `;
     const { rows } = await pool.query(query, [productId]);
 
