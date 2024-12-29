@@ -145,19 +145,17 @@ const ProductDesc = () => {
             </div>
           </div>
           <div className="seller-info">
-            <div className="card">
-              <img
-                src={product.seller_image || "placeholder_image.png"}
-                className="seller-image"
-                alt="Seller"
-              />
-              <p className="store-name">{product.store_name}</p>
-              <p>{product.province}</p>
-              <button>Message</button>
-              <button onClick={openShop} className="open-shop">
-                Shop
-              </button>
-            </div>
+            <img
+              src={product.seller_image || "placeholder_image.png"}
+              className="seller-image"
+              alt="Seller"
+            />
+            <p className="store-name">{product.store_name}</p>
+            <p>{product.province}</p>
+            <button>Message</button>
+            <button onClick={openShop} className="open-shop">
+              Shop
+            </button>
           </div>
         </div>
         {/* Product Description and Synopsis Section */}

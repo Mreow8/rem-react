@@ -7,10 +7,11 @@
   padding: 20px;
 }
 
-.product-container {
+.product-container1 {
   display: flex;
   flex-direction: row;
   width: 100%;
+  margin-top: 5vw;
   gap: 20px; /* Add gap between sections */
 }
 
@@ -24,8 +25,7 @@
 
 .card {
   background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+
   padding: 40px;
   min-height: 30vh;
 
@@ -123,7 +123,7 @@
   .product-desc-container {
     margin-top: 10%; /* Adjust vertical margin for smaller screens */
   }
-  .product-container {
+  .product-container1 {
     flex-direction: column; /* Stack sections vertically */
     margin-top: 10vw;
   }
@@ -162,25 +162,19 @@
     /* Your styles here */
     width: 30px;
   }
-  .seller-info .card {
-    width: 90%;
-  }
 }
 .seller-info {
-  width: 100%; /* Full width */
-  /* Add space below product container */
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
 
-.seller-info .card {
+.seller-info {
   display: flex;
   flex-direction: row; /* Align items horizontally */
   align-items: center;
   justify-content: space-between; /* Add spacing between content */
   padding: 20px;
-  width: 100%; /* Match product details width */
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
 }
 
 .seller-image {
