@@ -29,10 +29,6 @@
   transition: background-color 0.3s;
 }
 
-#categories-container {
-  margin-top: 50px;
-}
-
 .product-price {
   font-size: 15px;
   color: #ca2727;
