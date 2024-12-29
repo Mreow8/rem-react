@@ -131,17 +131,17 @@
   }
   .product-containers {
     flex-direction: column; /* Stack sections vertically */
-    margin-top: 100px;
+    margin-top: 200px;
   }
   #productss {
-    margin-left: 20px;
+    margin-left: 30px;
   }
   .product-details,
   .product-description {
     flex: 0 0 100%;
   }
   .product-description {
-    margin-top: -100px;
+    margin-top: 100px;
   }
   .product-card {
     flex-direction: column; /* Stack image and content vertically */
