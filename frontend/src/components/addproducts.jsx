@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/addproducts.css"; // Import custom CSS
 
-function AddProductForm({ setShowAddProductForm }) {
+function App() {
   const [formData, setFormData] = useState({
     product_image: null,
     product_name: "",
@@ -182,19 +182,10 @@ function AddProductForm({ setShowAddProductForm }) {
           <button type="submit" className="btns btn-primary btn-block">
             Add Product
           </button>
-
-          {/* Close button */}
-          <button
-            type="button"
-            onClick={() => setShowAddProductForm(false)}
-            className="btn btn-secondary btn-block mt-2"
-          >
-            Close
-          </button>
         </form>
       </div>
     </div>
   );
 }
 
-export default AddProductForm;
+export default App;

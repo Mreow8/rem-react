@@ -4,7 +4,7 @@ import Nav from "./nav";
 import "../css/seller_profile.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import "bootstrap-icons/font/bootstrap-icons.css";
-import AddProductForm from "./AddProductForm"; // Import the AddProductForm
+import AddProductForm from "./addproducts"; // Import the AddProductForm
 
 const Shop = () => {
   const { id } = useParams();
