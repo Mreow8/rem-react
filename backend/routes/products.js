@@ -10,7 +10,7 @@ const router = express.Router();
 cloudinary.config({
   cloud_name: "dejfzfdk0", // Replace with your Cloudinary Cloud Name
   api_key: "567128668369977", // Replace with your API Key
-  api_secret: "-5FfUruzAK7jEpBKdZ3Xn1RXVU8", // Replace with your API Secret
+  api_secret: "", // Replace with your API Secret
 });
 
 // Configure Multer with Cloudinary storage
@@ -56,7 +56,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
 
   // SQL query to insert product details
   const query = `
-    INSERT INTO products (store_id, product_name, product_price, product_quantity, product_author, product_description, category, image)
+    INSERT INTO products (store_id, product_name, product_price, product_quantity, product_author, product_description, category, product_image)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING product_id;
   `;
 
