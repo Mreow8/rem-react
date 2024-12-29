@@ -84,7 +84,7 @@ const ProductList = () => {
             filteredProducts.map((product) => {
               const imageUrl =
                 product.product_image ||
-                "/path_to_placeholder/placeholder_image.png"; // Fallback image
+                "/path_to_placeholder/placeholder_image.png";
 
               return (
                 <Link
