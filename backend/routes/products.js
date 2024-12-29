@@ -4,7 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const { Pool } = require("pg");
 const cloudinary = require("cloudinary").v2;
-
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const router = express.Router();
 const db = new Pool({
   connectionString:
