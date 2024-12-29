@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./addproducts.css"; // Import custom CSS
+import "../css/addproducts.css"; // Import custom CSS
 
 function App() {
   const [formData, setFormData] = useState({
