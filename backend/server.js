@@ -38,10 +38,12 @@ app.use("/api/profile", authRoutes);
 app.use("/api/products", productsRoutes);
 app.use("/api/sellers", sellersRoutes);
 
-// // Serve static files (if needed)
-// app.use(express.static(path.join(__dirname, "build"))); // Serve static React files
+app.use(express.static(path.join(__dirname, "../frontend/public")));
 
-// Start the server
+// Serve React's index.html file for any route (SPA behavior)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/public", "index.html"));
+});
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
