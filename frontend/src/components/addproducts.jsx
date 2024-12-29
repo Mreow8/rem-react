@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap for styling
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [formData, setFormData] = useState({
@@ -22,12 +22,21 @@ function App() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    const storeId = localStorage.getItem("sellerStoreId"); // Updated key
-    console.log("Store ID:", storeId); // Log the storeId for debugging
+    e.preventDefault();
+    const storeId = localStorage.getItem("sellerStoreId");
 
     if (!storeId) {
       alert("Store ID not found!");
+      return;
+    }
+
+    if (
+      !formData.product_image ||
+      !formData.product_name ||
+      !formData.product_price ||
+      !formData.product_quantity
+    ) {
+      alert("Please fill in all required fields.");
       return;
     }
 
@@ -39,16 +48,11 @@ function App() {
     productData.append("product_author", formData.product_author);
     productData.append("product_description", formData.product_description);
     productData.append("product_category", formData.product_category);
-    productData.append("store_id", storeId); // Append the store ID to the form data
-
-    // Log FormData entries for debugging
-    for (let [key, value] of productData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    productData.append("store_id", storeId);
 
     try {
       const response = await fetch(
-        "https://rem-reacts.onrender.com/api/seller-products",
+        "https://rem-reacts.onrender.com/api/products",
         {
           method: "POST",
           body: productData,
@@ -63,6 +67,8 @@ function App() {
       const data = await response.json();
       console.log("Response from server:", data);
       alert("Product added successfully!");
+
+      // Reset form
       setFormData({
         product_image: null,
         product_name: "",
@@ -72,8 +78,9 @@ function App() {
         product_description: "",
         product_category: "",
       });
+      document.getElementById("product_image").value = ""; // Reset file input
     } catch (error) {
-      console.error("Error adding product:", error); // Enhanced logging
+      console.error("Error adding product:", error);
       alert(`Error adding product: ${error.message}`);
     }
   };
@@ -83,20 +90,22 @@ function App() {
       <h2 className="text-center mb-4">Add New Product</h2>
       <form onSubmit={handleSubmit} className="shadow p-4 rounded">
         <div className="form-group">
-          <label>Product Image</label>
+          <label htmlFor="product_image">Product Image</label>
           <input
             type="file"
+            id="product_image"
             name="product_image"
             className="form-control"
             onChange={handleImageChange}
-            accept="image/*" // Accept image files
+            accept="image/*"
           />
         </div>
 
         <div className="form-group">
-          <label>Product Name</label>
+          <label htmlFor="product_name">Product Name</label>
           <input
             type="text"
+            id="product_name"
             name="product_name"
             className="form-control"
             placeholder="Product Name"
@@ -106,9 +115,10 @@ function App() {
         </div>
 
         <div className="form-group">
-          <label>Product Price</label>
+          <label htmlFor="product_price">Product Price</label>
           <input
             type="number"
+            id="product_price"
             name="product_price"
             className="form-control"
             placeholder="Product Price"
@@ -118,9 +128,10 @@ function App() {
         </div>
 
         <div className="form-group">
-          <label>Product Quantity</label>
+          <label htmlFor="product_quantity">Product Quantity</label>
           <input
             type="number"
+            id="product_quantity"
             name="product_quantity"
             className="form-control"
             placeholder="Product Quantity"
@@ -130,9 +141,10 @@ function App() {
         </div>
 
         <div className="form-group">
-          <label>Product Category</label>
+          <label htmlFor="product_category">Product Category</label>
           <input
             type="text"
+            id="product_category"
             name="product_category"
             className="form-control"
             placeholder="Product Category"
@@ -142,9 +154,10 @@ function App() {
         </div>
 
         <div className="form-group">
-          <label>Product Author</label>
+          <label htmlFor="product_author">Product Author</label>
           <input
             type="text"
+            id="product_author"
             name="product_author"
             className="form-control"
             placeholder="Product Author"
@@ -154,8 +167,9 @@ function App() {
         </div>
 
         <div className="form-group">
-          <label>Product Description</label>
+          <label htmlFor="product_description">Product Description</label>
           <textarea
+            id="product_description"
             name="product_description"
             className="form-control"
             placeholder="Product Description"
