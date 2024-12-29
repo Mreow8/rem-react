@@ -12,25 +12,25 @@ const db = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-// Configure Cloudinary
 cloudinary.config({
   cloud_name: "dejfzfdk0", // Replace with your Cloudinary Cloud Name
-  api_key: "567128668369977",
-  api_secret: "-5FfUruzAK7jEpBKdZ3Xn1RXVU8",
+  api_key: "567128668369977", // Replace with your API Key
+  api_secret: "-5FfUruzAK7jEpBKdZ3Xn1RXVU8", // Replace with your API Secret
 });
 
-// Configure Multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../uploads"));
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+// Configure Multer with Cloudinary storage
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "products",
+    allowedFormats: ["jpg", "jpeg", "png"],
+    public_id: (req, file) => Date.now() + "-" + file.originalname,
   },
 });
+
 const upload = multer({ storage });
 
-// POST Route to Create Product
+// POST route to create a new product
 router.post("/", upload.single("product_image"), async (req, res) => {
   const {
     store_id,
@@ -42,50 +42,66 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     product_category,
   } = req.body;
 
-  if (!req.file || !product_name || !product_price || !product_quantity) {
-    return res
-      .status(400)
-      .json({ message: "All fields and an image are required." });
+  const productImage = req.file ? req.file.path : null; // Cloudinary file URL
+
+  if (!store_id || !product_name || !product_price || !product_quantity) {
+    return res.status(400).json({ message: "Required fields are missing." });
   }
 
+  console.log("Inserting product data:", {
+    store_id,
+    product_name,
+    product_price,
+    product_quantity,
+    product_author,
+    product_description,
+    product_category,
+    productImage,
+  });
+
+  // SQL query to insert product details
+  const query = `
+    INSERT INTO products (store_id, product_name, product_price, product_quantity, product_author, product_description, product_category, image)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING product_id;
+  `;
+
   try {
-    // Upload image to Cloudinary
-    const cloudinaryResult = await cloudinary.uploader.upload(req.file.path, {
-      folder: "product_images",
-    });
-
-    // Cleanup local temporary file
-    fs.unlink(req.file.path, (err) => {
-      if (err) console.error("Error deleting temporary file:", err);
-    });
-
-    const productImageUrl = cloudinaryResult.secure_url;
-
-    const query = `
-      INSERT INTO products 
-      (store_id, product_image, product_name, product_price, product_quantity, product_author, product_description, created_at, updated_at, category) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW(), $8)
-    `;
-    await db.query(query, [
+    const result = await pool.query(query, [
       store_id,
-      productImageUrl,
       product_name,
       product_price,
       product_quantity,
       product_author,
       product_description,
       product_category,
+      productImage,
     ]);
 
-    res.status(201).json({ message: "Product added successfully!" });
+    res.status(201).json({
+      message: "Product added successfully!",
+      productId: result.rows[0].product_id,
+    });
   } catch (error) {
-    console.error("Error saving product:", error);
-    res
-      .status(500)
-      .json({ message: "Error saving product", error: error.message });
+    console.error("Error saving product data:", error.message);
+
+    if (error.code === "23505") {
+      // Handle unique violation error
+      return res.status(409).json({
+        message: "Conflict: A product with this data already exists.",
+      });
+    }
+
+    if (error.code === "ECONNREFUSED") {
+      // Handle database connection error
+      return res.status(503).json({
+        message: "Database connection failed. Please try again later.",
+      });
+    }
+
+    // General server error
+    res.status(500).json({ message: "Error saving product data" });
   }
 });
-
 // GET Route to Retrieve All Products
 router.get("/", async (req, res) => {
   try {

@@ -179,7 +179,7 @@ function App() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block">
+          <button type="submit" className="btns btn-primary btn-block">
             Add Product
           </button>
         </form>

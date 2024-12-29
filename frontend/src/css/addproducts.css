@@ -1,17 +1,6 @@
 /* Import Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@400;700&display=swap");
 
-body {
-  font-family: "Montserrat", sans-serif; /* Modern sans-serif for body text */
-  background: linear-gradient(
-    to right,
-    #f8f9fa,
-    #e9ecef
-  ); /* Subtle gradient background */
-  margin: 0;
-  padding: 0;
-}
-
 .overlay {
   position: fixed;
   top: 0;
@@ -74,7 +63,7 @@ textarea:focus {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
 }
 
-button {
+.btns {
   background-color: #007bff;
   color: white;
   font-weight: 600;
@@ -84,12 +73,12 @@ button {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.btn:hover {
+.btns:hover {
   background-color: #0056b3;
   transform: scale(1.05);
 }
 
-.btn:focus {
+.btns:focus {
   outline: none;
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
 }
