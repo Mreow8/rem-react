@@ -22,12 +22,11 @@ const storage = new CloudinaryStorage({
 });
 
 const upload = multer({ storage });
-
-const app = express();
+const router = express.Router();
 
 // POST route to add a product with an image to the cart
-app.post(
-  "/api/cart/:userId/:productId",
+router.post(
+  "/:userId/:productId",
   upload.single("product_image"),
   (req, res) => {
     const { userId, productId } = req.params;
@@ -39,10 +38,8 @@ app.post(
         .json({ message: "User ID, Product ID, and Quantity are required." });
     }
 
-    // Get the image URL from Cloudinary response
     const productImage = req.file ? req.file.path : null;
 
-    // SQL query to insert a product into the cart
     const query = `
     INSERT INTO cart (user_id, product_id, quantity, product_image)
     VALUES ($1, $2, $3, $4) RETURNING cart_id;
@@ -69,7 +66,7 @@ app.post(
 );
 
 // Get cart items for a user, including Cloudinary image URLs
-app.get("/api/cart/:userId", (req, res) => {
+router.get("/:userId", (req, res) => {
   const userId = req.params.userId;
   const query = `
       SELECT 
@@ -77,14 +74,14 @@ app.get("/api/cart/:userId", (req, res) => {
         products.product_price,
         products.product_image,
         cart.quantity,
-        sellers.store_name AS seller_username,
+        stores.store_name AS seller_username,
         cart.product_id
       FROM 
         cart
       JOIN 
         products ON cart.product_id = products.id
       JOIN 
-        sellers ON products.store_id = sellers.store_id
+        stores ON products.store_id = stores.store_id
       WHERE 
         cart.user_id = $1
     `;
@@ -95,7 +92,6 @@ app.get("/api/cart/:userId", (req, res) => {
       return res.status(500).json({ message: "Error retrieving cart items" });
     }
 
-    // Add the Cloudinary image URL or fallback image to the response
     const productsWithImages = results.rows.map((product) => ({
       ...product,
       product_image: product.product_image
@@ -108,7 +104,7 @@ app.get("/api/cart/:userId", (req, res) => {
 });
 
 // Delete item from cart
-app.delete("/api/cart/:userId/:productId", (req, res) => {
+router.delete("/:userId/:productId", (req, res) => {
   const { userId, productId } = req.params;
 
   if (!userId || !productId) {
@@ -134,7 +130,7 @@ app.delete("/api/cart/:userId/:productId", (req, res) => {
 });
 
 // Update item quantity in cart
-app.put("/api/carts", (req, res) => {
+router.put("/", (req, res) => {
   const { user_id, product_id, quantity } = req.body;
 
   if (!user_id || !product_id || quantity === undefined) {
@@ -159,6 +155,4 @@ app.put("/api/carts", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+module.exports = router;
