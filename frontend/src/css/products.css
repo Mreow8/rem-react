@@ -25,12 +25,12 @@
   flex-wrap: wrap; /* Allow products to wrap to the next line */
   overflow-y: auto; /* Make the container scrollable vertically */
   max-height: 80vh; /* Limit the container height to 80% of the viewport height */
-  padding: 10px; /* Add padding if needed */
 }
 
 .category-item {
   margin-right: 15px;
   padding: 5px 10px;
+
   background-color: #f8f9fa;
   border-radius: 5px;
   cursor: pointer;
@@ -39,7 +39,7 @@
 }
 
 .product-price {
-  font-size: 15px;
+  font-size: 15px !important;
   color: #ca2727;
 }
 
@@ -48,10 +48,10 @@
   flex-direction: column;
   align-items: center;
   border: 1px solid #ddd;
-  padding: 5px;
+
   text-align: center;
   background-color: #fff;
-  width: 20%;
+  width: 15%;
 }
 
 .product-item:hover {
@@ -67,7 +67,7 @@
 }
 .product-name {
   font-size: 16px !important;
-  margin: 10px 0;
+
   color: #333;
   white-space: normal; /* Allow the text to wrap */
   overflow: hidden; /* Hide overflow text */
