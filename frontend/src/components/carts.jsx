@@ -186,8 +186,7 @@ const Navbar = () => {
   };
 
   const decreaseQuantity = async (productId) => {
-    console.log("yuyui");
-    const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
+    const userId = localStorage.getItem("userId");
     if (!userId) {
       console.error("User ID is missing");
       return;
@@ -199,6 +198,7 @@ const Navbar = () => {
     if (!itemToUpdate || itemToUpdate.quantity <= 1) return;
 
     const newQuantity = itemToUpdate.quantity - 1;
+    console.log("New quantity:", newQuantity);
     const success = await updateCartItemQuantity(
       userId,
       productId,
