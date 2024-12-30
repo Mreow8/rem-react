@@ -2,8 +2,7 @@
   width: 100vw;
   margin-left: -10px;
   box-sizing: border-box;
-  position: relative; /* Ensures top positioning applies */
-  top: 0; /* Aligns container at the top of its parent */
+  position: relative;
 }
 .con {
   top: 0;
@@ -11,6 +10,7 @@
   color: yellow !important;
   height: 10vw;
   z-index: 50;
+  position: relative;
 }
 .products-main {
   top: 0;
