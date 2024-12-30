@@ -94,8 +94,6 @@ body {
   flex-direction: column;
   align-items: center;
   background-color: white;
-  padding: 15px;
-  margin: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -111,16 +109,4 @@ body {
   height: 150px;
   object-fit: cover;
   border-radius: 5px;
-}
-
-.product-name {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin: 10px 0 5px;
-  color: #333;
-}
-
-.product-price {
-  font-size: 1rem;
-  color: #555;
 }
