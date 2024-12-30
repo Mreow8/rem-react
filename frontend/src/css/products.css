@@ -6,6 +6,7 @@
   top: 0; /* Aligns container at the top of its parent */
 }
 .con {
+  top: 0;
   width: 100%;
   color: yellow !important;
   height: 10vw;
