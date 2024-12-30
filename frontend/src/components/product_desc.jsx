@@ -88,7 +88,12 @@ const ProductDesc = () => {
       }
 
       const data = await response.json();
-      alert(data.message);
+      setSuccessMessage(data.message); // Show success message
+
+      // Hide the message after 3 seconds
+      setTimeout(() => {
+        setSuccessMessage(null);
+      }, 3000);
     } catch (error) {
       console.error(error);
       alert("Error adding item to cart: " + error.message);
@@ -119,6 +124,9 @@ const ProductDesc = () => {
   return (
     <div className="product-desc-container">
       <Nav username={username} />
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
       <div className="desc-con"></div>
       <div className="product-containers">
         <div id="productss">
