@@ -1,34 +1,15 @@
 .container {
-  width: 100%;
-  margin-left: 0; /* Remove negative margin */
+  width: 100vw;
+  margin-left: -10px;
   box-sizing: border-box;
   position: relative;
 }
-
-.products-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap; /* Allow products to wrap to the next line */
-}
-
-.product-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #ddd;
-  padding: 5px;
-  text-align: center;
-  background-color: #fff;
-  width: 20%;
-}
-
 .con {
   top: 0;
   width: 100%;
   color: yellow !important;
-  height: 100px;
-  z-index: 150;
+  height: 10vw;
+  z-index: 50;
   position: relative;
 }
 .products-main {
@@ -40,6 +21,12 @@
   margin: 0;
   display: flex;
   flex-wrap: wrap;
+}
+
+.products-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .category-item {
@@ -57,6 +44,17 @@
   color: #ca2727;
 }
 
+.product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: center;
+  background-color: #fff;
+  width: 48%;
+}
+
 .product-item:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -72,9 +70,10 @@
   font-size: 16px !important;
   margin: 10px 0;
   color: #333;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal; /* Allow the text to wrap */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis when text overflows */
+  line-height: 1.4; /* Optionally, you can adjust line height for better readability */
 }
 
 .product-list {
