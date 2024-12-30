@@ -4,8 +4,13 @@
   box-sizing: border-box;
   position: relative; /* Ensures top positioning applies */
   top: 0; /* Aligns container at the top of its parent */
+  margin-top: -10px;
 }
-
+.con {
+  width: 100%;
+  color: yellow;
+  height: 100vw;
+}
 .products-main {
   top: 0;
 }
