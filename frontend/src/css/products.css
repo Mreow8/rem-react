@@ -1,9 +1,10 @@
 .container {
-  width: 100vw;
-  margin-left: -10px;
+  width: 100%;
+  margin-left: 0; /* Remove negative margin */
   box-sizing: border-box;
   position: relative;
 }
+
 .con {
   top: 0;
   width: 100%;
@@ -12,9 +13,11 @@
   z-index: 50;
   position: relative;
 }
+
 .products-main {
   top: 0;
 }
+
 .categories-list {
   list-style: none;
   padding: 0;
@@ -27,6 +30,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap; /* Allow products to wrap to the next line */
+  overflow-y: auto; /* Make the container scrollable vertically */
+  max-height: 80vh; /* Limit the container height to 80% of the viewport height */
+  padding: 10px; /* Add padding if needed */
 }
 
 .category-item {
@@ -52,7 +59,7 @@
   padding: 5px;
   text-align: center;
   background-color: #fff;
-  width: 48%;
+  width: 48%; /* Adjust the product width */
 }
 
 .product-item:hover {
@@ -66,6 +73,7 @@
   border-radius: 10px 10px 0 0;
   margin: 0;
 }
+
 .product-name {
   font-size: 16px !important;
   margin: 10px 0;
@@ -116,6 +124,7 @@
   p {
     font-size: 10px;
   }
+
   .products-container {
     display: flex;
     flex-direction: row;
@@ -152,6 +161,7 @@
     max-width: 100%;
     height: auto;
   }
+
   .container {
     position: absolute;
     left: 0;
@@ -160,6 +170,7 @@
     font-size: 10px;
     z-index: 10; /* Ensure it stays on top if needed */
   }
+
   .container p {
     font-size: 12px;
   }
