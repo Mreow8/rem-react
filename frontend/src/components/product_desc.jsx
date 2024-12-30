@@ -1,190 +1,202 @@
-const express = require("express");
-const multer = require("multer");
-const { v2: cloudinary } = require("cloudinary");
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const pool = require("../config/db"); // PostgreSQL connection pool
+import React, { useEffect, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import Nav from "./nav";
+import "../css/product_desc.css";
+import Loading from "./loading";
+const ProductDesc = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
+  const [username, setUsername] = useState(null);
+  const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState(null); // State for success message
 
-// Cloudinary configuration
-cloudinary.config({
-  cloud_name: "dejfzfdk0", // Replace with your Cloudinary Cloud Name
-  api_key: "567128668369977", // Replace with your API Key
-  api_secret: "-5FfUruzAK7jEpBKdZ3Xn1RXVU8", // Replace with your API Secret
-});
-
-// Configure Multer with Cloudinary storage
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: "products", // Cloudinary folder for product images
-    allowedFormats: ["jpg", "jpeg", "png"],
-    public_id: (req, file) => Date.now() + "-" + file.originalname,
-  },
-});
-
-const upload = multer({ storage });
-const router = express.Router();
-
-// POST route to add a product with an image to the cart
-router.post(
-  "/:userId/:productId",
-  upload.single("product_image"),
-  (req, res) => {
-    const { userId, productId } = req.params;
-    const { quantity } = req.body;
-
-    if (!userId || !productId || quantity === undefined) {
-      return res
-        .status(400)
-        .json({ message: "User ID, Product ID, and Quantity are required." });
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
     }
 
-    const productImage = req.file ? req.file.path : null;
-
-    const query = `
-      INSERT INTO cart (user_id, product_id, quantity, product_image)
-      VALUES ($1, $2, $3, $4) RETURNING cart_id;
-    `;
-
-    pool.query(
-      query,
-      [userId, productId, quantity, productImage],
-      (error, results) => {
-        if (error) {
-          console.error("Error adding product to cart:", error);
-          return res
-            .status(500)
-            .json({ message: "Error adding product to cart." });
+    const fetchProductDetails = async () => {
+      try {
+        const response = await fetch(
+          `https://rem-reacts.onrender.com/api/products/${id}`
+        );
+        if (!response.ok) {
+          throw new Error(`Failed to fetch product details for ID: ${id}`);
         }
-
-        res.status(201).json({
-          message: "Product added to cart successfully!",
-          cartId: results.rows[0].cart_id,
-        });
+        const data = await response.json();
+        setProduct(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
-    );
+    };
+
+    fetchProductDetails();
+  }, [id]);
+
+  const increaseQuantity = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  };
+
+  const handleBuyNow = () => {
+    const storedUserId = localStorage.getItem("userId");
+    if (!storedUserId) {
+      navigate("/login");
+      return;
+    }
+    // Handle Buy Now logic here
+  };
+
+  const handleAddToCart = async () => {
+    if (!product) return;
+
+    const storedUserId = localStorage.getItem("userId");
+    console.log("User ID:", storedUserId);
+    if (!storedUserId) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      // Log the data being sent in the POST request
+      const requestData = {
+        user_id: storedUserId,
+        product_id: product.id,
+        quantity: quantity,
+      };
+      console.log("Sending data to API:", requestData); // This will print the data to the console
+
+      const response = await fetch("https://rem-reacts.onrender.com/api/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add item to cart");
+      }
+
+      const data = await response.json();
+      setSuccessMessage(data.message); // Show success message
+
+      // Hide the message after 3 seconds
+      setTimeout(() => {
+        setSuccessMessage(null);
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+      alert("Error adding item to cart: " + error.message);
+    }
+  };
+
+  if (loading) {
+    return <Loading />; // Show the Loading screen while data is being fetched
   }
-);
-
-// Get cart items for a user, including Cloudinary image URLs
-router.get("/:userId", (req, res) => {
-  const userId = req.params.userId;
-  const query = `
-    SELECT 
-      products.product_name,
-      products.product_price,
-      products.product_image,
-      cart.quantity,
-      stores.store_name AS seller_username,
-      cart.product_id
-    FROM 
-      cart
-    JOIN 
-      products ON cart.product_id = products.id
-    JOIN 
-      stores ON products.store_id = stores.store_id
-    WHERE 
-      cart.user_id = $1;
-  `;
-
-  pool.query(query, [userId], (error, results) => {
-    if (error) {
-      console.error("Error retrieving cart items:", error);
-      return res.status(500).json({ message: "Error retrieving cart items" });
-    }
-
-    const productsWithImages = results.rows.map((product) => ({
-      ...product,
-      product_image: product.product_image
-        ? `https://res.cloudinary.com/dejfzfdk0/image/upload/v1/products/${product.product_image}`
-        : "placeholder_image.png", // Provide a default placeholder image
-    }));
-
-    res.status(200).json(productsWithImages);
-  });
-});
-
-// Delete item from cart
-router.delete("/:userId/:productId", (req, res) => {
-  const { userId, productId } = req.params;
-
-  if (!userId || !productId) {
-    return res
-      .status(400)
-      .json({ message: "User ID and Product ID are required" });
-  }
-
-  const query = "DELETE FROM cart WHERE user_id = $1 AND product_id = $2";
-
-  pool.query(query, [userId, productId], (error, results) => {
-    if (error) {
-      console.error("Error deleting cart item:", error);
-      return res.status(500).json({ message: "Error deleting cart item" });
-    }
-
-    if (results.rowCount === 0) {
-      return res.status(404).json({ message: "Cart item not found" });
-    }
-
-    res.json({ message: "Cart item removed successfully" });
-  });
-});
-
-// POST route to add or update a cart item (without image upload)
-router.post("/", (req, res) => {
-  const { user_id, product_id, quantity } = req.body;
-
-  if (!user_id || !product_id || !quantity) {
-    return res
-      .status(400)
-      .json({ message: "User ID, product ID, and quantity are required." });
+  if (error) {
+    return <div className="error-message">Error: {error}</div>;
   }
 
-  // PostgreSQL query to insert or update the cart item
-  const query = `
-    INSERT INTO cart (user_id, product_id, quantity)
-    VALUES ($1, $2, $3)
-    ON CONFLICT (user_id, product_id)
-    DO UPDATE SET quantity = cart.quantity + EXCLUDED.quantity
-    RETURNING cart_id;
-  `;
-
-  pool.query(query, [user_id, product_id, quantity], (error, results) => {
-    if (error) {
-      console.error("Error adding item to cart:", error);
-      return res.status(500).json({ message: "Error adding item to cart" });
-    }
-
-    res.status(200).json({
-      message: "Item added to cart successfully!",
-      cartId: results.rows[0].cart_id,
-    });
-  });
-});
-
-// Update item quantity in cart
-router.put("/update", (req, res) => {
-  const { user_id, product_id, quantity } = req.body;
-
-  if (!user_id || !product_id || quantity === undefined) {
-    return res
-      .status(400)
-      .json({ message: "User ID, product ID, and quantity are required." });
+  if (!product) {
+    return <div className="no-product-message">No product found.</div>;
   }
-
-  const query = `
-    UPDATE cart 
-    SET quantity = $1 
-    WHERE user_id = $2 AND product_id = $3;
-  `;
-
-  pool.query(query, [quantity, user_id, product_id], (error, results) => {
-    if (error) {
-      console.error("Error updating item quantity:", error);
-      return res.status(500).json({ message: "Error updating item quantity" });
+  const handleBackToProducts = () => {
+    navigate("/products"); // Navigate to the products page
+  };
+  const openShop = () => {
+    if (product && product.store_id) {
+      navigate(`/sellerprofile/${product.store_id}`); // Navigate to the seller's shop page
+    } else {
+      alert("Seller ID is missing!");
     }
+  };
 
-    res.status(200).json({ message: "Item quantity updated successfully" });
-  });
-});
+  return (
+    <div className="product-desc-container">
+      <Nav username={username} />
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
+      <div className="desc-con"></div>
+      <div className="product-containers">
+        <div id="productss">
+          {/* Product Details Section */}
+          <div className="product-details">
+            <div className="card product-card">
+              <img
+                src={product.product_image || "placeholder_image.png"}
+                alt={product.product_name}
+                className="img-fluid"
+              />
+              <div className="product-card-content">
+                <p className="font-size">{product.product_name}</p>
+                <p className="text-danger">Php {product.product_price}</p>
 
-module.exports = router;
+                <div className="input-group">
+                  <p>Quantity</p>
+                  <button onClick={decreaseQuantity}>-</button>
+                  <input type="text" value={quantity} readOnly />
+                  <button onClick={increaseQuantity}>+</button>
+                </div>
+                <div className="button-group">
+                  <button onClick={handleBuyNow}>Buy Now</button>
+                  <button onClick={handleAddToCart}>Add to Cart</button>
+                </div>
+                <Link to="/products" className="back-to-products">
+                  Back to Products
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="seller-info">
+            <div className="cards">
+              <img
+                src={product.seller_image || "placeholder_image.png"}
+                className="seller-image"
+                alt="Seller"
+              />
+              <div className="seller-info-content">
+                <div className="seller-name-location">
+                  <p className="store-name">{product.store_name}</p>
+                  <p className="location">{product.province}</p>
+                </div>
+                <div className="button-group">
+                  <button>Message</button>
+                  <button onClick={openShop} className="open-shop">
+                    Shop
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Product Description and Synopsis Section */}
+        <div className="product-description">
+          <div className="card">
+            <p>Product Description</p>
+            <p>{product.product_description}</p>
+          </div>
+          <div className="card">
+            <p>Product Synopsis</p>
+            <p>{product.product_synopsis || "No synopsis available."}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Seller Information Section */}
+    </div>
+  );
+};
+
+export default ProductDesc;
