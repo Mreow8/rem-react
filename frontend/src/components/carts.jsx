@@ -216,7 +216,7 @@ const Navbar = () => {
   const updateCartItemQuantity = async (userId, productId, quantity) => {
     try {
       const response = await fetch("https://rem-reacts.onrender.com/api/cart", {
-        method: "PUT",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
