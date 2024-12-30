@@ -92,13 +92,6 @@ router.get("/:userId", (req, res) => {
       return res.status(500).json({ message: "Error retrieving cart items" });
     }
 
-    const productsWithImages = results.rows.map((product) => ({
-      ...product,
-      product_image: product.product_image
-        ? `https://res.cloudinary.com/dejfzfdk0/image/upload/v1/products/${product.product_image}`
-        : "https://via.placeholder.com/150", // Provide a default placeholder image
-    }));
-
     res.status(200).json(productsWithImages);
   });
 });
