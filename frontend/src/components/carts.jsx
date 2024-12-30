@@ -215,20 +215,17 @@ const Navbar = () => {
   };
   const updateCartItemQuantity = async (userId, productId, quantity) => {
     try {
-      const response = await fetch(
-        "https://rem-reacts.onrender.com/api/cart/update",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: userId,
-            product_id: productId,
-            quantity,
-          }),
-        }
-      );
+      const response = await fetch("https://rem-reacts.onrender.com/api/cart", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          product_id: productId,
+          quantity,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to update quantity");

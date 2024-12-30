@@ -161,7 +161,7 @@ router.post("/", (req, res) => {
   });
 });
 // Update item quantity in cart
-router.put("/update", (req, res) => {
+router.put("/", (req, res) => {
   const { user_id, product_id, quantity } = req.body;
 
   if (!user_id || !product_id || quantity === undefined) {
