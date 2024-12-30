@@ -67,16 +67,20 @@ const ProductDesc = () => {
     }
 
     try {
+      // Log the data being sent in the POST request
+      const requestData = {
+        user_id: storedUserId,
+        product_id: product.id,
+        quantity: quantity,
+      };
+      console.log("Sending data to API:", requestData); // This will print the data to the console
+
       const response = await fetch("https://rem-reacts.onrender.com/api/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          user_id: storedUserId,
-          product_id: product.id,
-          quantity: quantity,
-        }),
+        body: JSON.stringify(requestData),
       });
 
       if (!response.ok) {
