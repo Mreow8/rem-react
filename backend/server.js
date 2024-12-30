@@ -5,6 +5,7 @@ const pool = require("./config/db");
 const authRoutes = require("./routes/profile");
 const productsRoutes = require("./routes/products");
 const sellersRoutes = require("./routes/sellers");
+const cartsRoutes = require("./routes/carts");
 
 const app = express();
 const PORT = 3001; // Use environment port or 3001
@@ -37,6 +38,7 @@ pool.query("SELECT NOW()", (err, res) => {
 app.use("/api/profile", authRoutes);
 app.use("/api/products", productsRoutes);
 app.use("/api/sellers", sellersRoutes);
+app.use("/api/cart", cartsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
