@@ -157,7 +157,7 @@ const Navbar = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   };
   const increaseQuantity = async (productId) => {
-    const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
+    const userId = localStorage.getItem("userId");
     if (!userId) {
       console.error("User ID is missing");
       return;
@@ -169,12 +169,14 @@ const Navbar = () => {
     if (!itemToUpdate) return;
 
     const newQuantity = itemToUpdate.quantity + 1;
+
     const success = await updateCartItemQuantity(
       userId,
       productId,
       newQuantity
     );
     if (success) {
+      // Update the local state with the new quantity
       setCartItems((prevItems) =>
         prevItems.map((item) =>
           item.product_id === productId
@@ -198,13 +200,14 @@ const Navbar = () => {
     if (!itemToUpdate || itemToUpdate.quantity <= 1) return;
 
     const newQuantity = itemToUpdate.quantity - 1;
-    console.log("New quantity:", newQuantity);
+
     const success = await updateCartItemQuantity(
       userId,
       productId,
       newQuantity
     );
     if (success) {
+      // Update the local state with the new quantity
       setCartItems((prevItems) =>
         prevItems.map((item) =>
           item.product_id === productId
@@ -214,6 +217,7 @@ const Navbar = () => {
       );
     }
   };
+
   const updateCartItemQuantity = async (userId, productId, quantity) => {
     try {
       const response = await fetch("https://rem-reacts.onrender.com/api/cart", {
@@ -224,7 +228,7 @@ const Navbar = () => {
         body: JSON.stringify({
           user_id: userId,
           product_id: productId,
-          quantity: quantity,
+          quantity,
         }),
       });
 
