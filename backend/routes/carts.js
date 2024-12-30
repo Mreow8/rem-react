@@ -129,8 +129,39 @@ router.delete("/:userId/:productId", (req, res) => {
   });
 });
 
-// Update item quantity in cart
 router.post("/", (req, res) => {
+  const { user_id, product_id, quantity } = req.body;
+
+  if (!user_id || !product_id || !quantity) {
+    return res
+      .status(400)
+      .json({ message: "User ID, product ID, and quantity are required." });
+  }
+
+  // PostgreSQL query to insert or update the cart item
+  const query = `
+    INSERT INTO cart (user_id, product_id, quantity)
+    VALUES ($1, $2, $3)
+    ON CONFLICT (user_id, product_id)
+    DO UPDATE SET quantity = cart.quantity + EXCLUDED.quantity
+    RETURNING cart_id;
+  `;
+
+  pool.query(query, [user_id, product_id, quantity], (error, results) => {
+    if (error) {
+      console.error("Error adding item to cart:", error);
+      return res.status(500).json({ message: "Error adding item to cart" });
+    }
+
+    // Respond with success message and the cart ID
+    res.status(200).json({
+      message: "Item added to cart successfully!",
+      cartId: results.rows[0].cart_id,
+    });
+  });
+});
+// Update item quantity in cart
+router.put("/", (req, res) => {
   const { user_id, product_id, quantity } = req.body;
 
   if (!user_id || !product_id || quantity === undefined) {
@@ -150,8 +181,6 @@ router.post("/", (req, res) => {
       console.error("Error updating item quantity:", error);
       return res.status(500).json({ message: "Error updating item quantity" });
     }
-
-    res.status(200).json({ message: "Item quantity updated successfully!" });
   });
 });
 
