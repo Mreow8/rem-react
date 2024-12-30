@@ -92,6 +92,13 @@ router.get("/:userId", (req, res) => {
       return res.status(500).json({ message: "Error retrieving cart items" });
     }
 
+    const productsWithImages = results.rows.map((product) => ({
+      ...product,
+      product_image: product.product_image
+        ? `https://res.cloudinary.com/dejfzfdk0/image/upload/products/${product.product_image}`
+        : "placeholder_image.png", // Provide a default placeholder image
+    }));
+
     res.status(200).json(productsWithImages);
   });
 });
@@ -122,7 +129,6 @@ router.delete("/:userId/:productId", (req, res) => {
   });
 });
 
-// Add or Update Item Quantity in Cart
 router.post("/", (req, res) => {
   const { user_id, product_id, quantity } = req.body;
 
@@ -154,8 +160,8 @@ router.post("/", (req, res) => {
     });
   });
 });
-
 // Update item quantity in cart
+
 router.put("/", (req, res) => {
   const { user_id, product_id, quantity } = req.body;
 
