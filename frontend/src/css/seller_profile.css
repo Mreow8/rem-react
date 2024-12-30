@@ -90,6 +90,7 @@ body {
 
 /* Product Card Styles */
 .product-item {
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -105,8 +106,6 @@ body {
 }
 
 .product-image {
-  width: 150px;
-  height: 150px;
   object-fit: cover;
   border-radius: 5px;
 }
