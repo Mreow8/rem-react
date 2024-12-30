@@ -1,7 +1,9 @@
 .product-desc-container {
-  margin-top: 0; /* Ensures it starts at the top */
+  margin-top: 0;
+  position: fixed;
   padding-top: 0; /* Adjust padding as needed */
   display: flex;
+  position: relative;
   flex-direction: column;
 }
 
