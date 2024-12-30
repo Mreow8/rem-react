@@ -7,7 +7,7 @@
 
 .products-main {
   top: 0;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .categories-list {
@@ -25,7 +25,7 @@
 .products-container {
   -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer 10+ */
   scrollbar-width: none;
-  margin-left: -10px;
+  margin-left: -100px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
