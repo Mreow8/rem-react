@@ -69,7 +69,7 @@
   width: 100%;
   padding: 5px;
   height: 25vh;
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px;
   margin: 0;
 }
 .product-name {
@@ -132,8 +132,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-left: -10px;
+    gap: 40px;
   }
 
   .product-item {
