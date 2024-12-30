@@ -1,9 +1,12 @@
 .container {
   width: 100vw;
   margin-left: -10px;
-  top: 0 !important;
   box-sizing: border-box;
+  position: relative; /* Ensures top positioning applies */
+  top: 0; /* Aligns container at the top of its parent */
+  margin-top: 50px; /* Adjust spacing below the Nav */
 }
+
 .products-main {
   top: 0;
 }
