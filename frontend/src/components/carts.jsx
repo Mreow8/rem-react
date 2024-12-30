@@ -223,7 +223,7 @@ const Navbar = () => {
         body: JSON.stringify({
           user_id: userId,
           product_id: productId,
-          quantity,
+          quantity: quantity,
         }),
       });
 
@@ -248,17 +248,7 @@ const Navbar = () => {
       console.error("User ID is missing");
       return;
     }
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "Do you want to remove this item from your cart?",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#d33",
-    //   cancelButtonColor: "#3085d6",
-    //   confirmButtonText: "Yes, remove it!",
-    //   cancelButtonText: "No, cancel!",
-    // }).then(async (result) => {
-    //   if (result.isConfirmed) {
+
     try {
       const response = await fetch(
         `https://rem-reacts.onrender.com/api/cart/${userId}/${productId}`,
