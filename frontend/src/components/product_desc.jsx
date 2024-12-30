@@ -60,6 +60,7 @@ const ProductDesc = () => {
     if (!product) return;
 
     const storedUserId = localStorage.getItem("userId");
+    console.log("User ID:", storedUserId);
     if (!storedUserId) {
       navigate("/login");
       return;
