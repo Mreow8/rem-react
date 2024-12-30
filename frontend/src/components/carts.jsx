@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import "../css/carts.css";
+import "../css/addtocart.css";
 import Nav from "./nav";
 //import Swal from "sweetalert2";
 
@@ -157,7 +157,7 @@ const Navbar = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   };
   const increaseQuantity = async (productId) => {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
     if (!userId) {
       console.error("User ID is missing");
       return;
@@ -169,14 +169,12 @@ const Navbar = () => {
     if (!itemToUpdate) return;
 
     const newQuantity = itemToUpdate.quantity + 1;
-
     const success = await updateCartItemQuantity(
       userId,
       productId,
       newQuantity
     );
     if (success) {
-      // Update the local state with the new quantity
       setCartItems((prevItems) =>
         prevItems.map((item) =>
           item.product_id === productId
@@ -188,7 +186,7 @@ const Navbar = () => {
   };
 
   const decreaseQuantity = async (productId) => {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
     if (!userId) {
       console.error("User ID is missing");
       return;
@@ -200,14 +198,12 @@ const Navbar = () => {
     if (!itemToUpdate || itemToUpdate.quantity <= 1) return;
 
     const newQuantity = itemToUpdate.quantity - 1;
-
     const success = await updateCartItemQuantity(
       userId,
       productId,
       newQuantity
     );
     if (success) {
-      // Update the local state with the new quantity
       setCartItems((prevItems) =>
         prevItems.map((item) =>
           item.product_id === productId
@@ -217,26 +213,29 @@ const Navbar = () => {
       );
     }
   };
-
   const updateCartItemQuantity = async (userId, productId, quantity) => {
     try {
-      const response = await fetch("https://rem-reacts.onrender.com/api/cart", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          product_id: productId,
-          quantity: quantity,
-        }),
-      });
+      const response = await fetch(
+        "https://rem-reacts.onrender.com/api/carts",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            product_id: productId,
+            quantity,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to update quantity");
       }
+
       const data = await response.json();
-      console.log("Update Response:", data); // Log the response data
+      console.log(data.message);
       return true;
     } catch (error) {
       console.error("Error updating cart item quantity:", error);
@@ -252,7 +251,17 @@ const Navbar = () => {
       console.error("User ID is missing");
       return;
     }
-
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text: "Do you want to remove this item from your cart?",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#d33",
+    //   cancelButtonColor: "#3085d6",
+    //   confirmButtonText: "Yes, remove it!",
+    //   cancelButtonText: "No, cancel!",
+    // }).then(async (result) => {
+    //   if (result.isConfirmed) {
     try {
       const response = await fetch(
         `https://rem-reacts.onrender.com/api/cart/${userId}/${productId}`,

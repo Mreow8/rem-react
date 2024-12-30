@@ -96,7 +96,7 @@ router.get("/:userId", (req, res) => {
       ...product,
       product_image: product.product_image
         ? `https://res.cloudinary.com/dejfzfdk0/image/upload/v1/products/${product.product_image}`
-        : "placeholder_image.png", // Provide a default placeholder image
+        : "https://via.placeholder.com/150", // Provide a default placeholder image
     }));
 
     res.status(200).json(productsWithImages);
@@ -129,6 +129,7 @@ router.delete("/:userId/:productId", (req, res) => {
   });
 });
 
+// Add or Update Item Quantity in Cart
 router.post("/", (req, res) => {
   const { user_id, product_id, quantity } = req.body;
 
@@ -160,6 +161,7 @@ router.post("/", (req, res) => {
     });
   });
 });
+
 // Update item quantity in cart
 router.put("/", (req, res) => {
   const { user_id, product_id, quantity } = req.body;
@@ -170,17 +172,28 @@ router.put("/", (req, res) => {
       .json({ message: "User ID, product ID, and quantity are required." });
   }
 
+  // PostgreSQL query to update the cart item quantity
   const query = `
-      UPDATE cart 
-      SET quantity = $1 
-      WHERE user_id = $2 AND product_id = $3
-    `;
+    UPDATE cart
+    SET quantity = $1
+    WHERE user_id = $2 AND product_id = $3
+    RETURNING *;
+  `;
 
+  // Execute the query
   pool.query(query, [quantity, user_id, product_id], (error, results) => {
     if (error) {
       console.error("Error updating item quantity:", error);
       return res.status(500).json({ message: "Error updating item quantity" });
     }
+
+    // Check if any rows were updated
+    if (results.rowCount === 0) {
+      return res.status(404).json({ message: "Item not found in the cart" });
+    }
+
+    // Respond with success message
+    res.status(200).json({ message: "Item quantity updated successfully!" });
   });
 });
 
