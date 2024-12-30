@@ -4,7 +4,6 @@
   box-sizing: border-box;
   position: relative; /* Ensures top positioning applies */
   top: 0; /* Aligns container at the top of its parent */
-  margin-top: -10px;
 }
 .con {
   width: 100%;
@@ -80,10 +79,6 @@
 }
 
 @media (max-width: 768px) {
-  .container {
-    top: 50px;
-  }
-
   .search-input {
     display: none;
   }
@@ -159,7 +154,7 @@
     position: absolute;
     left: 0;
     margin-left: -130px;
-    top: 130px;
+
     font-size: 10px;
     z-index: 10; /* Ensure it stays on top if needed */
   }
