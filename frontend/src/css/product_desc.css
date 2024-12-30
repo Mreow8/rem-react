@@ -1,222 +1,225 @@
-/* Reset margins and paddings */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-}
-
-/* Main Container */
 .product-desc-container {
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
+  max-width: 1200px;
+  width: 100%;
+  color: white;
 }
-
+#productss {
+  margin-left: 50px;
+  margin-top: 20px;
+}
 .desc-con {
-  margin-bottom: 20px;
-  text-align: center;
-  padding: 10px 0;
-  background-color: #ffc107;
+  position: relative;
+  width: 100%;
+  top: 0;
+  height: 60px;
+  background-color: yellow;
 }
-
 .product-containers {
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
+  gap: 20px; /* Add gap between sections */
 }
 
-/* Product Details Section */
 .product-details {
-  flex: 1;
-  min-width: 300px;
+  flex: 0 0 60%; /* Adjust width for better alignment */
+}
+
+.product-description {
+  flex: 0 0 40%;
+  margin-top: 10px;
 }
 
 .card {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  min-height: 30vh;
+
+  margin-bottom: 10px; /* Fix margin for consistent spacing */
 }
 
 .product-card {
   display: flex;
-  gap: 20px;
+  flex-direction: row;
   align-items: flex-start;
+  right: 25px;
+  width: 100%;
 }
 
 .product-card img {
-  width: 150px;
-  height: 150px;
+  width: 30%;
+  height: 40vh;
   border-radius: 8px;
   object-fit: cover;
 }
 
 .product-card-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 50px;
+
+  gap: 15px; /* Space between stacked items */
 }
 
 .font-size {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
-.text-danger {
-  color: #d9534f;
-  font-size: 1.2rem;
-  margin-bottom: 15px;
-}
-
-/* Quantity Input */
 .input-group {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
 .input-group button {
   padding: 5px 10px;
   font-size: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.input-group button:hover {
-  background-color: #0056b3;
 }
 
 .input-group input {
-  width: 50px;
   text-align: center;
+  width: 50px;
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-/* Buttons */
 .button-group {
   display: flex;
-  gap: 10px;
+
+  gap: 10px; /* Space between buttons */
 }
 
-.button-group button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.seller-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
-.button-group button:hover {
-  background-color: #0056b3;
+.store-name {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .back-to-products {
-  display: inline-block;
-  margin-top: 15px;
-  color: #007bff;
+  margin-top: 10px;
   text-decoration: none;
+  color: #007bff;
+  text-align: center; /* Center align the link */
 }
 
 .back-to-products:hover {
   text-decoration: underline;
 }
 
-/* Seller Information Section */
-.seller-info {
-  flex: 1;
-  min-width: 300px;
+.loading-message,
+.error-message,
+.no-product-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
 }
 
-.cards {
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+  .product-desc-container {
+    margin-top: 10%; /* Adjust vertical margin for smaller screens */
+  }
+  .product-containers {
+    flex-direction: column; /* Stack sections vertically */
+    margin-top: 200px;
+  }
+  #productss {
+    margin-left: 30px;
+  }
+  .product-details,
+  .product-description {
+    flex: 0 0 100%;
+  }
+  .product-description {
+    margin-top: 20px;
+  }
+  .product-card {
+    flex-direction: column; /* Stack image and content vertically */
+    align-items: center;
+    gap: 15px;
+  }
+
+  .product-card img {
+    width: 50%; /* Adjust image width */
+    object-fit: cover;
+    height: auto;
+  }
+
+  .button-group {
+    align-items: stretch; /* Stretch buttons to full width */
+  }
+
+  .back-to-products {
+    text-align: center; /* Center align the link */
+  }
+  .input-group {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .input-group input[type="text"] {
+    /* Your styles here */
+    width: 30px;
+  }
+  .seller-info .cards {
+    width: 100%;
+  }
+  .cards {
+    margin-left: -50px;
+  }
+}
+.seller-info {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: -20px;
+}
+
+.seller-info .cards {
   display: flex;
+  flex-direction: row; /* Align items horizontally */
   align-items: center;
-  gap: 20px;
+  justify-content: space-between; /* Add spacing between content */
+  padding: 20px;
+  width: 100%; /* Match product details width */
 }
 
 .seller-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 120px; /* Larger image */
+  height: 120px;
   object-fit: cover;
-  border: 2px solid #ddd;
-}
-
-.seller-info-content {
-  display: flex;
-  flex-direction: column;
+  border-radius: 50%;
 }
 
 .store-name {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.location {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.open-shop {
-  background-color: #28a745;
-}
-
-.open-shop:hover {
-  background-color: #218838;
-}
-
-/* Product Description Section */
-.product-description {
-  flex: 1;
-  min-width: 300px;
-}
-
-.product-description .card p:first-child {
+  font-size: 1.5rem; /* Increase font size */
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.product-description .card p:last-child {
-  color: #555;
+/* Center seller info card text content */
+.seller-info-content {
+  flex: 1;
+  margin-left: 20px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .product-containers {
-    flex-direction: column;
-  }
-
-  .product-card {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .product-card img {
-    margin-bottom: 10px;
-  }
-
-  .seller-info .cards {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .seller-image {
-    margin-bottom: 10px;
-  }
+.seller-info-content p {
+  margin: 5px 0;
 }
