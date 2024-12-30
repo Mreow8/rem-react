@@ -186,6 +186,7 @@ const Navbar = () => {
   };
 
   const decreaseQuantity = async (productId) => {
+    console.log("yuyui");
     const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
     if (!userId) {
       console.error("User ID is missing");
