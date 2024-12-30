@@ -107,5 +107,7 @@ body {
 
 .product-image {
   object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 10px;
   border-radius: 5px;
 }
