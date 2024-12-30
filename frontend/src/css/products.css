@@ -68,7 +68,7 @@
 
 .product-image {
   width: 100%;
-  padding: 20px;
+
   height: 25vh;
 
   margin: 0;
@@ -127,6 +127,9 @@
   p {
     font-size: 10px;
   }
+  .con {
+    height: 40px;
+  }
 
   .products-container {
     margin-top: -120px;
@@ -154,7 +157,9 @@
   .categories-list {
     font-size: 10px;
   }
-
+  .categories-container {
+    z-index: 1000;
+  }
   .loading-message,
   .error-message {
     font-size: 10px;

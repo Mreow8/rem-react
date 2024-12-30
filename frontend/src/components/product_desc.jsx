@@ -114,6 +114,7 @@ const ProductDesc = () => {
   return (
     <div className="product-desc-container">
       <Nav username={username} />
+      <div className="desc-con"></div>
       <div className="product-containers">
         <div id="productss">
           {/* Product Details Section */}

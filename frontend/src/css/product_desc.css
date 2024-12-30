@@ -11,8 +11,15 @@
   margin-left: 50px;
   margin-top: 20px;
 }
-
+.desc-con {
+  position: relative;
+  width: 100%;
+  top: 0;
+  height: 60px;
+  background-color: yellow;
+}
 .product-containers {
+  position: relative;
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -174,7 +181,6 @@
   }
   .seller-info .cards {
     width: 100%;
-    margin-left: -20px;
   }
   .cards {
     margin-left: -50px;
