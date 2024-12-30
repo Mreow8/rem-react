@@ -105,7 +105,7 @@ const ProductDesc = () => {
   };
   const openShop = () => {
     if (product && product.store_id) {
-      navigate(`/shop/${product.store_id}`); // Navigate to the seller's shop page
+      navigate(`/sellerprofile/${product.store_id}`); // Navigate to the seller's shop page
     } else {
       alert("Seller ID is missing!");
     }
