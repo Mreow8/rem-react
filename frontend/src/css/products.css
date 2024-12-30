@@ -8,8 +8,8 @@
 }
 .con {
   width: 100%;
-  color: yellow;
-  height: 100vw;
+  color: yellow !important;
+  height: 10vw;
   z-index: 50;
 }
 .products-main {
