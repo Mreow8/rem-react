@@ -228,16 +228,15 @@ const Navbar = () => {
         body: JSON.stringify({
           user_id: userId,
           product_id: productId,
-          quantity,
+          quantity: quantity,
         }),
       });
 
       if (!response.ok) {
         throw new Error("Failed to update quantity");
       }
-
       const data = await response.json();
-      console.log(data.message);
+      console.log("Update Response:", data); // Log the response data
       return true;
     } catch (error) {
       console.error("Error updating cart item quantity:", error);
