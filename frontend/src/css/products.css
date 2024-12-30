@@ -5,15 +5,6 @@
   position: relative;
 }
 
-.con {
-  top: 0;
-  width: 100%;
-  color: yellow !important;
-  height: 10vw;
-  z-index: 50;
-  position: relative;
-}
-
 .products-main {
   top: 0;
 }
