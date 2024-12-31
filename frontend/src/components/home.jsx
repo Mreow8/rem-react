@@ -26,15 +26,7 @@ const Home = () => {
       </nav>
 
       {/* Background Section */}
-      <div
-        className="background-image-containers"
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center center",
-          height: "100vh",
-        }}
-      >
+      <div className="background-image-containers">
         <div className="background-text">
           <h1>Welcome to Resource Exchange Marketplace</h1>
           <p>Find and share secondhand books</p>
@@ -53,10 +45,10 @@ const Home = () => {
           left: 0;
           right: 0;
           bottom: 0;
+          background-image: url(${backgroundImage});
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center;
-            filter: grayscale(0.4) brightness(0.6);
         }
 
         .background-image-containers::before {
@@ -66,15 +58,14 @@ const Home = () => {
           left: 0;
           right: 0;
           bottom: 0;
-          background-color: rgba(17, 16, 16, 0.664);
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-position: center;
+          background-color: rgba(17, 16, 16, 0.664); /* Semi-transparent overlay */
+          filter: grayscale(0.4) brightness(0.6); /* Apply filter here */
+          z-index: 1; /* Ensure filter is below text */
         }
 
         .background-text {
           color: white;
-          z-index: 1000;
+          z-index: 2; /* Place above the filter */
           padding: 20px;
           position: absolute;
           top: 50%;
@@ -84,7 +75,7 @@ const Home = () => {
         }
 
         .navbar {
-          z-index: 3; 
+          z-index: 3; /* Ensure navbar is above everything else */
         }
 
         /* Responsive styles for smaller screens */
