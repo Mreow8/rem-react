@@ -138,7 +138,9 @@
     padding: 20px;
     gap: 10px;
   }
-
+  .con {
+    z-index: 10;
+  }
   .product-item {
     width: 140px;
 
