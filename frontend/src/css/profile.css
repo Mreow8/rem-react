@@ -347,7 +347,7 @@ body {
   }
   .content label {
     font-weight: bold;
-    font-size: 17px;
+    font-size: 17px !important;
   }
 }
 
@@ -357,6 +357,6 @@ body {
   }
   .content label {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 15px !important;
   }
 }
