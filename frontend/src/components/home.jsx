@@ -72,7 +72,7 @@ const Home = () => {
 
         .background-text {
           color: white;
-          z-index: 5;
+          z-index: 1000;
           padding: 20px;
           position: absolute;
           top: 50%;
@@ -82,7 +82,7 @@ const Home = () => {
         }
 
         .navbar {
-          z-index: 3; /* Ensures the navbar stays above the background */
+          z-index: 3; 
         }
 
         /* Responsive styles for smaller screens */
