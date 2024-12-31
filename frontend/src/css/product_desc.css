@@ -7,7 +7,7 @@
   flex-direction: column;
   font-size: 15px;
 }
-.product-description .card:nth-child(2) p:last-child {
+.product-description .card > :nth-child(2) {
   font-size: 14px !important;
 }
 #butt {
