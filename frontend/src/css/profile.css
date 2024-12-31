@@ -114,34 +114,24 @@ body {
   font-weight: bold;
 }
 
-.content input {
+.address-form input,
+.content input,
+.img-con input {
   width: 100%;
-  padding: 8px 15px; /* Increased padding for better aesthetics */
-  font-size: 16px;
-  border: 2px solid #ccc; /* Slightly thicker border */
-  border-radius: 8px; /* Rounded corners */
-  background-color: #f9f9f9; /* Light background color */
-  transition: all 0.3s ease-in-out; /* Smooth transition for focus and hover */
+  padding: 6px 12px; /* Reduced padding for smaller height */
+  font-size: 14px; /* Optional: you can adjust the font size for smaller text */
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease-in-out;
   box-sizing: border-box;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow inside the input */
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
-.content input:focus {
-  outline: none;
-  border-color: #6c5ce7; /* Focus border color */
-  background-color: #fff; /* Lighter background on focus */
-  box-shadow: 0 0 8px rgba(108, 92, 231, 0.3); /* Glow effect on focus */
-}
-
+.address-form input::placeholder,
 .content input::placeholder {
   color: #aaa;
   font-style: italic;
   opacity: 0.8; /* Subtle placeholder style */
-}
-
-.content input:hover {
-  border-color: #4e44b0; /* Darker border on hover */
-  background-color: #fff; /* Light background on hover */
 }
 
 .img-con {
@@ -169,24 +159,8 @@ body {
   height: 100%;
   object-fit: cover;
 }
-
-.img-con input {
-  margin-top: 10px;
-  padding: 12px 15px;
-  font-size: 16px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  transition: all 0.3s ease-in-out;
-}
-
-.img-con input:focus {
-  outline: none;
-  border-color: #6c5ce7;
-  background-color: #fff;
-  box-shadow: 0 0 8px rgba(108, 92, 231, 0.3);
-}
-
+.address-form input:hover,
+.content input:hover,
 .img-con input:hover {
   border-color: #4e44b0;
   background-color: #fff;
@@ -252,35 +226,13 @@ body {
   margin-bottom: 5px;
   font-weight: bold;
 }
-
-.address-form input {
-  width: 100%;
-  padding: 12px 15px; /* Increased padding for better aesthetics */
-  font-size: 16px;
-  border: 2px solid #ccc; /* Slightly thicker border */
-  border-radius: 8px; /* Rounded corners */
-  background-color: #f9f9f9; /* Light background color */
-  transition: all 0.3s ease-in-out; /* Smooth transition for focus and hover */
-  box-sizing: border-box;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow inside the input */
-}
-
+.content input:focus,
+.img-con input:focus,
 .address-form input:focus {
   outline: none;
   border-color: #6c5ce7; /* Focus border color */
   background-color: #fff; /* Lighter background on focus */
   box-shadow: 0 0 8px rgba(108, 92, 231, 0.3); /* Glow effect on focus */
-}
-
-.address-form input::placeholder {
-  color: #aaa;
-  font-style: italic;
-  opacity: 0.8; /* Subtle placeholder style */
-}
-
-.address-form input:hover {
-  border-color: #4e44b0; /* Darker border on hover */
-  background-color: #fff; /* Light background on hover */
 }
 
 /* Styling for buttons in address form */
