@@ -27,7 +27,7 @@ const Home = () => {
 
       {/* Background Section */}
       <div
-        className="background-image-container"
+        className="background-image-containers"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
@@ -46,7 +46,7 @@ const Home = () => {
 
       {/* Inline styles */}
       <style>{`
-        .background-image-container {
+        .background-image-containers {
           position: fixed;
           z-index: 1;
           top: 0;
@@ -56,9 +56,10 @@ const Home = () => {
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center;
+            filter: grayscale(0.4) brightness(0.6);
         }
 
-        .background-image-container::before {
+        .background-image-containers::before {
           content: "";
           position: absolute;
           top: 0;
