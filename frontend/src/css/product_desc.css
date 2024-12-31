@@ -6,6 +6,64 @@
   position: relative;
   flex-direction: column;
 }
+/* product_desc.css */
+
+.button-group button {
+  background-color: #4caf50; /* Modern green color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 16px; /* Readable font size */
+  transition: all 0.3s ease; /* Smooth hover effects */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.button-group button:hover {
+  background-color: #45a049; /* Slightly darker green on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.button-group button:active {
+  background-color: #3e8e41; /* Even darker green on click */
+  transform: translateY(1px); /* Press effect on click */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow on click */
+}
+
+.open-shop {
+  background-color: #e73ea6; /* Blue for "Shop" button */
+}
+
+.open-shop:hover {
+  background-color: #2fee7f; /* Slightly darker blue on hover */
+}
+
+.open-shop:active {
+  background-color: #1976d2; /* Even darker blue on click */
+}
+
+.seller-info .button-group button {
+  margin: 0 5px;
+  font-size: 14px;
+  padding: 8px 15px;
+}
+
+/* General Button Styling */
+button {
+  font-family: "Roboto", sans-serif;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .button-group button,
+  .back-to-products {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+}
 
 /* .product-desc-container {
   display: flex;
@@ -117,17 +175,6 @@
 .store-name {
   font-size: 1.2rem;
   font-weight: bold;
-}
-
-.back-to-products {
-  margin-top: 10px;
-  text-decoration: none;
-  color: #007bff;
-  text-align: center; /* Center align the link */
-}
-
-.back-to-products:hover {
-  text-decoration: underline;
 }
 
 .loading-message,

@@ -51,7 +51,7 @@ const Home = () => {
           background-position: center;
         }
 
-        .background-image-containers::before {
+        .background-image-containers::after {
           content: "";
           position: absolute;
           top: 0;

@@ -153,9 +153,6 @@ const ProductDesc = () => {
                   <button onClick={handleBuyNow}>Buy Now</button>
                   <button onClick={handleAddToCart}>Add to Cart</button>
                 </div>
-                <Link to="/products" className="back-to-products">
-                  Back to Products
-                </Link>
               </div>
             </div>
           </div>
