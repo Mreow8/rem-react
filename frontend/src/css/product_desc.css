@@ -26,7 +26,6 @@
   top: 0;
   margin-top: 0;
   height: 150px;
-  background-color: yellow;
 }
 .product-containers {
   display: flex;
@@ -172,21 +171,19 @@
 /* Media Query for Responsive Design */
 @media (max-width: 768px) {
   .product-desc-container {
-    margin-top: 10%; /* Adjust vertical margin for smaller screens */
+    margin-top: 10%;
   }
   .product-containers {
-    flex-direction: column; /* Stack sections vertically */
-    margin-top: 200px;
+    flex-direction: column;
   }
-  #productss {
-    margin-left: 30px;
-  }
+
   .product-details,
   .product-description {
     flex: 0 0 100%;
   }
   .product-description {
-    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
   .product-card {
     flex-direction: column; /* Stack image and content vertically */
@@ -201,7 +198,7 @@
   }
 
   .button-group {
-    align-items: stretch; /* Stretch buttons to full width */
+    align-items: stretch;
   }
 
   .back-to-products {
@@ -219,9 +216,6 @@
   }
   .seller-info .cards {
     width: 100%;
-  }
-  .cards {
-    margin-left: -50px;
   }
 }
 .seller-info {
