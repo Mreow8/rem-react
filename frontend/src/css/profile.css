@@ -345,9 +345,14 @@ body {
   .saved-address {
     width: 100%; /* Ensure saved addresses take full width in stacked view */
   }
-  .content label {
+  .content label,
+  .address-box label {
     font-weight: bold;
-    font-size: 17px !important;
+    font-size: 14px !important;
+  }
+  .content input,
+  .address-box input {
+    font-size: 14px;
   }
 }
 
@@ -355,8 +360,13 @@ body {
   .saved-address {
     width: 100%; /* Single column on small screens */
   }
-  .content label {
+  .content label,
+  .address-box label {
     font-weight: bold;
-    font-size: 15px !important;
+    font-size: 12px !important;
+  }
+  .content input,
+  .address-box input {
+    font-size: 12px;
   }
 }
