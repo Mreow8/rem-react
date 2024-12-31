@@ -378,7 +378,14 @@ const App = () => {
                   </div>
                 ))
               ) : (
-                <p>No new notifications.</p>
+                <div className="no-notifications">
+                  <img
+                    src="../assets/no-new.png"
+                    alt="No Notifications"
+                    className="no-notifications-image"
+                  />
+                  <p>No new notifications.</p>
+                </div>
               )}
             </div>
           )}
