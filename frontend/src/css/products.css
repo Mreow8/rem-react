@@ -10,6 +10,7 @@
 }
 #categories-container {
   position: fixed;
+  top: 50px;
 }
 .categories-list {
   list-style: none;
