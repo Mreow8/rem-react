@@ -40,7 +40,7 @@ app.use("/api/profile", authRoutes);
 app.use("/api/products", productsRoutes);
 app.use("/api/sellers", sellersRoutes);
 app.use("/api/cart", cartsRoutes);
-app.use("/api/address", addressRoutes);
+app.use("/api/addresses", addressRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

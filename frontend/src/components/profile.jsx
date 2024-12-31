@@ -120,7 +120,7 @@ const App = () => {
 
     try {
       const response = await fetch(
-        "https://rem-reacts.onrender.com/api/address",
+        "https://rem-reacts.onrender.com/api/addresses",
         {
           method: "POST",
           headers: {
