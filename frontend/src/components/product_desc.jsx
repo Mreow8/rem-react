@@ -145,16 +145,20 @@ const ProductDesc = () => {
 
                 <div className="input-group">
                   <p id="quan">Quantity</p>
-                  <button onClick={decreaseQuantity}>-</button>
+                  <button id="butt" onClick={decreaseQuantity}>
+                    -
+                  </button>
                   <input type="text" value={quantity} readOnly />
-                  <button onClick={increaseQuantity}>+</button>
+                  <button id="butt" onClick={increaseQuantity}>
+                    +
+                  </button>
                 </div>
                 <div className="button-group">
-                  <button onClick={handleBuyNow} className="buy-now">
-                    Buy Now
-                  </button>
                   <button onClick={handleAddToCart} className="addto">
                     Add to Cart
+                  </button>
+                  <button onClick={handleBuyNow} className="buy-now">
+                    Buy Now
                   </button>
                 </div>
               </div>
@@ -186,11 +190,13 @@ const ProductDesc = () => {
         <div className="product-description">
           <div className="card">
             <p>Product Description</p>
-            <p>{product.product_description}</p>
+            <p style={{ fontSize: "20px" }}>{product.product_description}</p>
           </div>
           <div className="card">
             <p>Product Synopsis</p>
-            <p>{product.product_synopsis || "No synopsis available."}</p>
+            <p style={{ fontSize: "20px" }}>
+              {product.product_synopsis || "No synopsis available."}
+            </p>
           </div>
         </div>
       </div>

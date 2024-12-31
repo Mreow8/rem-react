@@ -6,6 +6,10 @@
   position: relative;
   flex-direction: column;
 }
+#butt {
+  background: none;
+  border: none;
+}
 .input-group {
   margin-top: 3px;
 }

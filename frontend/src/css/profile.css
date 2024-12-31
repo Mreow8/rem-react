@@ -52,7 +52,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 40px;
   background: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -345,10 +345,18 @@ body {
   .saved-address {
     width: 100%; /* Ensure saved addresses take full width in stacked view */
   }
+  .content label {
+    font-weight: bold;
+    font-size: 17px;
+  }
 }
 
 @media (max-width: 480px) {
   .saved-address {
     width: 100%; /* Single column on small screens */
+  }
+  .content label {
+    font-weight: bold;
+    font-size: 15px;
   }
 }
