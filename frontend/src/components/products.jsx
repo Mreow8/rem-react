@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "../css/products.css";
 import Nav from "./nav";
 import Loading from "./loading"; // Import Loading component
-const [sortOrder, setSortOrder] = useState(""); // "" means no sorting initially
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -46,6 +45,7 @@ const ProductList = () => {
     };
     fetchData();
   }, []);
+  const [sortOrder, setSortOrder] = useState(""); // "" means no sorting initially
 
   const filteredProducts = products
     .filter(
