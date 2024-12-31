@@ -6,6 +6,7 @@
 }
 .products-main {
   margin-top: 150px;
+  height: 100%;
 }
 #categories-container {
   position: fixed;
