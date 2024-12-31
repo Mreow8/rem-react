@@ -335,9 +335,8 @@ const App = () => {
                 <div className="saved-addresses">
                   {addresses.map((address, index) => (
                     <div key={index} className="saved-address">
-                      {address.user_id}, {address.full_name},{" "}
-                      {address.phone_number},{address.region},{" "}
-                      {address.province}, {address.city},{address.barangay},{" "}
+                      {address.user_id}, {address.phone_number},{address.region}
+                      , {address.province}, {address.city},{address.barangay},{" "}
                       {address.postal_code}
                     </div>
                   ))}
