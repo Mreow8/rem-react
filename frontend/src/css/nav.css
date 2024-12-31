@@ -64,10 +64,6 @@
   text-decoration: underline;
 }
 
-.navbar {
-  height: 80px; /* Shortened navbar height */
-}
-
 .auth-cart-container {
   display: flex;
   align-items: center;
