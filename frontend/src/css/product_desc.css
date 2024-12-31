@@ -256,7 +256,6 @@
 /* Center seller info card text content */
 .seller-info-content {
   flex: 1;
-  margin-left: 20px;
 }
 
 .seller-info-content p {

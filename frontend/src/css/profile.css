@@ -1,0 +1,348 @@
+/* General Reset */
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.App-header {
+  background-color: #6c5ce7;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav a {
+  text-decoration: none;
+  color: #6c5ce7;
+  font-weight: bold;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  color: #4e44b0;
+}
+
+/* Container Styles */
+.img-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.other-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.other-container a {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #6c5ce7;
+  border: 1px solid #6c5ce7;
+  transition: all 0.3s;
+}
+
+.other-container a.active {
+  background-color: #6c5ce7;
+  color: white;
+}
+
+.other-container a:hover {
+  background-color: #4e44b0;
+  color: white;
+}
+
+/* Profile Container */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.img-prof-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.content label {
+  font-weight: bold;
+}
+
+.content input {
+  width: 100%;
+  padding: 12px 15px; /* Increased padding for better aesthetics */
+  font-size: 16px;
+  border: 2px solid #ccc; /* Slightly thicker border */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background color */
+  transition: all 0.3s ease-in-out; /* Smooth transition for focus and hover */
+  box-sizing: border-box;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow inside the input */
+}
+
+.content input:focus {
+  outline: none;
+  border-color: #6c5ce7; /* Focus border color */
+  background-color: #fff; /* Lighter background on focus */
+  box-shadow: 0 0 8px rgba(108, 92, 231, 0.3); /* Glow effect on focus */
+}
+
+.content input::placeholder {
+  color: #aaa;
+  font-style: italic;
+  opacity: 0.8; /* Subtle placeholder style */
+}
+
+.content input:hover {
+  border-color: #4e44b0; /* Darker border on hover */
+  background-color: #fff; /* Light background on hover */
+}
+
+.img-con {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-con input {
+  margin-top: 10px;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease-in-out;
+}
+
+.img-con input:focus {
+  outline: none;
+  border-color: #6c5ce7;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(108, 92, 231, 0.3);
+}
+
+.img-con input:hover {
+  border-color: #4e44b0;
+  background-color: #fff;
+}
+
+.img-con button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background-color: #6c5ce7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.img-con button:hover {
+  background-color: #4e44b0;
+}
+
+/* Address Section */
+.address-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Space between address form and saved addresses */
+  margin-top: 20px;
+  width: 100%;
+}
+
+.address-box,
+.saved-addresses-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.address-form p,
+.saved-addresses-box h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between input fields */
+}
+
+.address-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.address-form input {
+  width: 100%;
+  padding: 12px 15px; /* Increased padding for better aesthetics */
+  font-size: 16px;
+  border: 2px solid #ccc; /* Slightly thicker border */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background color */
+  transition: all 0.3s ease-in-out; /* Smooth transition for focus and hover */
+  box-sizing: border-box;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow inside the input */
+}
+
+.address-form input:focus {
+  outline: none;
+  border-color: #6c5ce7; /* Focus border color */
+  background-color: #fff; /* Lighter background on focus */
+  box-shadow: 0 0 8px rgba(108, 92, 231, 0.3); /* Glow effect on focus */
+}
+
+.address-form input::placeholder {
+  color: #aaa;
+  font-style: italic;
+  opacity: 0.8; /* Subtle placeholder style */
+}
+
+.address-form input:hover {
+  border-color: #4e44b0; /* Darker border on hover */
+  background-color: #fff; /* Light background on hover */
+}
+
+/* Styling for buttons in address form */
+.address-form button {
+  padding: 12px 25px;
+  background-color: #6c5ce7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 15px;
+}
+
+.address-form button:hover {
+  background-color: #4e44b0;
+}
+
+/* Styling for the saved addresses */
+.saved-addresses {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.saved-address {
+  background-color: #ffffff;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.saved-addresses-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.saved-addresses-box h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .address-container {
+    flex-direction: column; /* Stack form and saved addresses on smaller screens */
+  }
+
+  .address-box,
+  .saved-addresses-box {
+    width: 100%; /* Make each box take full width */
+  }
+
+  .saved-address {
+    width: 100%; /* Ensure saved addresses take full width in stacked view */
+  }
+}
+
+@media (max-width: 480px) {
+  .saved-address {
+    width: 100%; /* Single column on small screens */
+  }
+}
