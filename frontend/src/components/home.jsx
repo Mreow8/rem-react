@@ -60,7 +60,7 @@ const Home = () => {
           bottom: 0;
           background-color: rgba(17, 16, 16, 0.664); /* Semi-transparent overlay */
           filter: grayscale(0.4) brightness(0.6); /* Apply filter here */
-          z-index: 1; /* Ensure filter is below text */
+          z-index: 1; 
         }
 
         .background-text {
