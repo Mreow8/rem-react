@@ -305,13 +305,14 @@ body {
   font-size: 14px;
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  top: 0;
+  position: relative;
+  margin-top: 0;
 }
 
 .saved-address {
   background-color: #ffffff;
-  top: 0;
-  position: relative;
+
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -323,7 +324,6 @@ body {
 .saved-addresses-box {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .saved-addresses-box h3 {
