@@ -163,7 +163,7 @@ const ProductDesc = () => {
             <div className="cards">
               <img
                 src={product.seller_image || "placeholder_image.png"}
-                className="seller-image"
+                className="seller-images"
                 alt="Seller"
               />
               <div className="seller-info-content">

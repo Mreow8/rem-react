@@ -16,7 +16,9 @@
   width: 100%;
   color: white;
 } */
-
+#productss {
+  margin-left: 20px;
+}
 .desc-con {
   position: relative;
   width: 100%;
@@ -36,6 +38,7 @@
 }
 
 .product-description {
+  margin-top: 10px;
   flex: 0 0 40%;
 }
 
@@ -166,6 +169,11 @@
 
 /* Media Query for Responsive Design */
 @media (max-width: 768px) {
+  #productss {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
   .desc-con {
     height: 50px;
   }
