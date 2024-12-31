@@ -107,7 +107,7 @@
   gap: 10px; /* Space between buttons */
 }
 
-.seller-image {
+.seller-images {
   width: 100px;
   height: 100px;
   object-fit: cover;
@@ -235,7 +235,7 @@
   width: 100%;
 }
 
-.seller-image {
+.seller-images {
   width: 120px; /* Larger image */
   height: 120px;
   object-fit: cover;
