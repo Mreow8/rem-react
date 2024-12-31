@@ -7,6 +7,7 @@ const productsRoutes = require("./routes/products");
 const sellersRoutes = require("./routes/sellers");
 const cartsRoutes = require("./routes/carts");
 const addressRoutes = require("./routes/address");
+const notifRoutes = require("./routes/notification");
 
 const app = express();
 const PORT = 3001; // Use environment port or 3001
@@ -41,7 +42,7 @@ app.use("/api/products", productsRoutes);
 app.use("/api/sellers", sellersRoutes);
 app.use("/api/cart", cartsRoutes);
 app.use("/api/addresses", addressRoutes);
-
+app.use("/notifications", notifRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -116,6 +116,10 @@ const StoreForm = () => {
     <div className="seller-container-wrapper">
       <form onSubmit={handleSubmit}>
         <div className="seller-container">
+          <p>
+            Become a seller and start selling your products on Resource
+            Exchange.
+          </p>
           <div>
             <label>Upload Image:</label>
             <input type="file" accept="image/*" onChange={handleImageChange} />

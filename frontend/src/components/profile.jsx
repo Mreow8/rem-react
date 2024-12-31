@@ -26,6 +26,7 @@ const App = () => {
   const [addresses, setAddresses] = useState([]);
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePicturePreview, setProfilePicturePreview] = useState(null);
+  const [notifications, setNotifications] = useState([]); // State to store notifications
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -37,6 +38,7 @@ const App = () => {
     if (userId) {
       fetchCartItems(userId);
       fetchAddresses(userId);
+      fetchNotifications(userId); // Fetch notifications on load
     } else {
       setLoading(false);
     }
@@ -65,6 +67,18 @@ const App = () => {
       setAddresses(data.addresses || []);
     } catch (error) {
       console.error("Error fetching addresses:", error);
+    }
+  };
+
+  const fetchNotifications = async (userId) => {
+    try {
+      const response = await fetch(
+        `https://rem-reacts.onrender.com/api/notifications/${userId}`
+      );
+      const data = await response.json();
+      setNotifications(data.notifications || []);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
     }
   };
 
@@ -194,6 +208,13 @@ const App = () => {
             className={activeContent === "address" ? "active" : ""}
           >
             Address
+          </a>
+          <a
+            href="#"
+            onClick={() => showContent("notification")}
+            className={activeContent === "notifications" ? "active" : ""}
+          >
+            Notification
           </a>
         </div>
 
@@ -342,6 +363,23 @@ const App = () => {
                   ))}
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Notification Section */}
+          {activeContent === "notifications" && (
+            <div className="notif-container">
+              <h3>Notifications</h3>
+              {notifications.length > 0 ? (
+                notifications.map((notification, index) => (
+                  <div key={index} className="notification-item">
+                    <p>{notification.message}</p>
+                    <small>{notification.created_at}</small>
+                  </div>
+                ))
+              ) : (
+                <p>No new notifications.</p>
+              )}
             </div>
           )}
         </div>
