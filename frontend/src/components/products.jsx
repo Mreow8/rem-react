@@ -78,7 +78,7 @@ const ProductList = () => {
             ))}
           </ul>
         </div>
-        <div className="con"></div>
+
         <div className="container">
           <div className="products-container">
             {filteredProducts.length > 0 ? (
