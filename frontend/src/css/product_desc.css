@@ -40,7 +40,6 @@
 
 .product-description {
   flex: 0 0 40%;
-  margin-top: 10px;
 }
 
 .card {
@@ -170,15 +169,14 @@
 
 /* Media Query for Responsive Design */
 @media (max-width: 768px) {
-  .product-desc-container {
-    margin-top: 10%;
-  }
   .product-containers {
     flex-direction: column;
   }
 
   .product-details,
   .product-description {
+    margin-left: 10px;
+    margin-right: 10px;
     flex: 0 0 100%;
   }
   .product-description {
