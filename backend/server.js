@@ -42,7 +42,7 @@ app.use("/api/products", productsRoutes);
 app.use("/api/sellers", sellersRoutes);
 app.use("/api/cart", cartsRoutes);
 app.use("/api/addresses", addressRoutes);
-app.use("api/notifications", notifRoutes);
+app.use("/api/notifications", notifRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
