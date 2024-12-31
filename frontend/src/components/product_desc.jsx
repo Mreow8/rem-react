@@ -140,18 +140,22 @@ const ProductDesc = () => {
                 className="img-fluid"
               />
               <div className="product-card-content">
-                <p className="font-size">{product.product_name}</p>
+                <p className="product-title">{product.product_name}</p>
                 <p className="text-danger">Php {product.product_price}</p>
 
                 <div className="input-group">
-                  <p>Quantity</p>
+                  <p id="quan">Quantity</p>
                   <button onClick={decreaseQuantity}>-</button>
                   <input type="text" value={quantity} readOnly />
                   <button onClick={increaseQuantity}>+</button>
                 </div>
                 <div className="button-group">
-                  <button onClick={handleBuyNow}>Buy Now</button>
-                  <button onClick={handleAddToCart}>Add to Cart</button>
+                  <button onClick={handleBuyNow} className="buy-now">
+                    Buy Now
+                  </button>
+                  <button onClick={handleAddToCart} className="addto">
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             </div>

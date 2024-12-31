@@ -6,10 +6,22 @@
   position: relative;
   flex-direction: column;
 }
+.input-group {
+  margin-top: 3px;
+}
+#quan {
+  margin-bottom: 0;
+}
 /* product_desc.css */
-
+.buy-now {
+  background-color: #4caf50;
+}
+.addto {
+  border-color: #4caf50;
+  background-color: #bfd3c0;
+}
 .button-group button {
-  background-color: #4caf50; /* Modern green color */
+  /* Modern green color */
   color: white;
   border: none;
   padding: 10px 20px;
@@ -243,6 +255,9 @@ button {
     align-items: center;
     gap: 15px;
   }
+  .product-card-content {
+    align-items: center;
+  }
 
   .product-card img {
     width: 50%; /* Adjust image width */
@@ -266,6 +281,9 @@ button {
   .input-group input[type="text"] {
     /* Your styles here */
     width: 30px;
+  }
+  .product-title {
+    align-items: center;
   }
   .seller-info .cards {
     width: 100%;
