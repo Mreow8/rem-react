@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Nav from "./nav";
 import "../css/profile.css";
+import Loading from "./loading";
 
 const App = () => {
   const [username, setUsername] = useState(null);
@@ -106,7 +107,7 @@ const App = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
