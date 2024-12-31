@@ -8,19 +8,24 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeContent, setActiveContent] = useState("profile"); // Set profile as active initially
+  const [activeContent, setActiveContent] = useState("profile");
   const [profileData, setProfileData] = useState({
     phoneNumber: "",
     email: "",
   });
   const [addressData, setAddressData] = useState({
-    address: "",
+    fullName: "",
+    phoneNumber: "",
+    region: "",
+    province: "",
     city: "",
+    barangay: "",
     postalCode: "",
+    label: "Home",
   });
-  const [addresses, setAddresses] = useState([]); // State for multiple addresses
-  const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
-  const [profilePicturePreview, setProfilePicturePreview] = useState(null); // For previewing the image
+  const [addresses, setAddresses] = useState([]);
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicturePreview, setProfilePicturePreview] = useState(null);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -39,9 +44,11 @@ const App = () => {
 
   const fetchCartItems = async (userId) => {
     try {
-      const response = await fetch(`/api/cart/${userId}`);
+      const response = await fetch(
+        `https://rem-reacts.onrender.com/api/cart/${userId}`
+      );
       const data = await response.json();
-      console.log(data); // Use this data in the UI
+      console.log(data);
     } catch (error) {
       console.error("Error fetching cart items:", error);
     } finally {
@@ -51,7 +58,9 @@ const App = () => {
 
   const fetchAddresses = async (userId) => {
     try {
-      const response = await fetch(`/api/addresses/${userId}`);
+      const response = await fetch(
+        `https://rem-reacts.onrender.com/api/addresses/${userId}`
+      );
       const data = await response.json();
       setAddresses(data.addresses || []);
     } catch (error) {
@@ -66,16 +75,12 @@ const App = () => {
     alert("Logged out successfully!");
   };
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
   const showContent = (contentId) => {
-    setActiveContent(contentId); // Update activeContent state
+    setActiveContent(contentId);
   };
 
   const handleProfileChange = (e) => {
@@ -94,13 +99,71 @@ const App = () => {
     }));
   };
 
+  const toggleAddressLabel = () => {
+    setAddressData((prevData) => ({
+      ...prevData,
+      label: prevData.label === "Home" ? "Work" : "Home",
+    }));
+  };
+
+  const addAddress = async () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("User not logged in. Cannot add address.");
+      return;
+    }
+
+    const newAddress = {
+      ...addressData,
+      userId,
+    };
+
+    try {
+      const response = await fetch(
+        "https://rem-reacts.onrender.com/api/address",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newAddress),
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        setAddresses((prevAddresses) => [
+          ...prevAddresses,
+          { ...newAddress, id: result.addressId },
+        ]);
+        alert("Address added successfully!");
+        setAddressData({
+          fullName: "",
+          phoneNumber: "",
+          region: "",
+          province: "",
+          city: "",
+          barangay: "",
+          postalCode: "",
+          label: "Home",
+        });
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to add address: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error adding address:", error);
+      alert("An error occurred while adding the address. Please try again.");
+    }
+  };
+
   const handleProfilePictureChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setProfilePicture(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePicturePreview(reader.result); // Set the image preview
+        setProfilePicturePreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -114,7 +177,6 @@ const App = () => {
     <div className="App">
       <Nav username={username} handleLogout={handleLogout} />
       <header className="App-header"></header>
-
       <div className="img-container">
         <div className="other-container">
           <p>{username}</p>
@@ -166,23 +228,6 @@ const App = () => {
                   />
                 </div>
               </div>
-
-              <div className="img-con">
-                {profilePicturePreview && (
-                  <div className="profile-picture-preview">
-                    <img src={profilePicturePreview} alt="Profile" />
-                  </div>
-                )}
-                <label htmlFor="profilePicture">Profile Picture: </label>
-                <input
-                  type="file"
-                  id="profilePicture"
-                  accept="image/*"
-                  onChange={handleProfilePictureChange}
-                />
-
-                <button>Save</button>
-              </div>
             </div>
           )}
 
@@ -192,12 +237,42 @@ const App = () => {
                 <p>Address Information</p>
                 <div className="address-form">
                   <div>
-                    <label htmlFor="address">Address: </label>
+                    <label htmlFor="fullName">Full Name: </label>
                     <input
                       type="text"
-                      id="address"
-                      name="address"
-                      value={addressData.address}
+                      id="fullName"
+                      name="fullName"
+                      value={addressData.fullName}
+                      onChange={handleAddressChange}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phoneNumber">Phone Number: </label>
+                    <input
+                      type="text"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      value={addressData.phoneNumber}
+                      onChange={handleAddressChange}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="region">Region: </label>
+                    <input
+                      type="text"
+                      id="region"
+                      name="region"
+                      value={addressData.region}
+                      onChange={handleAddressChange}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="province">Province: </label>
+                    <input
+                      type="text"
+                      id="province"
+                      name="province"
+                      value={addressData.province}
                       onChange={handleAddressChange}
                     />
                   </div>
@@ -212,6 +287,16 @@ const App = () => {
                     />
                   </div>
                   <div>
+                    <label htmlFor="barangay">Barangay: </label>
+                    <input
+                      type="text"
+                      id="barangay"
+                      name="barangay"
+                      value={addressData.barangay}
+                      onChange={handleAddressChange}
+                    />
+                  </div>
+                  <div>
                     <label htmlFor="postalCode">Postal Code: </label>
                     <input
                       type="text"
@@ -221,18 +306,12 @@ const App = () => {
                       onChange={handleAddressChange}
                     />
                   </div>
-                  <button>Add Address</button>
-                </div>
-              </div>
-
-              <div className="saved-addresses-box">
-                <h3>Saved Addresses</h3>
-                <div className="saved-addresses">
-                  {addresses.map((address, index) => (
-                    <div key={index} className="saved-address">
-                      {address.address}, {address.city}, {address.postalCode}
-                    </div>
-                  ))}
+                  <button type="button" onClick={toggleAddressLabel}>
+                    {addressData.label === "Home"
+                      ? "Set as Work"
+                      : "Set as Home"}
+                  </button>
+                  <button onClick={addAddress}>Add Address</button>
                 </div>
               </div>
             </div>
