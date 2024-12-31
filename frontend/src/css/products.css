@@ -7,7 +7,6 @@
 .products-main {
   margin-top: 150px;
   height: 100%;
-  z-index: 500;
 }
 #categories-container {
   position: fixed;

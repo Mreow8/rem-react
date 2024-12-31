@@ -330,11 +330,14 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .img-prof-container,
   .address-container {
     flex-direction: column; /* Stack form and saved addresses on smaller screens */
   }
 
   .address-box,
+  .content,
+  .img-con,
   .saved-addresses-box {
     width: 100%; /* Make each box take full width */
   }
