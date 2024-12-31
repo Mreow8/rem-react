@@ -13,6 +13,8 @@ const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const navigate = useNavigate();
+  const [sortOrder, setSortOrder] = useState(""); // "" means no sorting initially
+
   const handlePriceSort = (order) => {
     setSortOrder(order); // Update the sort order
   };
@@ -45,7 +47,6 @@ const ProductList = () => {
     };
     fetchData();
   }, []);
-  const [sortOrder, setSortOrder] = useState(""); // "" means no sorting initially
 
   const filteredProducts = products
     .filter(
