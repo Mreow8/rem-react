@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../css/products.css";
 import Nav from "./nav";
 import Loading from "./loading"; // Import Loading component
+const [sortOrder, setSortOrder] = useState(""); // "" means no sorting initially
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -13,6 +14,9 @@ const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const navigate = useNavigate();
+  const handlePriceSort = (order) => {
+    setSortOrder(order); // Update the sort order
+  };
 
   useEffect(() => {
     // Retrieve the username from localStorage
@@ -43,11 +47,20 @@ const ProductList = () => {
     fetchData();
   }, []);
 
-  const filteredProducts = products.filter(
-    (product) =>
-      (selectedCategory === "" || product.category === selectedCategory) && // Filter by category
-      product.product_name.toLowerCase().includes(searchQuery.toLowerCase()) // Filter by search query
-  );
+  const filteredProducts = products
+    .filter(
+      (product) =>
+        (selectedCategory === "" || product.category === selectedCategory) && // Filter by category
+        product.product_name.toLowerCase().includes(searchQuery.toLowerCase()) // Filter by search query
+    )
+    .sort((a, b) => {
+      if (sortOrder === "lowToHigh") {
+        return a.product_price - b.product_price; // Ascending order
+      } else if (sortOrder === "highToLow") {
+        return b.product_price - a.product_price; // Descending order
+      }
+      return 0; // No sorting
+    });
 
   if (loading) {
     return <Loading />; // Show the Loading screen while data is being fetched
@@ -76,6 +89,18 @@ const ProductList = () => {
                 {cat.name}
               </li>
             ))}
+            <li>
+              Price
+              <select
+                className="price-sort-dropdown"
+                onChange={(e) => handlePriceSort(e.target.value)}
+                style={{ marginLeft: "10px" }}
+              >
+                <option value="">Sort by</option> {/* Default option */}
+                <option value="lowToHigh">Low to High</option>
+                <option value="highToLow">High to Low</option>
+              </select>
+            </li>
           </ul>
         </div>
 

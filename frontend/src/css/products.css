@@ -62,6 +62,17 @@
   background-color: #fff;
   width: 100px;
 }
+.price-sort-dropdown {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.price-sort-dropdown:hover {
+  border-color: #888;
+}
 
 .product-item:hover {
   transform: translateY(-3px);
