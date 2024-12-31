@@ -228,6 +228,22 @@ const App = () => {
                   />
                 </div>
               </div>
+              <div className="img-con">
+                {profilePicturePreview && (
+                  <div className="profile-picture-preview">
+                    <img src={profilePicturePreview} alt="Profile" />
+                  </div>
+                )}
+                <label htmlFor="profilePicture">Profile Picture: </label>
+                <input
+                  type="file"
+                  id="profilePicture"
+                  accept="image/*"
+                  onChange={handleProfilePictureChange}
+                />
+
+                <button>Save</button>
+              </div>
             </div>
           )}
 
@@ -312,6 +328,16 @@ const App = () => {
                       : "Set as Home"}
                   </button>
                   <button onClick={addAddress}>Add Address</button>
+                </div>
+              </div>
+              <div className="saved-addresses-box">
+                <h3>Saved Addresses</h3>
+                <div className="saved-addresses">
+                  {addresses.map((address, index) => (
+                    <div key={index} className="saved-address">
+                      {address.address}, {address.city}, {address.postalCode}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
