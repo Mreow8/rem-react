@@ -302,6 +302,7 @@ body {
 
 /* Styling for the saved addresses */
 .saved-addresses {
+  font-size: 14px;
   list-style-type: none;
   padding: 0;
   margin: 0;
