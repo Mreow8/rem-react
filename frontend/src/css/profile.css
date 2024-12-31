@@ -219,6 +219,7 @@ body {
 
 .address-box,
 .saved-addresses-box {
+  width: 48%; /* Adjust width for two-column layout */
   flex: 1;
   display: flex;
   flex-direction: column;
