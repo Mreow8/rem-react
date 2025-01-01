@@ -9,20 +9,43 @@ const Checkout = () => {
   });
   const [checkedOutItems, setCheckedOutItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const userId = 1; // For example, replace with the actual user ID or fetch it from a session or token
+
+    // Fetch cart items from the database
+    fetchCartItems(userId);
+  }, []);
+
+  const fetchCartItems = async (userId) => {
+    try {
+      const response = await fetch(
+        `https://rem-reacts.onrender.com/api/cart/${userId}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart items");
+      }
+      const data = await response.json();
+      setCartItems(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     // Fetch the checked items from localStorage
     const storedCheckedItems =
       JSON.parse(localStorage.getItem("checkedItems")) || {};
-    const cartData = JSON.parse(localStorage.getItem("cartItems")) || {};
 
     // Filter items that are checked for checkout
-    const items = Object.keys(storedCheckedItems)
-      .filter((key) => storedCheckedItems[key]) // Only include checked items
-      .map((key) => {
-        const productId = key.split("-")[1]; // Extract product ID
-        return { productId, ...cartData[productId] }; // Merge product details
-      });
+    const items = cartItems.filter(
+      (item) => storedCheckedItems[`${item.seller_username}-${item.product_id}`]
+    );
 
     // Calculate the total amount
     const total = items.reduce(
@@ -32,7 +55,7 @@ const Checkout = () => {
 
     setCheckedOutItems(items);
     setTotalAmount(total);
-  }, []);
+  }, [cartItems]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,6 +76,14 @@ const Checkout = () => {
     window.location.href = "/";
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="checkout-container">
       <h1>Checkout</h1>
@@ -61,7 +92,7 @@ const Checkout = () => {
           <h2>Order Summary</h2>
           {checkedOutItems.length > 0 ? (
             checkedOutItems.map((item) => (
-              <div key={item.productId} className="checkout-item">
+              <div key={item.product_id} className="checkout-item">
                 <img
                   src={item.product_image}
                   alt={item.product_name}
