@@ -41,12 +41,16 @@ const Checkout = () => {
     const storedCheckedItems =
       JSON.parse(localStorage.getItem("checkedItems")) || {};
 
+    // Convert cartItems from object to array
+    const cartItemsArray = Object.keys(cartItems).map((key) => ({
+      product_id: key, // Product ID is the key in cartItems
+      ...cartItems[key], // Get the rest of the data like quantity
+    }));
+
     // Filter items that are checked for checkout
-    const items = cartItems.filter((item) => {
-      // Check if the product is checked in checkedItems
-      const checkedKey = `honzel-${item.product_id}`; // Construct the key like "honzel-7"
-      return storedCheckedItems[checkedKey]; // Check if the item is checked
-    });
+    const items = cartItemsArray.filter(
+      (item) => storedCheckedItems[`${item.seller_username}-${item.product_id}`] // Matching the checked items with seller and product_id
+    );
 
     // Calculate the total amount
     const total = items.reduce(
