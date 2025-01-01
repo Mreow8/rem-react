@@ -1,6 +1,6 @@
 /* General Layout */
 .checkout-container {
-  max-width: 1200px;
+  max-width: 1000px; /* Adjusted for better centering */
   margin: 20px auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -24,7 +24,7 @@
 .scrollable-section {
   flex: 2;
   overflow-y: auto;
-  max-height: 80vh;
+  max-height: 80vh; /* Ensures it doesn't overflow the viewport */
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -39,7 +39,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   position: sticky;
-  top: 20px;
+  top: 20px; /* Sticks when scrolling */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
