@@ -37,22 +37,28 @@ const Checkout = () => {
     }
   };
   useEffect(() => {
-    // Fetch the checked items from localStorage (only product_id and whether it's checked)
+    // Fetch the checked items from localStorage (only product_id values)
     const storedCheckedItems =
-      JSON.parse(localStorage.getItem("checkedItems")) || {};
+      JSON.parse(localStorage.getItem("checkedItems")) || [];
 
-    // Convert cartItems from object to array
+    // Log the checked items from localStorage
+    console.log("storedCheckedItems:", storedCheckedItems);
+
+    // Convert cartItems from object to array (including quantity)
     const cartItemsArray = Object.keys(cartItems).map((key) => ({
-      product_id: key, // Product ID is the key in cartItems
-      ...cartItems[key], // Get the quantity and other data like product_price
+      product_id: key, // Product ID
+      ...cartItems[key], // Include quantity and other data
     }));
+
+    // Log cartItemsArray to ensure the format is correct
+    console.log("cartItemsArray:", cartItemsArray);
 
     // Filter items that are checked for checkout
     const items = cartItemsArray.filter(
-      (item) => storedCheckedItems[item.product_id] // Only include items whose product_id is checked
+      (item) => storedCheckedItems.includes(item.product_id) // Check if product_id is checked
     );
 
-    console.log("checked out items:", items);
+    console.log("Filtered checked items:", items);
 
     // Calculate the total amount
     const total = items.reduce(
@@ -63,7 +69,6 @@ const Checkout = () => {
     setCheckedOutItems(items);
     setTotalAmount(total);
   }, [cartItems]);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
