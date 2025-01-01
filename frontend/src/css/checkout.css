@@ -1,6 +1,6 @@
 /* General Layout */
 .checkout-container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 20px auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -13,6 +13,34 @@
   text-align: center;
   color: #333;
   margin-bottom: 20px;
+}
+
+/* Layout for Fixed and Scrollable Sections */
+.checkout-layout {
+  display: flex;
+  gap: 20px;
+}
+
+.fixed-section {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  position: sticky;
+  top: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.scrollable-section {
+  flex: 2;
+  overflow-y: auto;
+  max-height: 80vh;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Loading and Error Messages */
@@ -46,7 +74,7 @@ p {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.product-image {
+.product-images {
   width: 100px;
   height: 100px;
   object-fit: cover;
@@ -54,7 +82,7 @@ p {
   border: 1px solid #ddd;
 }
 
-.product-details {
+.product-detailss {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -67,14 +95,10 @@ p {
   margin-bottom: 5px;
 }
 
-.seller-name {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 10px;
-}
-
 .product-details p {
   margin: 5px 0;
+  font-size: 14px;
+  color: #555;
 }
 
 .subtotal {
@@ -83,38 +107,7 @@ p {
   color: #007bff;
 }
 
-/* Checkout Summary */
-.checkout-summary {
-  margin-top: 20px;
-  padding-top: 15px;
-  text-align: right;
-  border-top: 1px solid #ddd;
-}
-
-.checkout-summary h2 {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-}
-
-.checkout-button {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  text-decoration: none;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.checkout-button:hover {
-  background-color: #218838;
-}
+/* Seller Grouping */
 .seller-group {
   margin-bottom: 20px;
   border: 1px solid #ddd;
@@ -135,4 +128,50 @@ p {
   color: #007bff;
   text-align: right;
   margin-top: 10px;
+}
+
+/* Fixed Section Styling */
+.fixed-section h2,
+.fixed-section h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.fixed-section p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.checkout-button {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  background-color: #28a745;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.checkout-button:hover {
+  background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .checkout-layout {
+    flex-direction: column;
+  }
+
+  .fixed-section {
+    position: static;
+    box-shadow: none;
+  }
 }
