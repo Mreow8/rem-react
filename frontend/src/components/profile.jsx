@@ -3,6 +3,7 @@ import Nav from "./nav";
 import "../css/profile.css";
 import Loading from "./loading";
 import noimage from "../assets/catno.png";
+
 const App = () => {
   const [username, setUsername] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -26,7 +27,7 @@ const App = () => {
   const [addresses, setAddresses] = useState([]);
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePicturePreview, setProfilePicturePreview] = useState(null);
-  const [notifications, setNotifications] = useState([]); // State to store notifications
+  const [notifications, setNotifications] = useState([]); // Initialize as an empty array
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -76,6 +77,7 @@ const App = () => {
         `https://rem-reacts.onrender.com/api/notifications/${userId}`
       );
       const data = await response.json();
+      console.log("Fetched notifications:", data.notifications);
       setNotifications(data.notifications || []);
     } catch (error) {
       console.error("Error fetching notifications:", error);
@@ -211,7 +213,7 @@ const App = () => {
           </a>
           <a
             href="#"
-            onClick={() => showContent("notification")}
+            onClick={() => showContent("notifications")}
             className={activeContent === "notifications" ? "active" : ""}
           >
             Notification
@@ -262,7 +264,6 @@ const App = () => {
                   accept="image/*"
                   onChange={handleProfilePictureChange}
                 />
-
                 <button>Save</button>
               </div>
             </div>
@@ -369,7 +370,7 @@ const App = () => {
           {activeContent === "notifications" && (
             <div className="notifications-container">
               <h3>Notifications</h3>
-              {notifications && notifications.length > 0 ? (
+              {notifications.length > 0 ? (
                 notifications.map((notification, index) => (
                   <div key={index} className="notification-item">
                     <p>{notification.message}</p>
