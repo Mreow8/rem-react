@@ -36,16 +36,17 @@ const Checkout = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     // Fetch the checked items from localStorage
     const storedCheckedItems =
       JSON.parse(localStorage.getItem("checkedItems")) || {};
 
     // Filter items that are checked for checkout
-    const items = cartItems.filter(
-      (item) => storedCheckedItems[`${item.seller_username}-${item.product_id}`]
-    );
+    const items = cartItems.filter((item) => {
+      // Check if the product is checked in checkedItems
+      const checkedKey = `honzel-${item.product_id}`; // Construct the key like "honzel-7"
+      return storedCheckedItems[checkedKey]; // Check if the item is checked
+    });
 
     // Calculate the total amount
     const total = items.reduce(
