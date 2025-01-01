@@ -8,7 +8,7 @@ const pool = require("../config/db"); // PostgreSQL connection pool
 cloudinary.config({
   cloud_name: "dejfzfdk0", // Replace with your Cloudinary Cloud Name
   api_key: "567128668369977", // Replace with your API Key
-  api_secret: "-5FfUruzAK7jEpBKdZ3Xn1RXVU8", // Replace with your API Secret
+  api_secret: "-5FfUruzAK7jEpBKdZ3Xn1RXVU8",
 });
 
 // Configure Multer with Cloudinary storage

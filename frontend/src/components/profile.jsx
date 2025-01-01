@@ -366,27 +366,21 @@ const App = () => {
             </div>
           )}
 
-          {/* Notification Section */}
-          {activeContent === "notifications" && (
-            <div className="notif-container">
-              <h3>Notifications</h3>
-              {notifications.length > 0 ? (
-                notifications.map((notification, index) => (
-                  <div key={index} className="notification-item">
-                    <p>{notification.message}</p>
-                    <small>{notification.created_at}</small>
-                  </div>
-                ))
-              ) : (
-                <div className="no-notifications">
-                  <img
-                    src="../assets/no-new.png"
-                    alt="No Notifications"
-                    className="no-notifications-image"
-                  />
-                  <p>No new notifications.</p>
-                </div>
-              )}
+          {notifications && notifications.length > 0 ? (
+            notifications.map((notification, index) => (
+              <div key={index} className="notification-item">
+                <p>{notification.message}</p>
+                <small>{notification.created_at}</small>
+              </div>
+            ))
+          ) : (
+            <div className="no-notifications">
+              <img
+                src="/assets/no-new.png"
+                alt="No Notifications"
+                className="no-notifications-image"
+              />
+              <p>No new notifications.</p>
             </div>
           )}
         </div>
