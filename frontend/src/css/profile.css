@@ -319,6 +319,11 @@ body {
   .address-box input {
     font-size: 14px;
   }
+  .other-container a {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+  }
 }
 
 @media (max-width: 480px) {
