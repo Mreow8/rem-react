@@ -376,7 +376,7 @@ const App = () => {
           ) : (
             <div className="no-notifications">
               <img
-                src="./assets/no_new.png"
+                src="no_new.png"
                 alt="No Notifications"
                 className="no-notifications-image"
               />
