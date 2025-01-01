@@ -51,7 +51,7 @@ const Checkout = () => {
     const items = cartItemsArray.filter(
       (item) => storedCheckedItems[`${item.seller_username}-${item.product_id}`] // Matching the checked items with seller and product_id
     );
-
+    console.log("items", items);
     // Calculate the total amount
     const total = items.reduce(
       (sum, item) => sum + item.quantity * item.product_price,
