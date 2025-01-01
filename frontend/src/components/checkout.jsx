@@ -23,7 +23,7 @@ const Checkout = () => {
         const fetchedProducts = [];
         for (const productId of productIds) {
           const response = await fetch(
-            `https://rem-reacts.onrender.com/api/product/${productId}`
+            `https://rem-reacts.onrender.com/api/products/${productId}`
           );
           if (!response.ok) {
             throw new Error(
