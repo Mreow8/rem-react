@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from "react";
 import "../css/checkout.css";
 
-const Checkout = ({ cartItems, totalAmount }) => {
+const Checkout = () => {
   const [userDetails, setUserDetails] = useState({
     name: "",
     address: "",
     phone: "",
   });
   const [checkedOutItems, setCheckedOutItems] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-    // Filter items that are checked for checkout
+    // Fetch the checked items from localStorage
     const storedCheckedItems =
       JSON.parse(localStorage.getItem("checkedItems")) || {};
-    const filteredItems = cartItems.filter(
-      (item) => storedCheckedItems[`${item.seller_username}-${item.product_id}`]
+    const cartData = JSON.parse(localStorage.getItem("cartItems")) || {};
+
+    // Filter items that are checked for checkout
+    const items = Object.keys(storedCheckedItems)
+      .filter((key) => storedCheckedItems[key]) // Only include checked items
+      .map((key) => {
+        const productId = key.split("-")[1]; // Extract product ID
+        return { productId, ...cartData[productId] }; // Merge product details
+      });
+
+    // Calculate the total amount
+    const total = items.reduce(
+      (sum, item) => sum + item.quantity * item.product_price,
+      0
     );
-    setCheckedOutItems(filteredItems);
-  }, [cartItems]);
+
+    setCheckedOutItems(items);
+    setTotalAmount(total);
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +48,8 @@ const Checkout = ({ cartItems, totalAmount }) => {
     // Simulate order placement
     alert("Order placed successfully!");
     localStorage.removeItem("checkedItems");
-    // Clear localStorage and redirect to home or orders page
+    localStorage.removeItem("cartItems");
+    // Redirect to home or orders page
     window.location.href = "/";
   };
 
@@ -45,7 +61,7 @@ const Checkout = ({ cartItems, totalAmount }) => {
           <h2>Order Summary</h2>
           {checkedOutItems.length > 0 ? (
             checkedOutItems.map((item) => (
-              <div key={item.product_id} className="checkout-item">
+              <div key={item.productId} className="checkout-item">
                 <img
                   src={item.product_image}
                   alt={item.product_name}
