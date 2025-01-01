@@ -80,6 +80,10 @@ const Checkout = () => {
     }, 0);
   };
 
+  const handlePaymentChange = (event) => {
+    setPaymentMethod(event.target.value);
+  };
+
   return (
     <div className="checkout-container">
       <h1>Checkout</h1>
@@ -91,8 +95,32 @@ const Checkout = () => {
           <p>Grand Total: Php {(totalAmount + shippingFee).toFixed(2)}</p>
           <h3>Address</h3>
           <p>{address}</p>
+
           <h3>Payment Method</h3>
-          <p>{paymentMethod}</p>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="payment-method"
+                value="Cash on Delivery"
+                checked={paymentMethod === "Cash on Delivery"}
+                onChange={handlePaymentChange}
+              />
+              Cash on Delivery
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="payment-method"
+                value="Online Payment"
+                checked={paymentMethod === "Online Payment"}
+                onChange={handlePaymentChange}
+              />
+              Online Payment
+            </label>
+          </div>
+
+          <h3>Selected Payment Method: {paymentMethod}</h3>
           <button className="checkout-button">Proceed to Payment</button>
         </div>
         <div className="checkout-items scrollable-section">
