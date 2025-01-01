@@ -9,7 +9,7 @@ const Checkout = () => {
   });
   const [checkedOutItems, setCheckedOutItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -36,6 +36,7 @@ const Checkout = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     // Fetch the checked items from localStorage (only product_id values)
     const storedCheckedItems =
@@ -69,6 +70,7 @@ const Checkout = () => {
     setCheckedOutItems(items);
     setTotalAmount(total);
   }, [cartItems]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
