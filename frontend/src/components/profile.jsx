@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Nav from "./nav";
 import "../css/profile.css";
 import Loading from "./loading";
-
+import noimage from "../assets/catno.png";
 const App = () => {
   const [username, setUsername] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -376,7 +376,7 @@ const App = () => {
           ) : (
             <div className="no-notifications">
               <img
-                src="cat_no.png"
+                src={noimage}
                 alt="No Notifications"
                 className="no-notifications-image"
               />
