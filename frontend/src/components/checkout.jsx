@@ -37,21 +37,23 @@ const Checkout = () => {
     }
   };
   useEffect(() => {
-    // Fetch the checked items from localStorage
+    // Fetch the checked items from localStorage (only product_id and whether it's checked)
     const storedCheckedItems =
       JSON.parse(localStorage.getItem("checkedItems")) || {};
 
     // Convert cartItems from object to array
     const cartItemsArray = Object.keys(cartItems).map((key) => ({
       product_id: key, // Product ID is the key in cartItems
-      ...cartItems[key], // Get the rest of the data like quantity
+      ...cartItems[key], // Get the quantity and other data like product_price
     }));
 
     // Filter items that are checked for checkout
     const items = cartItemsArray.filter(
-      (item) => storedCheckedItems[`${item.seller_username}-${item.product_id}`] // Matching the checked items with seller and product_id
+      (item) => storedCheckedItems[item.product_id] // Only include items whose product_id is checked
     );
-    console.log("items", items);
+
+    console.log("checked out items:", items);
+
     // Calculate the total amount
     const total = items.reduce(
       (sum, item) => sum + item.quantity * item.product_price,
