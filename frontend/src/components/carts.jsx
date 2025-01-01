@@ -318,7 +318,7 @@ const Navbar = () => {
 
         <p>Total: Php {totalAmount.toFixed(2)}</p>
         <p>Items in Cart: {totalQuantity}</p>
-        <Link to="/buy_now">
+        <Link to="/checkout">
           <button>Checkout</button>
         </Link>
       </div>
