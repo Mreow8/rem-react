@@ -89,6 +89,19 @@ const Navbar = () => {
     });
     setCheckedItems(updatedCheckedItems);
     localStorage.setItem("checkedItems", JSON.stringify(updatedCheckedItems));
+
+    // Store the checked product IDs and quantities in localStorage
+    const cartData = JSON.parse(localStorage.getItem("cartItems")) || {};
+    if (isChecked) {
+      groupedCartItems[seller].forEach((item) => {
+        cartData[item.product_id] = { quantity: item.quantity };
+      });
+    } else {
+      groupedCartItems[seller].forEach((item) => {
+        delete cartData[item.product_id]; // Remove from cart if unchecked
+      });
+    }
+    localStorage.setItem("cartItems", JSON.stringify(cartData)); // Save to localStorage
   };
 
   const removeCheckedItems = async () => {
@@ -119,6 +132,17 @@ const Navbar = () => {
     });
     setCheckedItems(updatedCheckedItems);
     localStorage.setItem("checkedItems", JSON.stringify(updatedCheckedItems));
+
+    // Store all the product IDs and quantities in localStorage when checking/unchecking all items
+    const cartData = JSON.parse(localStorage.getItem("cartItems")) || {};
+    cartItems.forEach((item) => {
+      if (isChecked) {
+        cartData[item.product_id] = { quantity: item.quantity };
+      } else {
+        delete cartData[item.product_id];
+      }
+    });
+    localStorage.setItem("cartItems", JSON.stringify(cartData)); // Save to localStorage
   };
 
   const isSellerFullyChecked = (seller) => {
@@ -132,6 +156,16 @@ const Navbar = () => {
     updatedCheckedItems[`${seller}-${productId}`] = isChecked;
     setCheckedItems(updatedCheckedItems);
     localStorage.setItem("checkedItems", JSON.stringify(updatedCheckedItems));
+
+    // Store the checked product IDs and quantities in localStorage
+    const cartData = JSON.parse(localStorage.getItem("cartItems")) || {};
+    if (isChecked) {
+      const item = cartItems.find((item) => item.product_id === productId);
+      cartData[productId] = { quantity: item.quantity };
+    } else {
+      delete cartData[productId]; // Remove from cart if unchecked
+    }
+    localStorage.setItem("cartItems", JSON.stringify(cartData)); // Save to localStorage
   };
 
   const isAllItemsChecked = () => {
@@ -248,17 +282,6 @@ const Navbar = () => {
       console.error("User ID is missing");
       return;
     }
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "Do you want to remove this item from your cart?",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#d33",
-    //   cancelButtonColor: "#3085d6",
-    //   confirmButtonText: "Yes, remove it!",
-    //   cancelButtonText: "No, cancel!",
-    // }).then(async (result) => {
-    //   if (result.isConfirmed) {
     try {
       const response = await fetch(
         `https://rem-reacts.onrender.com/api/cart/${userId}/${productId}`,
@@ -275,8 +298,6 @@ const Navbar = () => {
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }
-    //   }
-    // });
   };
 
   const totalAmount = calculateCheckedItemsTotal();
@@ -348,86 +369,69 @@ const Navbar = () => {
                             <div
                               style={{
                                 display: "flex",
-                                justifyContent: "space-evenly",
-                                width: "100%",
                                 alignItems: "center",
                               }}
                             >
-                              <div
+                              <input
+                                type="checkbox"
+                                checked={
+                                  checkedItems[`${seller}-${item.product_id}`]
+                                }
+                                onChange={(e) =>
+                                  handleProductCheckboxChange(
+                                    seller,
+                                    item.product_id,
+                                    e.target.checked
+                                  )
+                                }
+                              />
+                              <img
+                                src={item.product_image}
+                                alt={item.product_name}
                                 style={{
-                                  width: "50%",
-                                  display: "flex",
-                                  alignItems: "center",
+                                  width: "80px",
+                                  height: "80px",
+                                  objectFit: "cover",
+                                  borderRadius: "5px",
                                 }}
-                              >
-                                <input
-                                  type="checkbox"
-                                  className="chck"
-                                  checked={
-                                    !!checkedItems[
-                                      `${seller}-${item.product_id}`
-                                    ]
-                                  }
-                                  onChange={(e) =>
-                                    handleProductCheckboxChange(
-                                      seller,
-                                      item.product_id,
-                                      e.target.checked
-                                    )
-                                  }
-                                />
-                                <img
-                                  src={item.product_image}
-                                  alt={item.product_name}
-                                  style={{
-                                    width: "80px",
-                                    height: "80px",
-                                    margin: "10px",
-                                  }}
-                                />
-                                <p>{item.product_name}</p>
-                              </div>
-
-                              <div style={{ display: "flex" }}>
-                                <p>Php {item.product_price}</p>
-                              </div>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  width: "100px",
-                                }}
-                              >
-                                <button
-                                  onClick={() =>
-                                    decreaseQuantity(item.product_id)
-                                  }
-                                >
-                                  -
-                                </button>
-                                <p>{item.quantity}</p>
-                                <button
-                                  onClick={() =>
-                                    increaseQuantity(item.product_id)
-                                  }
-                                >
-                                  +
-                                </button>
-                              </div>
+                              />
+                              <p className="product-name">
+                                {item.product_name}
+                              </p>
+                            </div>
+                            <p>Php {item.product_price}</p>
+                            <div>
                               <button
-                                className="remove-item"
-                                onClick={() => removeCartItem(item.product_id)}
+                                className="minus-button"
+                                onClick={() =>
+                                  decreaseQuantity(item.product_id)
+                                }
                               >
-                                Remove
+                                -
+                              </button>
+                              <span>{item.quantity}</span>
+                              <button
+                                className="plus-button"
+                                onClick={() =>
+                                  increaseQuantity(item.product_id)
+                                }
+                              >
+                                +
                               </button>
                             </div>
+                            <button
+                              className="delete-button"
+                              onClick={() => removeCartItem(item.product_id)}
+                            >
+                              <FontAwesomeIcon icon={faTrash} />
+                            </button>
                           </div>
                         ))}
                       </div>
                     </div>
                   ))
                 ) : (
-                  <p className="text-muted">No items in your cart.</p>
+                  <p>No items in your cart</p>
                 )}
               </div>
             </div>

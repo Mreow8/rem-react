@@ -184,7 +184,7 @@
     margin-left: -130px;
 
     font-size: 10px;
-    z-index: -1; /* Ensure it stays on top if needed */
+    z-index: -1;
   }
 
   .container p {
