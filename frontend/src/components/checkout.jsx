@@ -1,158 +1,92 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/checkout.css";
 
 const Checkout = () => {
-  const [userDetails, setUserDetails] = useState({
-    name: "",
-    address: "",
-    phone: "",
-  });
-  const [checkedOutItems, setCheckedOutItems] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [cartItems, setCartItems] = useState({});
+  const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const userId = 1; // For example, replace with the actual user ID or fetch it from a session or token
-    fetchCartItems(userId);
-  }, []);
+    const localCartItems = JSON.parse(localStorage.getItem("cartItems"));
 
-  const fetchCartItems = async (userId) => {
-    try {
-      const response = await fetch(
-        `https://rem-reacts.onrender.com/api/cart/${userId}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch cart items");
-      }
-      const data = await response.json();
-      setCartItems(data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
+    if (!localCartItems || Object.keys(localCartItems).length === 0) {
+      setCartItems([]);
       setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    // Convert cartItems object to an array including the quantity
-    const cartItemsArray = Object.keys(cartItems).map((productId) => ({
-      product_id: productId,
-      quantity: cartItems[productId].quantity,
-    }));
-
-    // Log cartItemsArray to ensure the format is correct
-    console.log("cartItemsArray:", cartItemsArray);
-
-    // Calculate the total amount
-    const total = cartItemsArray.reduce(
-      (sum, item) => sum + item.quantity * item.product_price,
-      0
-    );
-
-    setCheckedOutItems(cartItemsArray);
-    setTotalAmount(total);
-  }, [cartItems]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserDetails({ ...userDetails, [name]: value });
-  };
-
-  const handleOrderConfirmation = () => {
-    if (!userDetails.name || !userDetails.address || !userDetails.phone) {
-      alert("Please fill in all the required details.");
       return;
     }
 
-    // Simulate order placement
-    alert("Order placed successfully!");
-    localStorage.removeItem("checkedItems");
-    localStorage.removeItem("cartItems");
-    // Redirect to home or orders page
-    window.location.href = "/";
+    const fetchProductDetails = async () => {
+      try {
+        const promises = Object.keys(localCartItems).map(async (productId) => {
+          const response = await fetch(
+            `https://rem-reacts.onrender.com/api/products/${productId}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch product details");
+          }
+          const productData = await response.json();
+          return {
+            ...productData,
+            quantity: localCartItems[productId].quantity,
+          };
+        });
+
+        const products = await Promise.all(promises);
+        setCartItems(products);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProductDetails();
+  }, []);
+
+  const calculateTotalAmount = () => {
+    return cartItems.reduce((total, item) => {
+      return total + item.product_price * item.quantity;
+    }, 0);
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
   return (
     <div className="checkout-container">
       <h1>Checkout</h1>
-      <div className="checkout-details">
-        <div className="items-summary">
-          <h2>Order Summary</h2>
-          {checkedOutItems.length > 0 ? (
-            checkedOutItems.map((item) => (
+      {loading ? (
+        <p>Loading cart items...</p>
+      ) : error ? (
+        <p className="text-danger">{error}</p>
+      ) : cartItems.length === 0 ? (
+        <p>Your cart is empty</p>
+      ) : (
+        <div>
+          <div className="checkout-items">
+            {cartItems.map((item) => (
               <div key={item.product_id} className="checkout-item">
                 <img
                   src={item.product_image}
                   alt={item.product_name}
-                  className="checkout-item-image"
+                  className="product-image"
                 />
-                <div className="checkout-item-details">
-                  <p>{item.product_name}</p>
+                <div className="item-details">
+                  <h4>{item.product_name}</h4>
+                  <p>Seller: {item.seller_username}</p>
+                  <p>Price: Php {item.product_price.toFixed(2)}</p>
+                  <p>Quantity: {item.quantity}</p>
                   <p>
-                    {item.quantity} x Php {item.product_price}
+                    Subtotal: Php{" "}
+                    {(item.product_price * item.quantity).toFixed(2)}
                   </p>
-                  <p>Total: Php {item.quantity * item.product_price}</p>
                 </div>
               </div>
-            ))
-          ) : (
-            <p>No items selected for checkout</p>
-          )}
-          <h3>Total Amount: Php {totalAmount.toFixed(2)}</h3>
+            ))}
+          </div>
+          <div className="checkout-summary">
+            <h2>Total Amount: Php {calculateTotalAmount().toFixed(2)}</h2>
+            <button className="checkout-button">Place Order</button>
+          </div>
         </div>
-
-        <div className="user-details">
-          <h2>Shipping Information</h2>
-          <form>
-            <div className="form-group">
-              <label htmlFor="name">Full Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={userDetails.name}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="address">Address</label>
-              <textarea
-                id="address"
-                name="address"
-                value={userDetails.address}
-                onChange={handleInputChange}
-                required
-              ></textarea>
-            </div>
-            <div className="form-group">
-              <label htmlFor="phone">Phone Number</label>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={userDetails.phone}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <button className="confirm-button" onClick={handleOrderConfirmation}>
-        Confirm Order
-      </button>
+      )}
     </div>
   );
 };
