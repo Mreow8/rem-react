@@ -305,6 +305,7 @@ const Navbar = () => {
 
   return (
     <div className="add-to-cart-container">
+      <Nav />
       <div className="fixed-bottom-bar">
         <input
           type="checkbox"
@@ -322,12 +323,6 @@ const Navbar = () => {
           <button>Checkout</button>
         </Link>
       </div>
-      <Nav
-        username={username}
-        handleLogout={handleLogout}
-        searchQuery={searchQuery}
-        handleSearchChange={handleSearchChange}
-      />
 
       <div className="container-fluid p-0">
         <div className="row justify-content-center">
@@ -391,10 +386,11 @@ const Navbar = () => {
                                 alt={item.product_name}
                                 style={{
                                   width: "80px",
-                                  height: "80px",
+                                  height: "100px",
                                   objectFit: "cover",
                                   borderRadius: "5px",
                                 }}
+                                className="image-product"
                               />
                               <p className="product-name">
                                 {item.product_name}

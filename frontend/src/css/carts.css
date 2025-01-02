@@ -212,7 +212,7 @@ body {
   border-color: #838383;
 }
 
-/* Media query for small screen sizes */
+/* Media query for small screen sizes */ /* Media query for small screen sizes */
 @media (max-width: 768px) {
   .details_cart,
   .cart_items,
@@ -223,8 +223,9 @@ body {
   }
 
   .product-card {
-    flex-direction: column;
+    flex-direction: column; /* Stack the elements */
     padding: 10px;
+    align-items: flex-start; /* Align items to the left */
   }
 
   .product-card img {
@@ -234,11 +235,37 @@ body {
   .product-card .product-info,
   .product-card .actions {
     width: 100%;
-    text-align: center;
+    text-align: left; /* Align text to the left */
   }
 
-  .product-card .quantity-controls {
-    margin: 10px 0;
+  /* Stack name and price */
+  .product-card .product-name,
+  .product-card p {
+    margin-bottom: 5px;
+  }
+
+  /* Inline the price and quantity controls */
+  .product-card .quantity {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: 10px;
+  }
+
+  .product-card .quantity button {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Move delete button to top left */
+  .product-card .delete-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  .product-card .delete-button:hover {
+    background-color: #c82333;
   }
 
   .search-container {
@@ -257,11 +284,14 @@ body {
     margin-right: 0;
     width: auto;
   }
+
   .check {
     width: 10px;
   }
+
   .fixed-bottom-bar {
     flex-direction: row;
+    margin-top: 90px;
     padding: 10px;
   }
 
