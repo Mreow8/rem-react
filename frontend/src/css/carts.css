@@ -33,6 +33,7 @@ body {
 
 .check {
   margin-left: 10%; /* Margin for checkbox */
+  width: 20px;
 }
 
 .details_cart p {
