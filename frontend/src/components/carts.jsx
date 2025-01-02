@@ -337,7 +337,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className="container-fluid p-0">
+      <div className="container-fluid">
         <div className="row justify-content-center">
           <div>
             <div className="cartContainer">

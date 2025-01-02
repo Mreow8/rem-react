@@ -48,7 +48,9 @@ body {
   margin-left: 10%;
   height: 40px;
 }
-
+.container-fluid {
+  width: 100%;
+}
 /* Style for the search container */
 .search-container {
   position: relative;
@@ -98,7 +100,7 @@ body {
 
 .random {
   margin-left: auto;
-  text-align: right;
+  text-align: left;
 }
 
 .product-card img {
