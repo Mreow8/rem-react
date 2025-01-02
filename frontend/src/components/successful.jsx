@@ -1,5 +1,5 @@
 import React from "react";
-import successGif from "./assets/successful.gif"; // Make sure to adjust the path to your gif file
+import successGif from "../assets/successful.gif"; // Make sure to adjust the path to your gif file
 
 const SuccessPage = () => {
   return (
