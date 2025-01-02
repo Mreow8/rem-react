@@ -65,14 +65,14 @@ router.post(
   }
 );
 
-// Get cart items for a user, including Cloudinary image URLs
+// Get cart items for a user, including Cloudinary image URLs// Get cart items for a user, including Cloudinary image URLs
 router.get("/:userId", (req, res) => {
   const userId = req.params.userId;
   const query = `
       SELECT 
         products.product_name,
         products.product_price,
-        products.product_image,
+        products.product_image,  // Get the product image URL
         cart.quantity,
         stores.store_name AS seller_username,
         cart.product_id
@@ -92,12 +92,15 @@ router.get("/:userId", (req, res) => {
       return res.status(500).json({ message: "Error retrieving cart items" });
     }
 
+    // Map through products and add the full image URL from Cloudinary
     const productsWithImages = results.rows.map((product) => ({
       ...product,
-      product_image: product.product_image || "placeholder_image.png",
+      product_image: product.product_image
+        ? product.product_image // If product_image is available, use it
+        : "placeholder_image.png", // Fallback image if not available
     }));
 
-    res.status(200).json(productsWithImages);
+    res.status(200).json(productsWithImages); // Return the products with the image URLs
   });
 });
 
