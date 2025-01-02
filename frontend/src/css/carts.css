@@ -199,6 +199,7 @@ body {
 .fixed-bottom-bar a {
   text-decoration: none;
 }
+
 .quantity {
   display: flex;
   align-items: center;
@@ -211,4 +212,61 @@ body {
   padding: 5px 10px;
   cursor: pointer;
   border-color: #838383;
+}
+
+/* Media query for small screen sizes */
+@media (max-width: 768px) {
+  .details_cart,
+  .cart_items,
+  .product-card,
+  .fixed-bottom-bar {
+    display: block; /* Stack elements vertically */
+    width: 100%; /* Ensure full width */
+  }
+
+  .product-card {
+    flex-direction: column; /* Stack items vertically */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .product-card img {
+    margin-bottom: 10px; /* Add space below image */
+  }
+
+  .product-card .product-info,
+  .product-card .actions {
+    width: 100%; /* Ensure these elements take full width */
+    text-align: center; /* Center text for better readability */
+  }
+
+  .product-card .quantity-controls {
+    margin: 10px 0; /* Adjust spacing for quantity controls */
+  }
+
+  .search-container {
+    width: 100%; /* Make search container full width */
+    margin-bottom: 10px; /* Add spacing below */
+  }
+
+  .search-input {
+    width: 100%; /* Make input field full width */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .cart_items p:not(.chck),
+  .cart_items button {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%; /* Make buttons take full width */
+  }
+
+  .fixed-bottom-bar {
+    flex-direction: column; /* Stack items vertically */
+    padding: 10px; /* Adjust padding */
+  }
+
+  .fixed-bottom-bar button {
+    width: 100%; /* Make buttons take full width */
+    margin-bottom: 10px; /* Space between buttons */
+  }
 }
