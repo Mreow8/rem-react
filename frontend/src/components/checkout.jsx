@@ -9,7 +9,7 @@ const Checkout = () => {
   const [groupedProducts, setGroupedProducts] = useState({});
   const [totalAmount, setTotalAmount] = useState(0);
   const [shippingFee, setShippingFee] = useState(50); // Example shipping fee
-  const [address, setAddress] = useState(""); // Default address
+  const [address, setAddress] = useState(null); // Store the full address object
   const [paymentMethod, setPaymentMethod] = useState("Credit Card");
   const [isAddressFormVisible, setAddressFormVisible] = useState(false);
   const [newAddress, setNewAddress] = useState({
@@ -81,7 +81,7 @@ const Checkout = () => {
         );
         const data = await response.json();
         setAddresses(data.addresses || []);
-        setAddress(data.addresses.length > 0 ? data.addresses[0] : "");
+        setAddress(data.addresses.length > 0 ? data.addresses[0] : null); // Set the first address by default
       } catch (err) {
         console.error("Error fetching addresses:", err);
       }
@@ -125,9 +125,8 @@ const Checkout = () => {
 
   const handleAddressSubmit = (event) => {
     event.preventDefault();
-    setAddress(
-      `${newAddress.full_name}, ${newAddress.barangay}, ${newAddress.city}, ${newAddress.province}, ${newAddress.region} ${newAddress.postal_code}`
-    );
+    const formattedAddress = `${newAddress.full_name}, ${newAddress.barangay}, ${newAddress.city}, ${newAddress.province}, ${newAddress.region} ${newAddress.postal_code}`;
+    setAddress(formattedAddress); // Store the address as a formatted string
     setAddressFormVisible(false); // Hide form after submission
   };
 
@@ -136,7 +135,7 @@ const Checkout = () => {
   };
 
   const handleAddressSelection = (selectedAddress) => {
-    setAddress(selectedAddress);
+    setAddress(selectedAddress); // Store the full address object
     setIsAddressModalVisible(false); // Close modal after selection
   };
 
@@ -207,7 +206,11 @@ const Checkout = () => {
           <p>Grand Total: Php {(totalAmount + shippingFee).toFixed(2)}</p>
 
           <h4>Address</h4>
-          <p>{address}</p>
+          <p>
+            {address
+              ? `${address.full_name}, ${address.barangay}, ${address.city}, ${address.province}, ${address.region} ${address.postal_code}`
+              : "No address selected"}
+          </p>
           <button onClick={toggleAddressModal}>Choose Address</button>
 
           <h4>Payment Method</h4>
