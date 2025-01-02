@@ -5,6 +5,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "../css/carts.css";
 import Nav from "./nav";
 //import Swal from "sweetalert2";
+import remLogo from "../assets/remlogo.png";
 
 const Navbar = () => {
   const [username, setUsername] = useState(null);
