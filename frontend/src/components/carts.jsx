@@ -400,36 +400,38 @@ const Navbar = () => {
                                 }}
                                 className="image-product"
                               />
-                              <p className="product-name">
-                                {item.product_name}
-                              </p>
-                            </div>
-                            <p>Php {item.product_price}</p>
-                            <div className="quantity">
+                              <div className="random">
+                                <p className="product-name">
+                                  {item.product_name}
+                                </p>
+                              </div>
+                              <p>Php {item.product_price}</p>
+                              <div className="quantity">
+                                <button
+                                  className="minus-button"
+                                  onClick={() =>
+                                    decreaseQuantity(item.product_id)
+                                  }
+                                >
+                                  -
+                                </button>
+                                <span>{item.quantity}</span>
+                                <button
+                                  className="plus-button"
+                                  onClick={() =>
+                                    increaseQuantity(item.product_id)
+                                  }
+                                >
+                                  +
+                                </button>
+                              </div>
                               <button
-                                className="minus-button"
-                                onClick={() =>
-                                  decreaseQuantity(item.product_id)
-                                }
+                                className="delete-button"
+                                onClick={() => removeCartItem(item.product_id)}
                               >
-                                -
-                              </button>
-                              <span>{item.quantity}</span>
-                              <button
-                                className="plus-button"
-                                onClick={() =>
-                                  increaseQuantity(item.product_id)
-                                }
-                              >
-                                +
+                                <FontAwesomeIcon icon={faTrash} />
                               </button>
                             </div>
-                            <button
-                              className="delete-button"
-                              onClick={() => removeCartItem(item.product_id)}
-                            >
-                              <FontAwesomeIcon icon={faTrash} />
-                            </button>
                           </div>
                         ))}
                       </div>
