@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../css/checkout.css";
+import Loading from "./loading"; // Assuming you have a loading component
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
@@ -8,7 +9,7 @@ const Checkout = () => {
   const [groupedProducts, setGroupedProducts] = useState({});
   const [totalAmount, setTotalAmount] = useState(0);
   const [shippingFee, setShippingFee] = useState(50); // Example shipping fee
-  const [address, setAddress] = useState("123 Main St, City, Country");
+  const [address, setAddress] = useState(""); // Default address
   const [paymentMethod, setPaymentMethod] = useState("Credit Card");
   const [isAddressFormVisible, setAddressFormVisible] = useState(false);
   const [newAddress, setNewAddress] = useState({
@@ -21,6 +22,8 @@ const Checkout = () => {
     postal_code: "",
     label: "Home",
   });
+  const [addresses, setAddresses] = useState([]);
+  const [isAddressModalVisible, setIsAddressModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -61,7 +64,23 @@ const Checkout = () => {
       }
     };
 
+    const fetchAddresses = async () => {
+      const userId = localStorage.getItem("userId");
+      if (!userId) return;
+      try {
+        const response = await fetch(
+          `https://rem-reacts.onrender.com/api/addresses/${userId}`
+        );
+        const data = await response.json();
+        setAddresses(data.addresses || []);
+        setAddress(data.addresses.length > 0 ? data.addresses[0] : "");
+      } catch (err) {
+        console.error("Error fetching addresses:", err);
+      }
+    };
+
     fetchCartItems();
+    fetchAddresses();
   }, []);
 
   const groupProductsBySeller = (products) => {
@@ -84,13 +103,6 @@ const Checkout = () => {
     setTotalAmount(total);
   };
 
-  const calculateSellerTotal = (products) => {
-    return products.reduce((sum, product) => {
-      const price = Number(product.product_price) || 0;
-      return sum + price * product.quantity;
-    }, 0);
-  };
-
   const handlePaymentChange = (event) => {
     setPaymentMethod(event.target.value);
   };
@@ -111,9 +123,27 @@ const Checkout = () => {
     setAddressFormVisible(false); // Hide form after submission
   };
 
-  const toggleAddressForm = () => {
-    setAddressFormVisible((prev) => !prev);
+  const toggleAddressModal = () => {
+    setIsAddressModalVisible((prev) => !prev);
   };
+
+  const handleAddressSelection = (selectedAddress) => {
+    setAddress(selectedAddress);
+    setIsAddressModalVisible(false); // Close modal after selection
+  };
+
+  const handleAddNewAddress = () => {
+    setIsAddressFormVisible(true);
+    setIsAddressModalVisible(false); // Close modal
+  };
+
+  const handleAddressModalClose = () => {
+    setIsAddressModalVisible(false);
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="checkout-container">
@@ -170,90 +200,7 @@ const Checkout = () => {
 
           <h4>Address</h4>
           <p>{address}</p>
-          <button onClick={toggleAddressForm}>Edit Address</button>
-
-          {isAddressFormVisible && (
-            <div className="address-form">
-              <h4>Enter New Address</h4>
-              <form onSubmit={handleAddressSubmit}>
-                <label>
-                  Full Name:
-                  <input
-                    type="text"
-                    name="full_name"
-                    value={newAddress.full_name}
-                    onChange={handleAddressChange}
-                  />
-                </label>
-                <label>
-                  Phone Number:
-                  <input
-                    type="text"
-                    name="phone_number"
-                    value={newAddress.phone_number}
-                    onChange={handleAddressChange}
-                  />
-                </label>
-                <label>
-                  Region:
-                  <input
-                    type="text"
-                    name="region"
-                    value={newAddress.region}
-                    onChange={handleAddressChange}
-                  />
-                </label>
-                <label>
-                  Province:
-                  <input
-                    type="text"
-                    name="province"
-                    value={newAddress.province}
-                    onChange={handleAddressChange}
-                  />
-                </label>
-                <label>
-                  City:
-                  <input
-                    type="text"
-                    name="city"
-                    value={newAddress.city}
-                    onChange={handleAddressChange}
-                  />
-                </label>
-                <label>
-                  Barangay:
-                  <input
-                    type="text"
-                    name="barangay"
-                    value={newAddress.barangay}
-                    onChange={handleAddressChange}
-                  />
-                </label>
-                <label>
-                  Postal Code:
-                  <input
-                    type="text"
-                    name="postal_code"
-                    value={newAddress.postal_code}
-                    onChange={handleAddressChange}
-                  />
-                </label>
-                <label>
-                  Address Label:
-                  <select
-                    name="label"
-                    value={newAddress.label}
-                    onChange={handleAddressChange}
-                  >
-                    <option value="Home">Home</option>
-                    <option value="Work">Work</option>
-                  </select>
-                </label>
-                <button type="submit">Save Address</button>
-              </form>
-            </div>
-          )}
+          <button onClick={toggleAddressModal}>Choose Address</button>
 
           <h4>Payment Method</h4>
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -283,6 +230,27 @@ const Checkout = () => {
           <button className="checkout-button">Place Order</button>
         </div>
       </div>
+
+      {/* Address Modal */}
+      {isAddressModalVisible && (
+        <div className="address-modal">
+          <div className="address-modal-content">
+            <h4>Select Address</h4>
+            {addresses.map((address, index) => (
+              <div
+                key={index}
+                className="address-option"
+                onClick={() => handleAddressSelection(address)}
+              >
+                {address.full_name}, {address.barangay}, {address.city},{" "}
+                {address.province}, {address.region}, {address.postal_code}
+              </div>
+            ))}
+            <button onClick={handleAddNewAddress}>Add New Address</button>
+            <button onClick={handleAddressModalClose}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
