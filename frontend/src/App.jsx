@@ -11,6 +11,8 @@ import Add_Product from "./components/addproducts";
 import Carts from "./components/carts";
 import Profile from "./components/profile";
 import Checkout from "./components/checkout";
+import Success from "./components/successful";
+import Failed from "./components/failed";
 
 const App = () => {
   return (
@@ -27,6 +29,8 @@ const App = () => {
         <Route path="/add_to_cart" element={<Carts />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/success" element={<Success />} />
       </Routes>
     </Router>
   );

@@ -1,13 +1,13 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const paymongo = require("paymongo"); // Import Paymongo
 const pool = require("./config/db");
 const authRoutes = require("./routes/profile");
 const productsRoutes = require("./routes/products");
 const sellersRoutes = require("./routes/sellers");
 const cartsRoutes = require("./routes/carts");
 const addressRoutes = require("./routes/address");
-const notifRoutes = require("./routes/notification");
 
 const app = express();
 const PORT = 3001; // Use environment port or 3001
@@ -27,8 +27,6 @@ app.use(
   })
 );
 
-// Mount the auth routes at /api/auth
-
 // Test the database connection
 pool.query("SELECT NOW()", (err, res) => {
   if (err) {
@@ -37,12 +35,36 @@ pool.query("SELECT NOW()", (err, res) => {
     console.log("Database connection test succeeded:", res.rows[0]);
   }
 });
+
+// Mount the auth routes at /api/auth
 app.use("/api/profile", authRoutes);
 app.use("/api/products", productsRoutes);
 app.use("/api/sellers", sellersRoutes);
 app.use("/api/cart", cartsRoutes);
 app.use("/api/addresses", addressRoutes);
-app.use("/api/notifications", notifRoutes);
+
+// Route to create a Paymongo payment link
+app.get("/create-payment-link", (req, res) => {
+  paymongo.apiKey = "sk_test_f4HS6zEv2XSaTjYYyagCcUcu"; // Replace with your actual secret key
+
+  paymongo.paymentLinks
+    .create({
+      amount: 1000,
+      description: "Payment for Order #1234",
+      redirect: {
+        success: "https://rem-react.onrender.com/success",
+        failed: "https://rem-react.onrender.com/failed",
+      },
+    })
+    .then((paymentLink) => {
+      res.json({ paymentLinkUrl: paymentLink.data.attributes.url });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

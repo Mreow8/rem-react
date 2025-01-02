@@ -10,6 +10,17 @@ const Checkout = () => {
   const [shippingFee, setShippingFee] = useState(50); // Example shipping fee
   const [address, setAddress] = useState("123 Main St, City, Country");
   const [paymentMethod, setPaymentMethod] = useState("Credit Card");
+  const [isAddressFormVisible, setAddressFormVisible] = useState(false);
+  const [newAddress, setNewAddress] = useState({
+    full_name: "",
+    phone_number: "",
+    region: "",
+    province: "",
+    city: "",
+    barangay: "",
+    postal_code: "",
+    label: "Home",
+  });
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -84,6 +95,26 @@ const Checkout = () => {
     setPaymentMethod(event.target.value);
   };
 
+  const handleAddressChange = (event) => {
+    const { name, value } = event.target;
+    setNewAddress((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleAddressSubmit = (event) => {
+    event.preventDefault();
+    setAddress(
+      `${newAddress.full_name}, ${newAddress.barangay}, ${newAddress.city}, ${newAddress.province}, ${newAddress.region} ${newAddress.postal_code}`
+    );
+    setAddressFormVisible(false); // Hide form after submission
+  };
+
+  const toggleAddressForm = () => {
+    setAddressFormVisible((prev) => !prev);
+  };
+
   return (
     <div className="checkout-container">
       <h1>Checkout</h1>
@@ -130,13 +161,99 @@ const Checkout = () => {
             ))
           )}
         </div>
+
         <div className="checkout-summary checkout-summary-right fixed-section">
           <h1>Total Amount</h1>
           <p>Products Total: Php {totalAmount.toFixed(2)}</p>
           <p>Shipping Fee: Php {shippingFee.toFixed(2)}</p>
           <p>Grand Total: Php {(totalAmount + shippingFee).toFixed(2)}</p>
+
           <h4>Address</h4>
           <p>{address}</p>
+          <button onClick={toggleAddressForm}>Edit Address</button>
+
+          {isAddressFormVisible && (
+            <div className="address-form">
+              <h4>Enter New Address</h4>
+              <form onSubmit={handleAddressSubmit}>
+                <label>
+                  Full Name:
+                  <input
+                    type="text"
+                    name="full_name"
+                    value={newAddress.full_name}
+                    onChange={handleAddressChange}
+                  />
+                </label>
+                <label>
+                  Phone Number:
+                  <input
+                    type="text"
+                    name="phone_number"
+                    value={newAddress.phone_number}
+                    onChange={handleAddressChange}
+                  />
+                </label>
+                <label>
+                  Region:
+                  <input
+                    type="text"
+                    name="region"
+                    value={newAddress.region}
+                    onChange={handleAddressChange}
+                  />
+                </label>
+                <label>
+                  Province:
+                  <input
+                    type="text"
+                    name="province"
+                    value={newAddress.province}
+                    onChange={handleAddressChange}
+                  />
+                </label>
+                <label>
+                  City:
+                  <input
+                    type="text"
+                    name="city"
+                    value={newAddress.city}
+                    onChange={handleAddressChange}
+                  />
+                </label>
+                <label>
+                  Barangay:
+                  <input
+                    type="text"
+                    name="barangay"
+                    value={newAddress.barangay}
+                    onChange={handleAddressChange}
+                  />
+                </label>
+                <label>
+                  Postal Code:
+                  <input
+                    type="text"
+                    name="postal_code"
+                    value={newAddress.postal_code}
+                    onChange={handleAddressChange}
+                  />
+                </label>
+                <label>
+                  Address Label:
+                  <select
+                    name="label"
+                    value={newAddress.label}
+                    onChange={handleAddressChange}
+                  >
+                    <option value="Home">Home</option>
+                    <option value="Work">Work</option>
+                  </select>
+                </label>
+                <button type="submit">Save Address</button>
+              </form>
+            </div>
+          )}
 
           <h4>Payment Method</h4>
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -163,7 +280,7 @@ const Checkout = () => {
           </div>
 
           <p>Selected Payment Method: {paymentMethod}</p>
-          <button className="checkout-button">Proceed to Payment</button>
+          <button className="checkout-button">Place Order</button>
         </div>
       </div>
     </div>

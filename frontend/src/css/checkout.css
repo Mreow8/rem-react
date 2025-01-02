@@ -171,6 +171,29 @@ p {
 .checkout-button:hover {
   background-color: #218838;
 }
+.address-form {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.checkout-summary button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.checkout-summary button:hover {
+  background-color: #45a049;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
