@@ -3,44 +3,44 @@ body {
 }
 
 .cartContainer {
-  width: calc(100vw - 20px); /* Adjust width to account for horizontal margin */
+  width: calc(100vw - 20px);
   height: calc(100vh - 10px);
   z-index: -2;
   border-radius: 5%;
   background-color: white;
-  margin: 8% 0 0 10px; /* Adjust margin as needed */
-  padding: 0; /* Remove padding if needed */
+  margin: 8% 0 0 10px;
+  padding: 0;
 }
 
 .details_cart {
-  display: flex; /* Keep the flex display */
-  justify-content: center; /* Center items horizontally */
-  align-items: center; /* Center items vertically */
-  margin-bottom: 10px; /* Space below */
-  background-color: white; /* White background */
-  width: 100%; /* Full width of container */
-  padding: 10px 0; /* Padding for aesthetics */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: white;
+  width: 100%;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   color: #ababab;
-  position: relative; /* Change to relative positioning */
-  top: 0; /* Remove the fixed top positioning */
+  position: relative;
+  top: 0;
 }
 
 .details_cart p.products {
   margin-left: 0;
-  margin-right: 20%; /* No left margin for the product label */
+  margin-right: 20%;
 }
 
 .check {
-  margin-left: 10%; /* Margin for checkbox */
+  margin-left: 10%;
   width: 20px !important;
 }
 
 .details_cart p {
   margin-top: 20px;
-  display: inline; /* Keep paragraphs inline */
-  margin-right: 10%; /* Right margin */
-  margin-left: 10%; /* Left margin */
+  display: inline;
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
 .cart_items {
@@ -51,8 +51,8 @@ body {
 .cart_items button {
   margin-top: 20px;
   display: inline;
-  margin-right: 10%; /* Right margin */
-  margin-left: 10%; /* Left margin */
+  margin-right: 10%;
+  margin-left: 10%;
   height: 40px;
 }
 
@@ -69,7 +69,6 @@ body {
   margin-right: 20px;
 }
 
-/* Style for the search input */
 .search-input {
   padding: 10px 40px 10px 10px;
   border-radius: 10px 0 0 10px;
@@ -77,7 +76,6 @@ body {
   outline: none;
 }
 
-/* Style for the search button */
 .search-container .btn {
   background-color: transparent;
   border: none;
@@ -87,78 +85,78 @@ body {
 }
 
 .product-card {
-  display: flex; /* Use flexbox for layout */
-  justify-content: space-between; /* Space items evenly */
-  align-items: center; /* Align items vertically */
-  border: 1px solid #ccc; /* Border color */
-  border-radius: 5px; /* Rounded corners */
-  padding: 15px; /* Inner spacing */
-  margin: 10px 20px; /* Vertical and horizontal margins */
-  background-color: #f9f9f9; /* Background color */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .product-card img {
-  width: 80px; /* Fixed width for images */
-  height: 80px; /* Fixed height for images */
-  object-fit: cover; /* Maintain aspect ratio */
-  border-radius: 5px; /* Rounded corners for images */
-  margin-right: 15px; /* Spacing between image and text */
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 15px;
 }
 
 .product-card .product-info {
-  flex-grow: 1; /* Allow the text to expand */
-  margin-right: 15px; /* Spacing to the right */
+  flex-grow: 1;
+  margin-right: 15px;
 }
 
 .product-card .product-info p {
-  margin: 5px 0; /* Margin between product name and details */
-  font-size: 1rem; /* Font size */
-  color: #333; /* Text color */
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #333;
 }
 
 .product-card .actions {
-  display: flex; /* Use flexbox for buttons */
-  align-items: center; /* Center items vertically */
+  display: flex;
+  align-items: center;
 }
 
 .product-card .quantity-controls {
-  display: flex; /* Align buttons horizontally */
-  align-items: center; /* Center items vertically */
-  margin-right: 10px; /* Space between quantity and delete button */
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
 }
 
 .product-card .quantity-controls button {
-  width: 30px; /* Fixed width */
-  height: 30px; /* Fixed height */
-  border: none; /* No border */
-  background-color: #007bff; /* Blue background */
-  color: #fff; /* White text */
-  border-radius: 50%; /* Round buttons */
-  cursor: pointer; /* Pointer cursor */
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .product-card .quantity-controls button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3;
 }
 
 .product-card .quantity-controls span {
-  margin: 0 10px; /* Space between buttons and quantity */
-  font-size: 1rem; /* Font size */
-  color: #333; /* Text color */
+  margin: 0 10px;
+  font-size: 1rem;
+  color: #333;
 }
 
 .product-card .delete-button {
-  background-color: #dc3545; /* Red background */
-  color: #fff; /* White text */
-  border: none; /* No border */
-  padding: 5px 10px; /* Padding */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor */
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .product-card .delete-button:hover {
-  background-color: #c82333; /* Darker red on hover */
+  background-color: #c82333;
 }
 
 .fixed-bottom-bar {
@@ -166,25 +164,25 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #f8f9fa; /* Light gray background */
-  border-top: 1px solid #ddd; /* Top border for separation */
+  background-color: #f8f9fa;
+  border-top: 1px solid #ddd;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for elevation */
-  z-index: 1000; /* Ensure it stays above other content */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
 .fixed-bottom-bar p {
   margin: 0;
   font-size: 1rem;
-  color: #333; /* Text color */
+  color: #333;
 }
 
 .fixed-bottom-bar button {
   padding: 10px 20px;
-  background-color: #007bff; /* Blue button background */
+  background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -193,7 +191,7 @@ body {
 }
 
 .fixed-bottom-bar button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3;
 }
 
 .fixed-bottom-bar a {
@@ -220,53 +218,53 @@ body {
   .cart_items,
   .product-card,
   .fixed-bottom-bar {
-    display: block; /* Stack elements vertically */
-    width: 100%; /* Ensure full width */
+    display: block;
+    width: 100%;
   }
 
   .product-card {
-    flex-direction: column; /* Stack items vertically */
-    padding: 10px; /* Adjust padding for smaller screens */
+    flex-direction: column;
+    padding: 10px;
   }
 
   .product-card img {
-    margin-bottom: 10px; /* Add space below image */
+    margin-bottom: 10px;
   }
 
   .product-card .product-info,
   .product-card .actions {
-    width: 100%; /* Ensure these elements take full width */
-    text-align: center; /* Center text for better readability */
+    width: 100%;
+    text-align: center;
   }
 
   .product-card .quantity-controls {
-    margin: 10px 0; /* Adjust spacing for quantity controls */
+    margin: 10px 0;
   }
 
   .search-container {
-    width: 100%; /* Make search container full width */
-    margin-bottom: 10px; /* Add spacing below */
+    width: 100%;
+    margin-bottom: 10px;
   }
 
   .search-input {
-    width: 100%; /* Make input field full width */
-    padding: 10px; /* Adjust padding for smaller screens */
+    width: 100%;
+    padding: 10px;
   }
 
   .cart_items p:not(.chck),
   .cart_items button {
     margin-left: 0;
     margin-right: 0;
-    width: 100%; /* Make buttons take full width */
+    width: auto;
   }
 
   .fixed-bottom-bar {
-    flex-direction: column; /* Stack items vertically */
-    padding: 10px; /* Adjust padding */
+    flex-direction: row;
+    padding: 10px;
   }
 
   .fixed-bottom-bar button {
-    width: 100%; /* Make buttons take full width */
-    margin-bottom: 10px; /* Space between buttons */
+    width: auto;
+    margin-bottom: 0;
   }
 }
