@@ -1,11 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../config/db"); // Importing the pool for database queries
+const { check, validationResult } = require("express-validator");
+
+// Placeholder middleware for `authenticateUser`
+const authenticateUser = (req, res, next) => {
+  // For now, this simply allows requests through
+  console.log("Authentication placeholder.");
+  next();
+};
+
+// Update user profile route
 router.put(
   "/:userId",
-  authenticateUser,
+  authenticateUser, // Placeholder authentication middleware
   [
-    // Validation (optional, based on your needs)
     check("phoneNumber")
       .optional()
       .isString()
@@ -22,50 +31,64 @@ router.put(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    // Find user by userId
     try {
-      let user = await User.findById(userId);
-      if (!user) {
+      const query = "SELECT * FROM users WHERE user_id = $1";
+      const { rows } = await pool.query(query, [userId]);
+
+      if (rows.length === 0) {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Only update the fields that are provided
-      if (phoneNumber) user.phoneNumber = phoneNumber;
-      if (email) user.email = email;
+      // Update user fields
+      let updateQuery = "UPDATE users SET ";
+      const updateValues = [];
+      let valueIndex = 1;
 
-      // Save the updated user information
-      await user.save();
+      if (phoneNumber) {
+        updateQuery += `phone = $${valueIndex}, `;
+        updateValues.push(phoneNumber);
+        valueIndex++;
+      }
+      if (email) {
+        updateQuery += `email = $${valueIndex}, `;
+        updateValues.push(email);
+        valueIndex++;
+      }
 
-      return res.status(200).json({
+      updateQuery = updateQuery.slice(0, -2); // Remove trailing comma
+      updateQuery += ` WHERE user_id = $${valueIndex} RETURNING *`;
+      updateValues.push(userId);
+
+      const updatedUser = await pool.query(updateQuery, updateValues);
+
+      res.status(200).json({
         message: "User profile updated successfully",
-        user,
+        user: updatedUser.rows[0],
       });
     } catch (error) {
       console.error("Error updating user:", error);
-      return res.status(500).json({ message: "Server error" });
+      res.status(500).json({ message: "Server error" });
     }
   }
 );
+
+// Signup Route
 router.post("/signup", async (req, res) => {
   const { phone, password, username } = req.body;
 
-  // Check if all fields are provided
   if (!phone || !password || !username) {
     return res.status(400).json({ message: "All fields are required." });
   }
 
   try {
-    // Query to check if the username already exists
     const checkUsernameQuery = "SELECT * FROM users WHERE username = $1";
     const { rows: usernameRows } = await pool.query(checkUsernameQuery, [
       username,
     ]);
 
-    // Query to check if the phone number already exists
     const checkPhoneQuery = "SELECT * FROM users WHERE phone = $1";
     const { rows: phoneRows } = await pool.query(checkPhoneQuery, [phone]);
 
-    // If either username or phone already exists, return a conflict error
     if (usernameRows.length > 0 && phoneRows.length > 0) {
       return res
         .status(409)
@@ -76,7 +99,6 @@ router.post("/signup", async (req, res) => {
       return res.status(409).json({ message: "Phone number already exists." });
     }
 
-    // Insert new user into the database
     const insertUserQuery =
       "INSERT INTO users (phone, password, username) VALUES ($1, $2, $3)";
     await pool.query(insertUserQuery, [phone, password, username]);
@@ -86,8 +108,8 @@ router.post("/signup", async (req, res) => {
     console.error("Error in /signup route:", error.message);
     res.status(500).json({
       message: "Internal server error.",
-      error: error.message, // Detailed error message for debugging
-      stack: process.env.NODE_ENV === "development" ? error.stack : undefined, // Include stack trace in development
+      error: error.message,
+      stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
     });
   }
 });
@@ -96,15 +118,13 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { identifier, password } = req.body;
 
-  // Validate if both identifier and password are provided
   if (!identifier || !password) {
     return res
       .status(400)
       .json({ message: "Username, email, phone, and password are required." });
   }
-  console.log("identifier", identifier);
+
   try {
-    // Query to fetch user details from either username, email, or phone
     const query = `
       SELECT users.*, stores.store_name, stores.store_id
       FROM users
@@ -113,19 +133,16 @@ router.post("/login", async (req, res) => {
     `;
     const { rows } = await pool.query(query, [identifier]);
 
-    // If user doesn't exist, return an error message
     if (rows.length === 0) {
       return res.status(401).json({ message: "User does not exist." });
     }
 
     const user = rows[0];
 
-    // Check if the password matches
     if (user.password !== password) {
       return res.status(401).json({ message: "Incorrect password." });
     }
 
-    // Respond with user data on successful login
     res.status(200).json({
       message: "Login successful",
       user_id: user.user_id,
@@ -136,10 +153,10 @@ router.post("/login", async (req, res) => {
     console.error("Error in /login route:", error.message);
     res.status(500).json({
       message: "Internal server error.",
-      error: error.message, // Detailed error message for debugging
-      stack: process.env.NODE_ENV === "development" ? error.stack : undefined, // Include stack trace in development
+      error: error.message,
+      stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
     });
   }
 });
 
-module.exports = router; // Export the router to be used in server.js
+module.exports = router;
