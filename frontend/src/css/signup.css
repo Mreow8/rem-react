@@ -65,14 +65,13 @@ body {
   background-size: cover;
   background-position: center;
   filter: grayscale(0.4) brightness(0.6);
-  z-index: 1;
 }
 
 .background-image-container::before {
   content: "";
   position: absolute;
   top: 0;
-  z-index: 1;
+
   left: 0;
   right: 0;
   bottom: 0;
@@ -85,6 +84,22 @@ body {
 }
 
 @media (max-width: 768px) {
+  .login-container {
+    max-width: 80%; /* Adjust width for smaller screens */
+    position: absolute;
+    left: 50%; /* Center horizontally */
+    top: 80%; /* Center vertically */
+    transform: translate(-50%, -50%); /* Offset by half of width and height */
+    margin: 0; /* Remove any margin */
+    padding: 20px; /* Adjust padding for smaller screens */
+    background-color: rgba(
+      255,
+      255,
+      255,
+      0.95
+    ); /* Slightly increase opacity for readability */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  }
   .background-text {
     width: 100%;
     font-size: 0.5rem;

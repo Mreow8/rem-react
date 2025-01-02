@@ -48,12 +48,13 @@ body {
 .text-end {
   margin-right: 15px; /* Keep this for potential use in a .text-end element */
 }
+
 @media (max-width: 768px) {
   .login-container {
     max-width: 80%; /* Adjust width for smaller screens */
     position: absolute;
     left: 50%; /* Center horizontally */
-    top: 50%; /* Center vertically */
+    top: 80%; /* Center vertically */
     transform: translate(-50%, -50%); /* Offset by half of width and height */
     margin: 0; /* Remove any margin */
     padding: 20px; /* Adjust padding for smaller screens */
@@ -65,20 +66,28 @@ body {
     ); /* Slightly increase opacity for readability */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
   }
-
-  .login-title {
-    font-size: 1.5rem; /* Adjust title size for smaller screens */
+  .main-container {
+    display: block;
+    gap: 10px;
   }
-
-  button {
-    font-size: 1.1rem; /* Adjust button font size */
-  }
-
   .background-text {
-    display: none; /* Hide background text on small screens for better focus */
+    width: 100%;
+    font-size: 0.5rem;
+    left: 0;
+    right: 0;
+    padding: 0 20px;
+    top: 25%;
+    text-align: center;
+  }
+
+  .login-container {
+    max-width: 80%;
+    margin: 0 auto;
+    top: 70%;
+    margin-bottom: 10%;
+    padding: 30px;
   }
 }
-
 .background-image-container {
   position: fixed; /* Fix the background so it stays in place */
   top: 0;
