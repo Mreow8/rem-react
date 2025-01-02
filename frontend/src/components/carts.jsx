@@ -401,7 +401,7 @@ const Navbar = () => {
                               </p>
                             </div>
                             <p>Php {item.product_price}</p>
-                            <div className="input-group">
+                            <div className="quantity">
                               <button
                                 className="minus-button"
                                 onClick={() =>

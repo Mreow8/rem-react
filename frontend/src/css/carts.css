@@ -199,3 +199,16 @@ body {
 .fixed-bottom-bar a {
   text-decoration: none;
 }
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.minus-button,
+.plus-button {
+  display: inline-block;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-color: #838383;
+}
