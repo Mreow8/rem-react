@@ -267,7 +267,9 @@ body {
   .product-card .delete-button:hover {
     background-color: #c82333;
   }
-
+  .productsss {
+    align-items: flex-start;
+  }
   .search-container {
     width: 100%;
     margin-bottom: 10px;
@@ -290,16 +292,19 @@ body {
   }
 
   .fixed-bottom-bar {
-    flex-direction: row;
-    margin-top: 90px;
-    padding: 10px;
+    justify-content: flex-start; /* Align items to the left instead of center */
+    align-items: flex-start; /* Align items to the top */
+    flex-direction: column; /* Stack the items vertically */
   }
-
   .fixed-bottom-bar button {
     width: auto;
     margin-bottom: 0;
   }
   .product-name {
-    margin-top: 0;
+    margin-top: -10px;
+  }
+  .image-product {
+    width: 130px;
+    height: 150px;
   }
 }

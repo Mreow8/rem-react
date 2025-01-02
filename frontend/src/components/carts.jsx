@@ -380,6 +380,7 @@ const Navbar = () => {
                                 display: "flex",
                                 alignItems: "center",
                               }}
+                              className="productsss"
                             >
                               <input
                                 type="checkbox"
