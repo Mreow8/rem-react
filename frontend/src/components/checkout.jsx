@@ -25,6 +25,14 @@ const Checkout = () => {
   const [addresses, setAddresses] = useState([]);
   const [isAddressModalVisible, setIsAddressModalVisible] = useState(false);
 
+  // Function to calculate seller total
+  const calculateSellerTotal = (products) => {
+    return products.reduce((sum, product) => {
+      const price = Number(product.product_price) || 0;
+      return sum + price * product.quantity;
+    }, 0);
+  };
+
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -62,12 +70,6 @@ const Checkout = () => {
       } finally {
         setLoading(false);
       }
-    };
-    const calculateSellerTotal = (products) => {
-      return products.reduce((sum, product) => {
-        const price = Number(product.product_price) || 0;
-        return sum + price * product.quantity;
-      }, 0);
     };
 
     const fetchAddresses = async () => {
