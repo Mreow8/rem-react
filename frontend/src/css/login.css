@@ -27,7 +27,6 @@ body {
   padding: 30px 60px;
   border-radius: 10px;
   margin-right: 5%;
-  z-index: 2;
 }
 
 .login-title {
@@ -49,8 +48,37 @@ body {
 .text-end {
   margin-right: 15px; /* Keep this for potential use in a .text-end element */
 }
+@media (max-width: 768px) {
+  .login-container {
+    max-width: 80%; /* Adjust width for smaller screens */
+    position: absolute;
+    left: 50%; /* Center horizontally */
+    top: 50%; /* Center vertically */
+    transform: translate(-50%, -50%); /* Offset by half of width and height */
+    margin: 0; /* Remove any margin */
+    padding: 20px; /* Adjust padding for smaller screens */
+    background-color: rgba(
+      255,
+      255,
+      255,
+      0.95
+    ); /* Slightly increase opacity for readability */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  }
 
-/* Ensure background image is properly positioned */
+  .login-title {
+    font-size: 1.5rem; /* Adjust title size for smaller screens */
+  }
+
+  button {
+    font-size: 1.1rem; /* Adjust button font size */
+  }
+
+  .background-text {
+    display: none; /* Hide background text on small screens for better focus */
+  }
+}
+
 .background-image-container {
   position: fixed; /* Fix the background so it stays in place */
   top: 0;
@@ -61,7 +89,6 @@ body {
   background-size: cover;
   background-position: center;
   filter: grayscale(0.4) brightness(0.6);
-  z-index: 1;
 }
 
 .background-image-container::before {
@@ -72,44 +99,10 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
+
   background-color: rgba(5, 167, 27, 0.5);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   filter: grayscale(0.4) brightness(0.6);
-}
-
-/* Media Query for smaller screens */
-@media (max-width: 768px) {
-  .main-container {
-    display: block;
-    gap: 10px;
-  }
-
-  .background-text {
-    width: 100%;
-    font-size: 0.5rem;
-    left: 0;
-    right: 0;
-    padding: 0 20px;
-    top: 25%;
-    text-align: center;
-  }
-
-  /* Center the login container on small screens */
-  .login-container {
-    max-width: 80%;
-    margin: 0 auto;
-    top: 60%; /* Adjust the vertical position */
-    padding: 30px;
-    box-sizing: border-box; /* Ensure padding is included in width */
-  }
-
-  .login-title {
-    font-size: 1.5rem;
-  }
-
-  button {
-    font-size: 1.1rem; /* Scales button font size */
-  }
 }
