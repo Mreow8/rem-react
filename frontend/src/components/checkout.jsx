@@ -88,41 +88,6 @@ const Checkout = () => {
     <div className="checkout-container">
       <h1>Checkout</h1>
       <div className="checkout-layout">
-        <div className="checkout-summary fixed-section">
-          <h2>Total Amount</h2>
-          <p>Products Total: Php {totalAmount.toFixed(2)}</p>
-          <p>Shipping Fee: Php {shippingFee.toFixed(2)}</p>
-          <p>Grand Total: Php {(totalAmount + shippingFee).toFixed(2)}</p>
-          <h3>Address</h3>
-          <p>{address}</p>
-
-          <h3>Payment Method</h3>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="payment-method"
-                value="Cash on Delivery"
-                checked={paymentMethod === "Cash on Delivery"}
-                onChange={handlePaymentChange}
-              />
-              Cash on Delivery
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="payment-method"
-                value="Online Payment"
-                checked={paymentMethod === "Online Payment"}
-                onChange={handlePaymentChange}
-              />
-              Online Payment
-            </label>
-          </div>
-
-          <h3>Selected Payment Method: {paymentMethod}</h3>
-          <button className="checkout-button">Proceed to Payment</button>
-        </div>
         <div className="checkout-items scrollable-section">
           {loading ? (
             <p>Loading products...</p>
@@ -164,6 +129,41 @@ const Checkout = () => {
               </div>
             ))
           )}
+        </div>
+        <div className="checkout-summary checkout-summary-right fixed-section">
+          <h2>Total Amount</h2>
+          <p>Products Total: Php {totalAmount.toFixed(2)}</p>
+          <p>Shipping Fee: Php {shippingFee.toFixed(2)}</p>
+          <p>Grand Total: Php {(totalAmount + shippingFee).toFixed(2)}</p>
+          <h3>Address</h3>
+          <p>{address}</p>
+
+          <h3>Payment Method</h3>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="payment-method"
+                value="Cash on Delivery"
+                checked={paymentMethod === "Cash on Delivery"}
+                onChange={handlePaymentChange}
+              />
+              Cash on Delivery
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="payment-method"
+                value="Online Payment"
+                checked={paymentMethod === "Online Payment"}
+                onChange={handlePaymentChange}
+              />
+              Online Payment
+            </label>
+          </div>
+
+          <h3>Selected Payment Method: {paymentMethod}</h3>
+          <button className="checkout-button">Proceed to Payment</button>
         </div>
       </div>
     </div>

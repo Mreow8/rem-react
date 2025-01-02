@@ -47,17 +47,9 @@
   justify-content: flex-start; /* Aligns content to the top */
 }
 
-/* Move the total amount div to the right side of the container */
-.total-amount-parent {
-  margin-left: auto; /* Pushes it to the right side of the container */
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
+/* New class to move the left div to the right */
+.checkout-summary-right {
+  margin-left: auto; /* Pushes it to the right */
 }
 
 /* Loading and Error Messages */
