@@ -1,5 +1,5 @@
 import React from "react";
-import successWebp from "./assets/failed.webp"; // Make sure to adjust the path to your .webp file
+import successWebp from "../assets/failed.webp"; // Make sure to adjust the path to your .webp file
 
 const SuccessPage = () => {
   return (
