@@ -2,16 +2,6 @@ body {
   background-color: rgb(196, 198, 199);
 }
 
-.cartContainer {
-  width: calc(100vw - 20px);
-  height: calc(100vh - 10px);
-  z-index: -2;
-  border-radius: 5%;
-  background-color: white;
-  margin: 8% 0 0 10px;
-  padding: 0;
-}
-
 .details_cart {
   display: flex;
   justify-content: center;
