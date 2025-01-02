@@ -305,7 +305,19 @@ const Navbar = () => {
 
   return (
     <div className="add-to-cart-container">
-      <Nav />
+      <nav className="navbar navbar-light bg-white shadow w-100 fixed-top">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="#">
+            <img
+              src={remLogo}
+              alt="Logo"
+              width="60"
+              height="60"
+              className="d-inline-block align-text-top"
+            />
+          </a>
+        </div>
+      </nav>
       <div className="fixed-bottom-bar">
         <input
           type="checkbox"

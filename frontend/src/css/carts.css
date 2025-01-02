@@ -299,4 +299,7 @@ body {
     width: auto;
     margin-bottom: 0;
   }
+  .product-name {
+    margin-top: 0;
+  }
 }
