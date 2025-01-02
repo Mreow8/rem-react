@@ -1,5 +1,6 @@
 body {
   background-color: rgb(196, 198, 199);
+  max-width: max-content;
 }
 .quantity .button {
   all: unset;
