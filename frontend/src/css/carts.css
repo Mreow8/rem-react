@@ -257,7 +257,9 @@ body {
     margin-right: 0;
     width: auto;
   }
-
+  .check {
+    width: 10px;
+  }
   .fixed-bottom-bar {
     flex-direction: row;
     padding: 10px;
