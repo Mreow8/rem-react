@@ -2,6 +2,7 @@ body {
   background-color: rgb(196, 198, 199);
 }
 .quantity .button {
+  box-decoration-break: unset;
   all: unset;
   cursor: pointer;
 }
@@ -49,6 +50,7 @@ body {
   height: 40px;
 }
 .container-fluid {
+  margin: 0 auto;
   width: 100%;
 }
 /* Style for the search container */
@@ -312,9 +314,5 @@ body {
   .image-product {
     width: 180px;
     height: 200px;
-  }
-  .productsss {
-    display: flex;
-    flex-direction: column;
   }
 }
