@@ -72,7 +72,7 @@ router.get("/:userId", (req, res) => {
       SELECT 
         products.product_name,
         products.product_price,
-        products.product_image,  // Get the product image URL
+        products.product_image, 
         cart.quantity,
         stores.store_name AS seller_username,
         cart.product_id
