@@ -38,15 +38,13 @@ label {
   font-weight: 600; /* Slightly bold labels for emphasis */
   color: #495057; /* Medium grey */
 }
-
-input,
+.form-group input,
 textarea,
 button {
   font-family: "Montserrat", sans-serif; /* Consistent sans-serif for input */
   font-size: 14px;
 }
-
-input,
+.form-group input,
 textarea {
   border: 1px solid #ced4da;
   border-radius: 5px;
