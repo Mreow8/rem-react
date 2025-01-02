@@ -80,6 +80,9 @@ body {
   margin: 10px;
   cursor: pointer;
 }
+.product-details {
+  display: inline-block;
+}
 .product-card {
   display: flex;
   align-items: center;
