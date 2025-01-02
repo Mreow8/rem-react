@@ -63,6 +63,12 @@ const Checkout = () => {
         setLoading(false);
       }
     };
+    const calculateSellerTotal = (products) => {
+      return products.reduce((sum, product) => {
+        const price = Number(product.product_price) || 0;
+        return sum + price * product.quantity;
+      }, 0);
+    };
 
     const fetchAddresses = async () => {
       const userId = localStorage.getItem("userId");
