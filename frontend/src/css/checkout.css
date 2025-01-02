@@ -171,28 +171,92 @@ p {
 .checkout-button:hover {
   background-color: #218838;
 }
-.address-form {
+
+/* Address Modal Styles */
+.address-modal {
   position: fixed;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: white;
-  padding: 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.checkout-summary button {
-  margin-top: 10px;
+.address-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+}
+
+.address-option {
   padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.address-option:hover {
+  background-color: #f0f0f0;
+}
+
+button {
   background-color: #4caf50;
   color: white;
+  padding: 10px 20px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.checkout-summary button:hover {
+button:hover {
   background-color: #45a049;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Address Form Styling */
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.address-form input {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.address-form input:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+.address-form label {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Modal Close button */
+.close-modal-btn {
+  background-color: #f44336;
+}
+
+.close-modal-btn:hover {
+  background-color: #e53935;
 }
 
 /* Responsive Design */

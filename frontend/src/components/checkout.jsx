@@ -140,7 +140,7 @@ const Checkout = () => {
   };
 
   const handleAddNewAddress = () => {
-    setIsAddressFormVisible(true);
+    setAddressFormVisible(true);
     setIsAddressModalVisible(false); // Close modal
   };
 
