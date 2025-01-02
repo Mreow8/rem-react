@@ -350,6 +350,7 @@ const Navbar = () => {
                       <div className="sellers_username">
                         <div className="seller">
                           <input
+                            className="check"
                             type="checkbox"
                             checked={isSellerFullyChecked(seller)}
                             onChange={(e) =>
