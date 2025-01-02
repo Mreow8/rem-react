@@ -85,7 +85,7 @@ body {
 
 @media (max-width: 768px) {
   .login-container {
-    max-width: 90%; /* Adjust width for smaller screens */
+    width: 70%; /* Adjust width for smaller screens */
     position: absolute;
     left: 50%; /* Center horizontally */
     top: 80%; /* Center vertically */
@@ -99,6 +99,9 @@ body {
       0.95
     ); /* Slightly increase opacity for readability */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  }
+  .text-center {
+    font-size: 14px;
   }
   .background-text {
     width: 100%;

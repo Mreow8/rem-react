@@ -150,7 +150,7 @@ const Login = () => {
                 onFocus={clearErrorOnFocus} // Clear error when clicked
               />
             </div>
-            <div className="mb-3">
+            <div className="login mb-3">
               <label htmlFor="password" className="form-label">
                 Password
               </label>
