@@ -76,7 +76,7 @@ const ProductList = () => {
   };
 
   return (
-    <div className="product-list" style={{ fontFamily: "Roboto, sans-serif" }}>
+    <div className="product-lists" style={{ fontFamily: "Roboto, sans-serif" }}>
       <Nav />
       <div className="products-main">
         <div id="categories-container">

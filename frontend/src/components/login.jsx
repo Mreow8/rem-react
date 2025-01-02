@@ -95,6 +95,11 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
+  // Clear error when input is focused
+  const clearErrorOnFocus = () => {
+    setError("");
+  };
+
   return (
     <div className="login-page">
       <div
@@ -142,6 +147,7 @@ const Login = () => {
                 value={credentials.identifier}
                 onChange={handleChange}
                 required
+                onFocus={clearErrorOnFocus} // Clear error when clicked
               />
             </div>
             <div className="mb-3">
@@ -157,6 +163,7 @@ const Login = () => {
                   value={credentials.password}
                   onChange={handleChange}
                   required
+                  onFocus={clearErrorOnFocus} // Clear error when clicked
                 />
                 <button
                   type="button"

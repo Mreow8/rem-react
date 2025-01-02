@@ -1,7 +1,51 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../config/db"); // Importing the pool for database queries
+router.put(
+  "/:userId",
+  authenticateUser,
+  [
+    // Validation (optional, based on your needs)
+    check("phoneNumber")
+      .optional()
+      .isString()
+      .withMessage("Phone number must be a string"),
+    check("email").optional().isEmail().withMessage("Invalid email format"),
+  ],
+  async (req, res) => {
+    const { userId } = req.params;
+    const { phoneNumber, email } = req.body;
 
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Find user by userId
+    try {
+      let user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Only update the fields that are provided
+      if (phoneNumber) user.phoneNumber = phoneNumber;
+      if (email) user.email = email;
+
+      // Save the updated user information
+      await user.save();
+
+      return res.status(200).json({
+        message: "User profile updated successfully",
+        user,
+      });
+    } catch (error) {
+      console.error("Error updating user:", error);
+      return res.status(500).json({ message: "Server error" });
+    }
+  }
+);
 router.post("/signup", async (req, res) => {
   const { phone, password, username } = req.body;
 

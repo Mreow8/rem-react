@@ -11,6 +11,11 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  // Function to clear error message when an input field is focused
+  const clearErrorOnFocus = () => {
+    setError("");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -139,6 +144,7 @@ const SignUp = () => {
                 name="usernameInput"
                 placeholder="Enter your username"
                 required
+                onFocus={clearErrorOnFocus} // Clear error on focus
               />
             </div>
             <div className="mb-3">
@@ -152,6 +158,7 @@ const SignUp = () => {
                 name="phoneInput"
                 placeholder="Enter your phone number"
                 required
+                onFocus={clearErrorOnFocus} // Clear error on focus
               />
             </div>
             <div className="mb-3">
@@ -166,6 +173,7 @@ const SignUp = () => {
                   name="passwordInput"
                   placeholder="Enter your password"
                   required
+                  onFocus={clearErrorOnFocus} // Clear error on focus
                 />
                 <button
                   type="button"

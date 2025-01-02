@@ -25,8 +25,6 @@ const App = () => {
     label: "Home",
   });
   const [addresses, setAddresses] = useState([]);
-  const [profilePicture, setProfilePicture] = useState(null);
-  const [profilePicturePreview, setProfilePicturePreview] = useState(null);
   const [notifications, setNotifications] = useState([]); // Initialize as an empty array
 
   useEffect(() => {
@@ -122,6 +120,48 @@ const App = () => {
     }));
   };
 
+  const updateProfile = async () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("User not logged in. Cannot update profile.");
+      return;
+    }
+
+    const updatedProfile = {};
+
+    // Include only fields that have values
+    if (profileData.phoneNumber)
+      updatedProfile.phoneNumber = profileData.phoneNumber;
+    if (profileData.email) updatedProfile.email = profileData.email;
+
+    try {
+      const response = await fetch(
+        `https://rem-reacts.onrender.com/api/profile/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedProfile),
+        }
+      );
+
+      if (response.ok) {
+        alert("Profile updated successfully!");
+        setProfileData({
+          phoneNumber: "",
+          email: "",
+        });
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to update profile: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("An error occurred while updating the profile. Please try again.");
+    }
+  };
+
   const addAddress = async () => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
@@ -170,18 +210,6 @@ const App = () => {
     } catch (error) {
       console.error("Error adding address:", error);
       alert("An error occurred while adding the address. Please try again.");
-    }
-  };
-
-  const handleProfilePictureChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfilePicture(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePicturePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
     }
   };
 
@@ -251,21 +279,10 @@ const App = () => {
                   />
                 </div>
               </div>
-              <div className="img-con">
-                {profilePicturePreview && (
-                  <div className="profile-picture-preview">
-                    <img src={profilePicturePreview} alt="Profile" />
-                  </div>
-                )}
-                <label htmlFor="profilePicture">Profile Picture: </label>
-                <input
-                  type="file"
-                  id="profilePicture"
-                  accept="image/*"
-                  onChange={handleProfilePictureChange}
-                />
-                <button>Save</button>
-              </div>
+
+              <button type="button" onClick={updateProfile}>
+                Save
+              </button>
             </div>
           )}
 

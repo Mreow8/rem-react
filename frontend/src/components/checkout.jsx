@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../css/checkout.css";
+// import "../css/checkout.css";
 import Loading from "./loading"; // Assuming you have a loading component
 
 const AddressForm = ({ onSubmit, onClose }) => {
