@@ -94,9 +94,7 @@ router.get("/:userId", (req, res) => {
 
     const productsWithImages = results.rows.map((product) => ({
       ...product,
-      product_image: product.product_image
-        ? `https://res.cloudinary.com/dejfzfdk0/image/upload/${product.product_image}`
-        : "placeholder_image.png",
+      product_image: product.product_image || "placeholder_image.png",
     }));
 
     res.status(200).json(productsWithImages);
