@@ -85,7 +85,7 @@ body {
 
 @media (max-width: 768px) {
   .login-container {
-    max-width: 80%; /* Adjust width for smaller screens */
+    max-width: 90%; /* Adjust width for smaller screens */
     position: absolute;
     left: 50%; /* Center horizontally */
     top: 80%; /* Center vertically */

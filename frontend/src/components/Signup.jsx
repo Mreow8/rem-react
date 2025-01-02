@@ -133,7 +133,7 @@ const SignUp = () => {
         <div className="login-container shadow">
           <h3 className="login-title">Sign Up</h3>
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
+            <div className="login mb-3">
               <label htmlFor="usernameInput" className="form-label">
                 Username
               </label>
