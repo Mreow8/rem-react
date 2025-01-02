@@ -1,7 +1,10 @@
 body {
   background-color: rgb(196, 198, 199);
 }
-
+.quantity .button {
+  all: unset;
+  cursor: pointer;
+}
 .details_cart {
   display: flex;
   justify-content: center;
@@ -204,6 +207,13 @@ body {
 
 /* Media query for small screen sizes */ /* Media query for small screen sizes */
 @media (max-width: 768px) {
+  .cartContainer {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: stretch; /* Ensure full width */
+  }
+
   .details_cart,
   .cart_items,
   .product-card,
@@ -213,9 +223,9 @@ body {
   }
 
   .product-card {
-    flex-direction: column; /* Stack the elements */
+    flex-direction: column;
     padding: 10px;
-    align-items: flex-start; /* Align items to the left */
+    align-items: flex-start;
   }
 
   .product-card img {
@@ -247,7 +257,6 @@ body {
     height: 30px;
   }
 
-  /* Move delete button to top left */
   .product-card .delete-button {
     position: absolute;
     top: 10px;
@@ -259,15 +268,6 @@ body {
   }
   .productsss {
     align-items: flex-start;
-  }
-  .search-container {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .search-input {
-    width: 100%;
-    padding: 10px;
   }
 
   .cart_items p:not(.chck),
@@ -282,7 +282,7 @@ body {
   }
 
   .fixed-bottom-bar {
-    justify-content: flex-start; /* Align items to the left instead of center */
+    justify-content: flex-start;
     align-items: flex-start; /* Align items to the top */
     flex-direction: column; /* Stack the items vertically */
   }
@@ -294,7 +294,7 @@ body {
     margin-top: -10px;
   }
   .image-product {
-    width: 130px;
-    height: 150px;
+    width: 180px;
+    height: 200px;
   }
 }
