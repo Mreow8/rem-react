@@ -1,13 +1,11 @@
 body {
   background-color: rgb(196, 198, 199);
 }
-
 .quantity .button {
   box-decoration-break: unset;
   all: unset;
   cursor: pointer;
 }
-
 .details_cart {
   display: flex;
   justify-content: center;
@@ -51,12 +49,10 @@ body {
   margin-left: 10%;
   height: 40px;
 }
-
 .container-fluid {
   margin: 0 auto;
   width: 100%;
 }
-
 /* Style for the search container */
 .search-container {
   position: relative;
@@ -84,11 +80,6 @@ body {
   margin: 10px;
   cursor: pointer;
 }
-
-.product-details {
-  display: inline-block;
-}
-
 .product-card {
   display: flex;
   align-items: center;
@@ -215,11 +206,9 @@ body {
 .fixed-bottom-bar a {
   text-decoration: none;
 }
-
 .details_cart > * {
   display: block;
 }
-
 .quantity {
   display: flex;
   align-items: center;
@@ -233,11 +222,11 @@ body {
   cursor: pointer;
   border-color: #838383;
 }
-
 .cartContainer {
   margin-top: 100px;
 }
 
+/* Media query for small screen sizes */ /* Media query for small screen sizes */
 @media (max-width: 768px) {
   .cartContainer {
     margin-top: 100px;
@@ -270,11 +259,13 @@ body {
     text-align: left; /* Align text to the left */
   }
 
+  /* Stack name and price */
   .product-card .product-name,
   .product-card p {
     margin-bottom: 5px;
   }
 
+  /* Inline the price and quantity controls */
   .product-card .quantity {
     display: inline-flex;
     gap: 10px;
@@ -303,11 +294,9 @@ body {
     margin-right: 0;
     width: auto;
   }
-
   .details_cart > *:not(.products) {
     display: none; /* Hide all except .products */
   }
-
   .check {
     width: 10px;
   }
@@ -317,7 +306,6 @@ body {
     align-items: flex-start; /* Align items to the top */
     flex-direction: column;
   }
-
   .fixed-bottom-bar button {
     width: auto;
     margin-bottom: 0;
@@ -326,48 +314,5 @@ body {
   .image-product {
     width: 180px;
     height: 200px;
-  }
-}
-
-/* Large screen styles (default) */
-@media (min-width: 769px) {
-  .cartContainer {
-    max-width: 1200px;
-    margin: 0 auto; /* Center the main container */
-  }
-
-  .details_cart,
-  .cart_items,
-  .product-card,
-  .fixed-bottom-bar {
-    display: inline-flex; /* Align items inline */
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .product-card {
-    width: 100%;
-    flex-direction: row; /* Align products horizontally */
-  }
-
-  .product-card img {
-    margin-right: 20px;
-  }
-
-  .product-card .product-info,
-  .product-card .actions {
-    flex-grow: 1;
-    text-align: left; /* Align text to the left */
-  }
-
-  .product-card .quantity {
-    display: inline-flex;
-    gap: 10px;
-    align-items: center;
-  }
-
-  .product-card .quantity button {
-    width: 30px;
-    height: 30px;
   }
 }

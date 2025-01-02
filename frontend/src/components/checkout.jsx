@@ -55,7 +55,7 @@ const Checkout = () => {
 
   const groupProductsBySeller = (products) => {
     const grouped = products.reduce((acc, product) => {
-      const seller = product.seller_username;
+      const seller = product.store_name;
       if (!acc[seller]) {
         acc[seller] = [];
       }
@@ -131,15 +131,15 @@ const Checkout = () => {
           )}
         </div>
         <div className="checkout-summary checkout-summary-right fixed-section">
-          <h2>Total Amount</h2>
+          <h1>Total Amount</h1>
           <p>Products Total: Php {totalAmount.toFixed(2)}</p>
           <p>Shipping Fee: Php {shippingFee.toFixed(2)}</p>
           <p>Grand Total: Php {(totalAmount + shippingFee).toFixed(2)}</p>
-          <h3>Address</h3>
+          <h4>Address</h4>
           <p>{address}</p>
 
-          <h3>Payment Method</h3>
-          <div>
+          <h4>Payment Method</h4>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <label>
               <input
                 type="radio"
@@ -162,7 +162,7 @@ const Checkout = () => {
             </label>
           </div>
 
-          <h3>Selected Payment Method: {paymentMethod}</h3>
+          <p>Selected Payment Method: {paymentMethod}</p>
           <button className="checkout-button">Proceed to Payment</button>
         </div>
       </div>

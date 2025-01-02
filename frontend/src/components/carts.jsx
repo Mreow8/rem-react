@@ -337,7 +337,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className="container-fluid">
+      <div className="container-fluid p-0">
         <div className="row justify-content-center">
           <div>
             <div className="cartContainer">
@@ -389,41 +389,41 @@ const Navbar = () => {
                                   )
                                 }
                               />
-                              <div className="product-image-container">
-                                <img
-                                  src={item.product_image}
-                                  alt={item.product_name}
-                                  className="image-product"
-                                />
-                              </div>
-                              <div className="product-details">
+                              <img
+                                src={item.product_image}
+                                alt={item.product_name}
+                                style={{
+                                  width: "80px",
+                                  height: "100px",
+                                  objectFit: "cover",
+                                  borderRadius: "5px",
+                                }}
+                                className="image-product"
+                              />
+                              <div className="random">
                                 <p className="product-name">
                                   {item.product_name}
                                 </p>
-                                <div className="price-quantity">
-                                  <p className="product-price">
-                                    Php {item.product_price}
-                                  </p>
-                                  <div className="quantity-controls">
-                                    <button
-                                      className="minus-button"
-                                      onClick={() =>
-                                        decreaseQuantity(item.product_id)
-                                      }
-                                    >
-                                      -
-                                    </button>
-                                    <span>{item.quantity}</span>
-                                    <button
-                                      className="plus-button"
-                                      onClick={() =>
-                                        increaseQuantity(item.product_id)
-                                      }
-                                    >
-                                      +
-                                    </button>
-                                  </div>
-                                </div>
+                              </div>
+                              <p>Php {item.product_price}</p>
+                              <div className="quantity">
+                                <button
+                                  className="minus-button"
+                                  onClick={() =>
+                                    decreaseQuantity(item.product_id)
+                                  }
+                                >
+                                  -
+                                </button>
+                                <span>{item.quantity}</span>
+                                <button
+                                  className="plus-button"
+                                  onClick={() =>
+                                    increaseQuantity(item.product_id)
+                                  }
+                                >
+                                  +
+                                </button>
                               </div>
                               <button
                                 className="delete-button"
