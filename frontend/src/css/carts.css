@@ -87,13 +87,78 @@ body {
 }
 
 .product-card {
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space items evenly */
+  align-items: center; /* Align items vertically */
   border: 1px solid #ccc; /* Border color */
-
+  border-radius: 5px; /* Rounded corners */
   padding: 15px; /* Inner spacing */
-  margin: 10px 0;
-  margin-right: 20px;
-  margin-left: 20px;
-  background-color: #f9f9f9; /* Background color for visibility */
+  margin: 10px 20px; /* Vertical and horizontal margins */
+  background-color: #f9f9f9; /* Background color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.product-card img {
+  width: 80px; /* Fixed width for images */
+  height: 80px; /* Fixed height for images */
+  object-fit: cover; /* Maintain aspect ratio */
+  border-radius: 5px; /* Rounded corners for images */
+  margin-right: 15px; /* Spacing between image and text */
+}
+
+.product-card .product-info {
+  flex-grow: 1; /* Allow the text to expand */
+  margin-right: 15px; /* Spacing to the right */
+}
+
+.product-card .product-info p {
+  margin: 5px 0; /* Margin between product name and details */
+  font-size: 1rem; /* Font size */
+  color: #333; /* Text color */
+}
+
+.product-card .actions {
+  display: flex; /* Use flexbox for buttons */
+  align-items: center; /* Center items vertically */
+}
+
+.product-card .quantity-controls {
+  display: flex; /* Align buttons horizontally */
+  align-items: center; /* Center items vertically */
+  margin-right: 10px; /* Space between quantity and delete button */
+}
+
+.product-card .quantity-controls button {
+  width: 30px; /* Fixed width */
+  height: 30px; /* Fixed height */
+  border: none; /* No border */
+  background-color: #007bff; /* Blue background */
+  color: #fff; /* White text */
+  border-radius: 50%; /* Round buttons */
+  cursor: pointer; /* Pointer cursor */
+}
+
+.product-card .quantity-controls button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.product-card .quantity-controls span {
+  margin: 0 10px; /* Space between buttons and quantity */
+  font-size: 1rem; /* Font size */
+  color: #333; /* Text color */
+}
+
+.product-card .delete-button {
+  background-color: #dc3545; /* Red background */
+  color: #fff; /* White text */
+  border: none; /* No border */
+  padding: 5px 10px; /* Padding */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+}
+
+.product-card .delete-button:hover {
+  background-color: #c82333; /* Darker red on hover */
 }
 
 .fixed-bottom-bar {
