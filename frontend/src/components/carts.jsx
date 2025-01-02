@@ -367,7 +367,12 @@ const Navbar = () => {
                             key={`${seller}-${item.product_id}`}
                             className="product-card"
                           >
-                            <div>
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                              }}
+                            >
                               <input
                                 type="checkbox"
                                 checked={
