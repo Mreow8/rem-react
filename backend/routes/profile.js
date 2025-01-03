@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../config/db"); // Importing the pool for database queries
-const { check, validationResult } = require("express-validator");
 
 // Placeholder middleware for `authenticateUser`
 const authenticateUser = (req, res, next) => {
@@ -11,66 +10,49 @@ const authenticateUser = (req, res, next) => {
 };
 
 // Update user profile route
-router.put(
-  "/:userId",
-  authenticateUser, // Placeholder authentication middleware
-  [
-    check("phoneNumber")
-      .optional()
-      .isString()
-      .withMessage("Phone number must be a string"),
-    check("email").optional().isEmail().withMessage("Invalid email format"),
-  ],
-  async (req, res) => {
-    const { userId } = req.params;
-    const { phoneNumber, email } = req.body;
+router.put("/:userId", authenticateUser, async (req, res) => {
+  const { userId } = req.params;
+  const { phoneNumber, email } = req.body;
 
-    // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+  try {
+    const query = "SELECT * FROM users WHERE user_id = $1";
+    const { rows } = await pool.query(query, [userId]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    try {
-      const query = "SELECT * FROM users WHERE user_id = $1";
-      const { rows } = await pool.query(query, [userId]);
+    // Update user fields
+    let updateQuery = "UPDATE users SET ";
+    const updateValues = [];
+    let valueIndex = 1;
 
-      if (rows.length === 0) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      // Update user fields
-      let updateQuery = "UPDATE users SET ";
-      const updateValues = [];
-      let valueIndex = 1;
-
-      if (phoneNumber) {
-        updateQuery += `phone = $${valueIndex}, `;
-        updateValues.push(phoneNumber);
-        valueIndex++;
-      }
-      if (email) {
-        updateQuery += `email = $${valueIndex}, `;
-        updateValues.push(email);
-        valueIndex++;
-      }
-
-      updateQuery = updateQuery.slice(0, -2); // Remove trailing comma
-      updateQuery += ` WHERE user_id = $${valueIndex} RETURNING *`;
-      updateValues.push(userId);
-
-      const updatedUser = await pool.query(updateQuery, updateValues);
-
-      res.status(200).json({
-        message: "User profile updated successfully",
-        user: updatedUser.rows[0],
-      });
-    } catch (error) {
-      console.error("Error updating user:", error);
-      res.status(500).json({ message: "Server error" });
+    if (phoneNumber) {
+      updateQuery += `phone = $${valueIndex}, `;
+      updateValues.push(phoneNumber);
+      valueIndex++;
     }
+    if (email) {
+      updateQuery += `email = $${valueIndex}, `;
+      updateValues.push(email);
+      valueIndex++;
+    }
+
+    updateQuery = updateQuery.slice(0, -2); // Remove trailing comma
+    updateQuery += ` WHERE user_id = $${valueIndex} RETURNING *`;
+    updateValues.push(userId);
+
+    const updatedUser = await pool.query(updateQuery, updateValues);
+
+    res.status(200).json({
+      message: "User profile updated successfully",
+      user: updatedUser.rows[0],
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Server error" });
   }
-);
+});
 
 // Signup Route
 router.post("/signup", async (req, res) => {
