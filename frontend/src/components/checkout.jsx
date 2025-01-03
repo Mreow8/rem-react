@@ -191,6 +191,18 @@ const Checkout = () => {
 
     fetchCartItems();
     fetchAddresses();
+
+    // Clear cart items when leaving the page
+    const clearCartOnExit = () => {
+      localStorage.removeItem("cartItems");
+    };
+
+    window.addEventListener("beforeunload", clearCartOnExit);
+
+    // Cleanup listener on component unmount
+    return () => {
+      window.removeEventListener("beforeunload", clearCartOnExit);
+    };
   }, []);
 
   const groupProductsBySeller = (products) => {
