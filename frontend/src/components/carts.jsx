@@ -411,33 +411,30 @@ const Navbar = () => {
                                 }}
                                 className="image-product"
                               />
-                              <div className="stack">
-                                <div className="random">
-                                  <p className="product-name">
-                                    {item.product_name}
-                                  </p>
-                                </div>
-                                <p>Php {item.product_price}</p>
-                                <div className="quantity">
-                                  <p>Php {item.product_price}</p>
-                                  <button
-                                    className="minus-button"
-                                    onClick={() =>
-                                      decreaseQuantity(item.product_id)
-                                    }
-                                  >
-                                    -
-                                  </button>
-                                  <span>{item.quantity}</span>
-                                  <button
-                                    className="plus-button"
-                                    onClick={() =>
-                                      increaseQuantity(item.product_id)
-                                    }
-                                  >
-                                    +
-                                  </button>
-                                </div>
+                              <div className="random">
+                                <p className="product-name">
+                                  {item.product_name}
+                                </p>
+                              </div>
+                              <p>Php {item.product_price}</p>
+                              <div className="quantity">
+                                <button
+                                  className="minus-button"
+                                  onClick={() =>
+                                    decreaseQuantity(item.product_id)
+                                  }
+                                >
+                                  -
+                                </button>
+                                <span>{item.quantity}</span>
+                                <button
+                                  className="plus-button"
+                                  onClick={() =>
+                                    increaseQuantity(item.product_id)
+                                  }
+                                >
+                                  +
+                                </button>
                               </div>
                               <button
                                 className="delete-button"
