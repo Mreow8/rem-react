@@ -252,33 +252,29 @@ const App = () => {
 
                 <div>
                   <label htmlFor="phoneNumber">Phone Number: </label>
-                  {isEditing.phoneNumber ? (
-                    <input
-                      type="text"
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      value={profileData.phoneNumber}
-                      onChange={handleProfileChange}
-                    />
-                  ) : (
-                    <span>{profileData.phoneNumber || "Not Provided"}</span>
-                  )}
+                  <input
+                    type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={profileData.phoneNumber}
+                    onChange={handleProfileChange}
+                    readOnly={!isEditing.phoneNumber} // Make readOnly based on editing state
+                  />
+
                   <FaEdit onClick={() => handleEditClick("phoneNumber")} />
                 </div>
 
                 <div>
                   <label htmlFor="email">Email: </label>
-                  {isEditing.email ? (
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={profileData.email}
-                      onChange={handleProfileChange}
-                    />
-                  ) : (
-                    <span>{profileData.email || "Not Provided"}</span>
-                  )}
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={profileData.email}
+                    onChange={handleProfileChange}
+                    readOnly={!isEditing.email} // Read-only when not editing
+                  />
+
                   <FaEdit onClick={() => handleEditClick("email")} />
                 </div>
 

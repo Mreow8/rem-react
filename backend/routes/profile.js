@@ -8,6 +8,34 @@ const authenticateUser = (req, res, next) => {
   console.log("Authentication placeholder.");
   next();
 };
+// Fetch user profile route
+router.get("/:userId", authenticateUser, async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Fetch user data from the database
+    const query = "SELECT user_id, phone, email FROM users WHERE user_id = $1";
+    const { rows } = await pool.query(query, [userId]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Return the user data
+    const user = rows[0];
+    res.status(200).json({
+      message: "User profile retrieved successfully",
+      user: {
+        userId: user.user_id,
+        phoneNumber: user.phone,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 // Update user profile route
 router.put("/:userId", authenticateUser, async (req, res) => {
