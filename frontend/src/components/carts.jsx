@@ -6,7 +6,7 @@ import "../css/carts.css";
 import Nav from "./nav";
 //import Swal from "sweetalert2";
 import remLogo from "../assets/remlogo.png";
-
+import { useLocation } from "react-router-dom";
 const Navbar = () => {
   const [username, setUsername] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,6 +30,24 @@ const Navbar = () => {
       setLoading(false);
     }
   }, []);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const clearCartOnExit = () => {
+      if (location.pathname !== "/checkout") {
+        localStorage.removeItem("cartItems");
+      }
+    };
+
+    // Listen for when the user leaves the cart page
+    window.addEventListener("beforeunload", clearCartOnExit);
+
+    return () => {
+      window.removeEventListener("beforeunload", clearCartOnExit);
+      clearCartOnExit();
+    };
+  }, [location.pathname]);
 
   const fetchCartItems = async (userId) => {
     try {
