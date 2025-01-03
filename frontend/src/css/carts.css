@@ -210,11 +210,6 @@ body {
 .details_cart > * {
   display: block;
 }
-.quantity {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 
 .minus-button,
 .plus-button {
@@ -225,6 +220,18 @@ body {
 }
 .cartContainer {
   margin-top: 100px;
+}
+.quantity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Spacing between elements */
+}
+
+.product-name {
+  text-align: left;
+  margin-bottom: 0;
 }
 
 /* Media query for small screen sizes */ /* Media query for small screen sizes */
