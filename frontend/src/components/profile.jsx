@@ -21,6 +21,10 @@ const App = () => {
 
   const [activeContent, setActiveContent] = useState("profile"); // Added state for activeContent
 
+  const showContent = (contentId) => {
+    setActiveContent(contentId);
+  };
+
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
