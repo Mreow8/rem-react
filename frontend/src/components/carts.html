@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <link rel="stylesheet" href="../css/carts.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-light bg-white shadow w-100 fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            src="remLogo.png"
+            alt="Logo"
+            width="60"
+            height="60"
+            class="d-inline-block align-text-top"
+          />
+        </a>
+      </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <div class="add-to-cart-container">
+      <!-- Fixed Bottom Bar -->
+      <div class="fixed-bottom-bar">
+        <input type="checkbox" style="margin-right: 10px" />
+        <button class="delete-button">
+          <img
+            src="trash-icon.png"
+            alt="Delete"
+            style="width: 20px; height: 20px"
+          />
+        </button>
+        <p>Total: Php 1200.00</p>
+        <p>Items in Cart: 3</p>
+        <button>Checkout</button>
+      </div>
+
+      <div class="container-fluid p-0">
+        <div class="row justify-content-center">
+          <div>
+            <div class="cartContainer">
+              <div class="details_cart">
+                <p class="products">Products</p>
+                <p>Price</p>
+                <p>Quantity</p>
+                <p>Action</p>
+              </div>
+
+              <div class="cart_items">
+                <!-- Seller 1 -->
+                <div class="sellers_username">
+                  <div class="seller">
+                    <input class="check" type="checkbox" />
+                    <p class="username">Seller1</p>
+                  </div>
+
+                  <!-- Product 1 -->
+                  <div class="product-card">
+                    <div class="productsss">
+                      <input type="checkbox" />
+                      <img
+                        src="product1.jpg"
+                        alt="Product 1"
+                        class="image-product"
+                      />
+                      <div class="random">
+                        <p class="product-name">Product 1</p>
+                      </div>
+                      <p>Php 400.00</p>
+                      <div class="quantity">
+                        <button class="minus-button">-</button>
+                        <span>1</span>
+                        <button class="plus-button">+</button>
+                      </div>
+                      <button class="delete-button">
+                        <img
+                          src="trash-icon.png"
+                          alt="Delete"
+                          style="width: 20px; height: 20px"
+                        />
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Product 2 -->
+                  <div class="product-card">
+                    <div class="productsss">
+                      <input type="checkbox" />
+                      <img
+                        src="product2.jpg"
+                        alt="Product 2"
+                        class="image-product"
+                      />
+                      <div class="random">
+                        <p class="product-name">Product 2</p>
+                      </div>
+                      <p>Php 500.00</p>
+                      <div class="quantity">
+                        <button class="minus-button">-</button>
+                        <span>1</span>
+                        <button class="plus-button">+</button>
+                      </div>
+                      <button class="delete-button">
+                        <img
+                          src="trash-icon.png"
+                          alt="Delete"
+                          style="width: 20px; height: 20px"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Seller 2 -->
+                <div class="sellers_username">
+                  <div class="seller">
+                    <input class="check" type="checkbox" />
+                    <p class="username">Seller2</p>
+                  </div>
+
+                  <!-- Product 3 -->
+                  <div class="product-card">
+                    <div class="productsss">
+                      <input type="checkbox" />
+                      <img
+                        src="product3.jpg"
+                        alt="Product 3"
+                        class="image-product"
+                      />
+                      <div class="random">
+                        <p class="product-name">Product 3</p>
+                      </div>
+                      <p>Php 300.00</p>
+                      <div class="quantity">
+                        <button class="minus-button">-</button>
+                        <span>1</span>
+                        <button class="plus-button">+</button>
+                      </div>
+                      <button class="delete-button">
+                        <img
+                          src="trash-icon.png"
+                          alt="Delete"
+                          style="width: 20px; height: 20px"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

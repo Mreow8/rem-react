@@ -331,7 +331,7 @@ const Navbar = () => {
       <div className="fixed-bottom-bar">
         <input
           type="checkbox"
-          style={{ marginLeft: "10px" }}
+          style={{ marginRight: "10px" }}
           checked={isAllItemsChecked()}
           onChange={(e) => handleGlobalCheckboxChange(e.target.checked)}
         />
@@ -416,36 +416,32 @@ const Navbar = () => {
                                   {item.product_name}
                                 </p>
                               </div>
-                              <div className="quan">
-                                <p>Php {item.product_price}</p>
-                                <div className="quantity">
-                                  <button
-                                    className="minus-button"
-                                    onClick={() =>
-                                      decreaseQuantity(item.product_id)
-                                    }
-                                  >
-                                    -
-                                  </button>
-                                  <span>{item.quantity}</span>
-                                  <button
-                                    className="plus-button"
-                                    onClick={() =>
-                                      increaseQuantity(item.product_id)
-                                    }
-                                  >
-                                    +
-                                  </button>
-                                </div>
+                              <p>Php {item.product_price}</p>
+                              <div className="quantity">
                                 <button
-                                  className="delete-button"
+                                  className="minus-button"
                                   onClick={() =>
-                                    removeCartItem(item.product_id)
+                                    decreaseQuantity(item.product_id)
                                   }
                                 >
-                                  <FontAwesomeIcon icon={faTrash} />
+                                  -
+                                </button>
+                                <span>{item.quantity}</span>
+                                <button
+                                  className="plus-button"
+                                  onClick={() =>
+                                    increaseQuantity(item.product_id)
+                                  }
+                                >
+                                  +
                                 </button>
                               </div>
+                              <button
+                                className="delete-button"
+                                onClick={() => removeCartItem(item.product_id)}
+                              >
+                                <FontAwesomeIcon icon={faTrash} />
+                              </button>
                             </div>
                           </div>
                         ))}
