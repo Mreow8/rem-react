@@ -1,5 +1,119 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom"; // Import useLocation to track the route
+import "../css/checkout.css";
+import Loading from "./loading"; // Assuming you have a loading component
+import { useLocation } from "react-router-dom";
+
+const AddressForm = ({ onSubmit, onClose }) => {
+  const [newAddress, setNewAddress] = useState({
+    full_name: "",
+    phone_number: "",
+    region: "",
+    province: "",
+    city: "",
+    barangay: "",
+    postal_code: "",
+    label: "Home",
+  });
+
+  const handleAddressChange = (event) => {
+    const { name, value } = event.target;
+    setNewAddress((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleAddressSubmit = (event) => {
+    event.preventDefault();
+    onSubmit(newAddress); // Pass the new address to the parent component
+    onClose(); // Close the modal after submission
+  };
+
+  return (
+    <form onSubmit={handleAddressSubmit}>
+      <div>
+        <label>Full Name</label>
+        <input
+          type="text"
+          name="full_name"
+          value={newAddress.full_name}
+          onChange={handleAddressChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Phone Number</label>
+        <input
+          type="text"
+          name="phone_number"
+          value={newAddress.phone_number}
+          onChange={handleAddressChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Region</label>
+        <input
+          type="text"
+          name="region"
+          value={newAddress.region}
+          onChange={handleAddressChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Province</label>
+        <input
+          type="text"
+          name="province"
+          value={newAddress.province}
+          onChange={handleAddressChange}
+          required
+        />
+      </div>
+      <div>
+        <label>City</label>
+        <input
+          type="text"
+          name="city"
+          value={newAddress.city}
+          onChange={handleAddressChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Barangay</label>
+        <input
+          type="text"
+          name="barangay"
+          value={newAddress.barangay}
+          onChange={handleAddressChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Postal Code</label>
+        <input
+          type="text"
+          name="postal_code"
+          value={newAddress.postal_code}
+          onChange={handleAddressChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Address Label (e.g., Home, Office)</label>
+        <input
+          type="text"
+          name="label"
+          value={newAddress.label}
+          onChange={handleAddressChange}
+        />
+      </div>
+      <button type="submit">Save Address</button>
+    </form>
+  );
+};
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
@@ -7,16 +121,15 @@ const Checkout = () => {
   const [error, setError] = useState(null);
   const [groupedProducts, setGroupedProducts] = useState({});
   const [totalAmount, setTotalAmount] = useState(0);
-  const [shippingFee, setShippingFee] = useState(50); // Example shipping fee
-  const [address, setAddress] = useState(null); // Store the full address object
+  const [shippingFee, setShippingFee] = useState(50);
+  const [address, setAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("Credit Card");
   const [isAddressFormVisible, setAddressFormVisible] = useState(false);
   const [addresses, setAddresses] = useState([]);
   const [isAddressModalVisible, setIsAddressModalVisible] = useState(false);
 
-  const location = useLocation(); // Get the current location/path
+  const location = useLocation();
 
-  // Function to calculate seller total
   const calculateSellerTotal = (products) => {
     return products.reduce((sum, product) => {
       const price = Number(product.product_price) || 0;
@@ -72,7 +185,7 @@ const Checkout = () => {
         );
         const data = await response.json();
         setAddresses(data.addresses || []);
-        setAddress(data.addresses.length > 0 ? data.addresses[0] : null); // Set the first address by default
+        setAddress(data.addresses.length > 0 ? data.addresses[0] : null);
       } catch (err) {
         console.error("Error fetching addresses:", err);
       }
@@ -81,11 +194,13 @@ const Checkout = () => {
     fetchCartItems();
     fetchAddresses();
 
-    // Clear cart when navigating away from the checkout page
-    if (location.pathname !== "/checkout") {
-      localStorage.removeItem("cartItems");
-    }
-  }, [location.pathname]); // Trigger the effect on pathname change
+    // Clear cartItems if not on Checkout page
+    return () => {
+      if (location.pathname !== "/checkout") {
+        localStorage.removeItem("cartItems");
+      }
+    };
+  }, [location]);
 
   const groupProductsBySeller = (products) => {
     const grouped = products.reduce((acc, product) => {
@@ -107,8 +222,8 @@ const Checkout = () => {
     setTotalAmount(total);
   };
 
-  const handlePaymentChange = (event) => {
-    setPaymentMethod(event.target.value);
+  const toggleAddressModal = () => {
+    setIsAddressModalVisible((prev) => !prev);
   };
 
   if (loading) {
@@ -118,7 +233,15 @@ const Checkout = () => {
   return (
     <div className="checkout-container">
       <h1>Checkout</h1>
-      {/* Your checkout component JSX here */}
+      <div className="checkout-summary">
+        <h4>Address</h4>
+        <p>
+          {address
+            ? `${address.full_name}, ${address.barangay}, ${address.city}, ${address.province}, ${address.region} ${address.postal_code}`
+            : "No address selected"}
+        </p>
+        <button onClick={toggleAddressModal}>Choose Address</button>
+      </div>
     </div>
   );
 };
