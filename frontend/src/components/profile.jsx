@@ -165,53 +165,55 @@ const App = () => {
         </div>
 
         <div className="profile-container">
-          <div className="img-prof-container">
-            <div className="content">
-              <p>Profile Information</p>
-              <p>Manage and protect your account</p>
+          {activeContent === "profile" && (
+            <div className="img-prof-container">
+              <div className="content">
+                <p>Profile Information</p>
+                <p>Manage and protect your account</p>
 
-              <div>
-                <label htmlFor="username">Username: </label>
-                <input type="text" id="username" value={username} readOnly />
+                <div>
+                  <label htmlFor="username">Username: </label>
+                  <input type="text" id="username" value={username} readOnly />
+                </div>
+
+                <div>
+                  <label htmlFor="phoneNumber">Phone Number: </label>
+                  {isEditing.phoneNumber ? (
+                    <input
+                      type="text"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      value={profileData.phoneNumber}
+                      onChange={handleProfileChange}
+                    />
+                  ) : (
+                    <span>{profileData.phoneNumber || "Not Provided"}</span>
+                  )}
+                  <FaEdit onClick={() => handleEditClick("phoneNumber")} />
+                </div>
+
+                <div>
+                  <label htmlFor="email">Email: </label>
+                  {isEditing.email ? (
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={profileData.email}
+                      onChange={handleProfileChange}
+                    />
+                  ) : (
+                    <span>{profileData.email || "Not Provided"}</span>
+                  )}
+                  <FaEdit onClick={() => handleEditClick("email")} />
+                </div>
+
+                <button type="button" onClick={updateProfile}>
+                  Save Changes
+                </button>
               </div>
-
-              <div>
-                <label htmlFor="phoneNumber">Phone Number: </label>
-                {isEditing.phoneNumber ? (
-                  <input
-                    type="text"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={profileData.phoneNumber}
-                    onChange={handleProfileChange}
-                  />
-                ) : (
-                  <span>{profileData.phoneNumber || "Not Provided"}</span>
-                )}
-                <FaEdit onClick={() => handleEditClick("phoneNumber")} />
-              </div>
-
-              <div>
-                <label htmlFor="email">Email: </label>
-                {isEditing.email ? (
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={profileData.email}
-                    onChange={handleProfileChange}
-                  />
-                ) : (
-                  <span>{profileData.email || "Not Provided"}</span>
-                )}
-                <FaEdit onClick={() => handleEditClick("email")} />
-              </div>
-
-              <button type="button" onClick={updateProfile}>
-                Save Changes
-              </button>
             </div>
-          </div>
+          )}
         </div>
 
         {activeContent === "address" && (
