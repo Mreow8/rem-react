@@ -19,6 +19,8 @@ const App = () => {
   const [addresses, setAddresses] = useState([]);
   const [notifications, setNotifications] = useState([]);
 
+  const [activeContent, setActiveContent] = useState("profile"); // Added state for activeContent
+
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
