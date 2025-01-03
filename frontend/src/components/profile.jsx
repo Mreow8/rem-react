@@ -141,7 +141,27 @@ const App = () => {
         <div className="other-container">
           <p>{username}</p>
           <p>My Account</p>
-          {/* Links to content */}
+          <a
+            href="#"
+            onClick={() => showContent("profile")}
+            className={activeContent === "profile" ? "active" : ""}
+          >
+            Profile
+          </a>
+          <a
+            href="#"
+            onClick={() => showContent("address")}
+            className={activeContent === "address" ? "active" : ""}
+          >
+            Address
+          </a>
+          <a
+            href="#"
+            onClick={() => showContent("notifications")}
+            className={activeContent === "notifications" ? "active" : ""}
+          >
+            Notification
+          </a>
         </div>
 
         <div className="profile-container">
