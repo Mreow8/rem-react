@@ -58,11 +58,6 @@ General Layout .checkout-container {
   text-align: center;
 }
 
-p {
-  font-size: 16px;
-  color: #555;
-}
-
 /* Checkout Items */
 .checkout-items {
   display: flex;

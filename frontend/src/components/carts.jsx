@@ -331,7 +331,7 @@ const Navbar = () => {
       <div className="fixed-bottom-bar">
         <input
           type="checkbox"
-          style={{ marginRight: "10px" }}
+          style={{ marginRight: "30px" }}
           checked={isAllItemsChecked()}
           onChange={(e) => handleGlobalCheckboxChange(e.target.checked)}
         />

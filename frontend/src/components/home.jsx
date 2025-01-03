@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="home-page">
       {/* Navbar */}
-      <nav className="navbar navbar-light bg-white shadow w-100 fixed-top">
+      <nav className="navbar navbar-light bg-white w-100 fixed-top">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img
