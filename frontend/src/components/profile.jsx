@@ -18,6 +18,16 @@ const App = () => {
   });
   const [addresses, setAddresses] = useState([]);
   const [notifications, setNotifications] = useState([]);
+  const [addressData, setAddressData] = useState({
+    fullName: "",
+    phoneNumber: "",
+    region: "",
+    province: "",
+    city: "",
+    barangay: "",
+    postalCode: "",
+    label: "Home", // default label for address
+  });
 
   const [activeContent, setActiveContent] = useState("profile"); // Added state for activeContent
 
@@ -41,11 +51,15 @@ const App = () => {
     }
   }, []);
 
+  // Fetch user profile
   const fetchUserProfile = async (userId) => {
     try {
       const response = await fetch(
         `https://rem-reacts.onrender.com/api/profile/${userId}`
       );
+      if (!response.ok) {
+        throw new Error("Failed to fetch profile");
+      }
       const data = await response.json();
       setProfileData({
         phoneNumber: data.phoneNumber || "",
@@ -53,11 +67,13 @@ const App = () => {
       });
     } catch (error) {
       console.error("Error fetching user profile:", error);
+      alert("An error occurred while fetching the profile.");
     } finally {
       setLoading(false);
     }
   };
 
+  // Fetch addresses
   const fetchAddresses = async (userId) => {
     try {
       const response = await fetch(
@@ -70,6 +86,7 @@ const App = () => {
     }
   };
 
+  // Fetch notifications
   const fetchNotifications = async (userId) => {
     try {
       const response = await fetch(
@@ -82,13 +99,7 @@ const App = () => {
     }
   };
 
-  const handleEditClick = (field) => {
-    setIsEditing((prevState) => ({
-      ...prevState,
-      [field]: !prevState[field],
-    }));
-  };
-
+  // Handle profile changes
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prevData) => ({
@@ -97,6 +108,15 @@ const App = () => {
     }));
   };
 
+  // Handle edit click
+  const handleEditClick = (field) => {
+    setIsEditing((prevState) => ({
+      ...prevState,
+      [field]: !prevState[field],
+    }));
+  };
+
+  // Update profile
   const updateProfile = async () => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
@@ -130,6 +150,56 @@ const App = () => {
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("An error occurred while updating the profile. Please try again.");
+    }
+  };
+
+  // Handle address change
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setAddressData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Toggle address label between "Home" and "Work"
+  const toggleAddressLabel = () => {
+    setAddressData((prevData) => ({
+      ...prevData,
+      label: prevData.label === "Home" ? "Work" : "Home",
+    }));
+  };
+
+  // Add address
+  const addAddress = async () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("User not logged in. Cannot add address.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `https://rem-reacts.onrender.com/api/addresses/${userId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(addressData),
+        }
+      );
+
+      if (response.ok) {
+        alert("Address added successfully!");
+        fetchAddresses(userId); // Re-fetch addresses to update the list
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to add address: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error adding address:", error);
+      alert("An error occurred while adding the address. Please try again.");
     }
   };
 
