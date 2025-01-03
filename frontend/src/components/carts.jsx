@@ -342,7 +342,9 @@ const Navbar = () => {
         <p>Total: Php {totalAmount.toFixed(2)}</p>
         <p>Items in Cart: {totalQuantity}</p>
         <Link to="/checkout">
-          <button>Checkout</button>
+          <button disabled={getCheckedItemsDetails().length === 0}>
+            Checkout
+          </button>
         </Link>
       </div>
 
@@ -409,6 +411,7 @@ const Navbar = () => {
                                 }}
                                 className="image-product"
                               />
+
                               <div className="random">
                                 <p className="product-name">
                                   {item.product_name}
@@ -416,6 +419,7 @@ const Navbar = () => {
                               </div>
                               <p>Php {item.product_price}</p>
                               <div className="quantity">
+                                <p>Php {item.product_price}</p>
                                 <button
                                   className="minus-button"
                                   onClick={() =>
