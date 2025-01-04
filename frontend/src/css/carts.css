@@ -342,4 +342,19 @@ body {
     width: 100%; /* Make the divs take full width */
     margin-bottom: 10px; /* Optional spacing between stacked divs */
   }
+  #random {
+    flex-direction: column; /* Stack the two divs vertically */
+    gap: 10px; /* Reduce gap for smaller screens */
+  }
+  .random,
+  .prod-container {
+    flex-direction: column; /* Ensure internal items are stacked */
+    align-items: flex-start; /* Align content to the left */
+  }
+}
+#random {
+  display: flex; /* Default inline layout */
+  align-items: center; /* Align items vertically */
+  gap: 15px; /* Add spacing between elements */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
