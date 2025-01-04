@@ -16,8 +16,6 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [isVerificationSent, setIsVerificationSent] = useState(false);
-  const [isCodeVerified, setIsCodeVerified] = useState(false); // Track if code is verified
-  const [newPassword, setNewPassword] = useState(""); // New password input
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -153,7 +151,6 @@ const Login = () => {
         if (response.ok) {
           alert("Verification successful.");
           setIsModalOpen(false); // Close the modal after verification
-          setIsCodeVerified(true); // Mark as verified
         } else {
           const data = await response.json();
           alert(data.message || "Invalid verification code.");
@@ -164,41 +161,6 @@ const Login = () => {
       }
     } else {
       alert("Please enter the verification code.");
-    }
-  };
-
-  // Handle new password submission
-  const handleNewPasswordSubmit = async () => {
-    if (newPassword) {
-      try {
-        // Send the new password to the backend for updating
-        const response = await fetch(
-          "https://your-backend-url.com/api/update-password", // Replace with your backend URL
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              phone: phoneNumber,
-              newPassword: newPassword,
-            }),
-          }
-        );
-
-        if (response.ok) {
-          alert("Password updated successfully.");
-          setIsModalOpen(false); // Close the modal after updating
-        } else {
-          const data = await response.json();
-          alert(data.message || "Failed to update password.");
-        }
-      } catch (error) {
-        console.error("Error updating password:", error);
-        alert("An error occurred while updating the password.");
-      }
-    } else {
-      alert("Please enter a new password.");
     }
   };
 
@@ -358,30 +320,6 @@ const Login = () => {
                     onClick={handleVerificationCodeSubmit}
                   >
                     Submit Verification Code
-                  </button>
-                </>
-              )}
-
-              {isCodeVerified && (
-                <>
-                  <div className="mb-3 mt-3">
-                    <label htmlFor="newPassword" className="form-label">
-                      Enter New Password
-                    </label>
-                    <input
-                      type="password"
-                      id="newPassword"
-                      className="form-control"
-                      placeholder="Enter your new password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                  </div>
-                  <button
-                    className="btn btn-primary"
-                    onClick={handleNewPasswordSubmit}
-                  >
-                    Submit New Password
                   </button>
                 </>
               )}
