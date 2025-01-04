@@ -14,8 +14,6 @@ const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 // Generates a u
 // In-memory OTP store (should be replaced with a persistent store)
 const otpStore = {};
-
-// Send OTP Route
 router.post("/send-otp", async (req, res) => {
   const { phone } = req.body;
 
@@ -33,25 +31,49 @@ router.post("/send-otp", async (req, res) => {
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000);
-
     otpStore[phone] = { otp, expiry: Date.now() + 300000 };
 
-    // Send OTP via Twilio
-    await twilioClient.messages.create({
-      body: `Your OTP code is: ${otp}`,
-      to: phone,
-      from: twilioPhoneNumber,
-    });
+    // Send OTP via Twilio with better error handling
+    try {
+      await twilioClient.messages.create({
+        body: `Your OTP code is: ${otp}`,
+        to: phone,
+        from: twilioPhoneNumber,
+      });
 
-    res.status(200).json({
-      message: "OTP sent successfully.",
-    });
+      res.status(200).json({
+        message: "OTP sent successfully.",
+      });
+    } catch (twilioError) {
+      console.error("Twilio Error:", {
+        code: twilioError.code,
+        message: twilioError.message,
+        status: twilioError.status,
+      });
+
+      // Return more specific error messages based on Twilio error codes
+      if (twilioError.code === 21614) {
+        return res
+          .status(400)
+          .json({ message: "Invalid phone number format." });
+      } else if (twilioError.code === 21608) {
+        return res.status(400).json({ message: "Unverified phone number." });
+      } else if (twilioError.code === 20003) {
+        return res.status(400).json({
+          message: "Authentication failed. Check Twilio credentials.",
+        });
+      }
+
+      res.status(500).json({
+        message: "Failed to send OTP. Please try again.",
+        error: twilioError.message,
+      });
+    }
   } catch (error) {
-    console.error("Error sending OTP:", error);
-    res.status(500).json({ message: "Failed to send OTP. Please try again." });
+    console.error("Database Error:", error);
+    res.status(500).json({ message: "Database error occurred." });
   }
 });
-
 // Verify OTP and Update Password Route
 router.post("/verify-otp", async (req, res) => {
   const { phone, otp, newPassword } = req.body;
