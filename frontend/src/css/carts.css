@@ -353,6 +353,6 @@ body {
 
 .random,
 .prod-container {
-  display: inline-block;
+  width: 100%;
   margin-right: 10px; /* Adjust space between elements as needed */
 }
