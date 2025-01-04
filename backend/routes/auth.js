@@ -11,8 +11,7 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioClient = new twilio(accountSid, authToken);
 const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
-const twilio = require("twilio");
-const { v4: uuidv4 } = require("uuid"); // Generates a u
+// Generates a u
 // In-memory OTP store (should be replaced with a persistent store)
 const otpStore = {};
 
