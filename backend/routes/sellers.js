@@ -127,7 +127,7 @@ router.get("/:userId", async (req, res) => {
     // Send the seller data as response
     res.status(200).json(result.rows[0]);
   } catch (error) {
-    console.error("Error fetching seller data:", error.message);
+    console.error("Error fetching seller data [[[]]]:", error.message);
 
     if (error.code === "ECONNREFUSED") {
       // Handle connection error
