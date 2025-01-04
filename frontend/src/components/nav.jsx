@@ -22,24 +22,23 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
     // Fetch seller data if the user is logged in
     if (storedUsername) {
       const userId = localStorage.getItem("userId");
-      if (userId && /^[0-9]+$/.test(userId)) {
-        const fetchSellerData = async () => {
-          try {
-            const response = await fetch(
-              `https://rem-reacts.onrender.com/api/sellers/${userId}`
-            );
-            if (response.ok) {
-              const data = await response.json();
-              setSellerStoreName(data.store_name);
-              setSellerStoreId(data.store_id); // Adjust property name from backend response
-            } else {
-              console.error("Failed to fetch seller data");
-            }
-          } catch (error) {
-            console.error("Error fetching seller data:", error);
+      console.log("userId", userId);
+      const fetchSellerData = async () => {
+        try {
+          const response = await fetch(
+            `https://rem-reacts.onrender.com/api/sellers/${userId}`
+          );
+          if (response.ok) {
+            const data = await response.json();
+            setSellerStoreName(data.store_name);
+            setSellerStoreId(data.store_id); // Adjust property name from backend response
+          } else {
+            console.error("Failed to fetch seller data");
           }
-        };
-      }
+        } catch (error) {
+          console.error("Error fetching seller data:", error);
+        }
+      };
 
       fetchSellerData();
     }
