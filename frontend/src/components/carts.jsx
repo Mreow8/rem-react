@@ -321,8 +321,8 @@ const Navbar = () => {
             <img
               src={remLogo}
               alt="Logo"
-              width="60"
-              height="60"
+              width="50"
+              height="50"
               className="d-inline-block align-text-top"
             />
           </a>
@@ -390,6 +390,7 @@ const Navbar = () => {
                             <div className="productsss">
                               <input
                                 type="checkbox"
+                                style={{ marginRight: "20px" }}
                                 checked={
                                   checkedItems[`${seller}-${item.product_id}`]
                                 }

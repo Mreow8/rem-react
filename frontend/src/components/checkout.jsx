@@ -300,7 +300,7 @@ const Checkout = () => {
           ) : (
             Object.keys(groupedProducts).map((seller) => (
               <div key={seller} className="seller-group">
-                <h2>Seller: {seller}</h2>
+                <p>Seller: {seller}</p>
                 {groupedProducts[seller].map((product) => (
                   <div key={product.product_id} className="checkout-item">
                     <img
