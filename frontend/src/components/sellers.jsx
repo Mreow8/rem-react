@@ -88,7 +88,7 @@ const StoreForm = () => {
           confirmButtonText: "OK",
         }).then(() => {
           // Navigate after success
-          navigate(`/store/${sellerStoreId}`);
+          navigate(`/sellerprofile/${sellerStoreId}`);
         });
       } else {
         const errorData = await response.json();

@@ -82,9 +82,7 @@
 .product-image {
   width: 100%;
   object-fit: cover;
-
   min-height: 15vh;
-
   margin: 0;
 }
 .product-name {
