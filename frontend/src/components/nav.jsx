@@ -30,8 +30,8 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
           );
           if (response.ok) {
             const data = await response.json();
-            sellerStoreName(data.store_name);
-            sellerStoreId(data.store_id);
+            setSellerStoreName(data.store_name);
+            setSellerStoreId(data.store_id);
           } else {
             console.error("Failed to fetch seller data");
           }

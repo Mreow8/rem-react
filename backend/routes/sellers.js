@@ -137,7 +137,7 @@ router.get("/:userId", async (req, res) => {
     }
 
     // General server error
-    res.status(500).json({ message: "Error fetching seller data" });
+    res.status(500).json({ message: "Error fetching seller data //" });
   }
 });
 
