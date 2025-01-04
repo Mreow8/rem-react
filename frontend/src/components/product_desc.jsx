@@ -133,7 +133,7 @@ const ProductDesc = () => {
         <div id="productss">
           {/* Product Details Section */}
           <div className="product-details">
-            <div className="card product-card">
+            <div className="card product-card1">
               <img
                 src={product.product_image || "placeholder_image.png"}
                 alt={product.product_name}

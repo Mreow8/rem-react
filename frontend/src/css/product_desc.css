@@ -87,6 +87,7 @@ button {
 
 #productss {
   margin-left: 20px;
+  width: 80%;
 }
 .desc-con {
   position: relative;
@@ -117,11 +118,10 @@ button {
   border-radius: 8px;
   padding: 40px;
   min-height: 30vh;
-
   margin-bottom: 10px; /* Fix margin for consistent spacing */
 }
 
-.product-card {
+.product-card1 {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -129,9 +129,9 @@ button {
   width: 100%;
 }
 
-.product-card img {
-  width: 30%;
-  height: 40vh;
+.product-card1 img {
+  width: 10vw;
+  height: 20vw;
   border-radius: 8px;
   object-fit: cover;
 }
@@ -250,19 +250,13 @@ button {
     font-size: 12px;
     margin-top: 10px;
   }
-  .product-card {
+  .product-card1 {
     flex-direction: column; /* Stack image and content vertically */
     align-items: center;
     gap: 15px;
   }
   .product-card-content {
     align-items: center;
-  }
-
-  .product-card img {
-    width: 50%; /* Adjust image width */
-    object-fit: cover;
-    height: auto;
   }
 
   .button-group {
