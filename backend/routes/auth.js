@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../config/db"); // Your database pool for DB queries
-<<<<<<< HEAD
 require("dotenv").config();
 
 const twilio = require("twilio");
@@ -13,15 +12,7 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioClient = new twilio(accountSid, authToken);
 const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 const twilio = require("twilio");
-const { v4: uuidv4 } = require("uuid"); // Generates a unique OTP key
-=======
-// Twilio credentials (replace these with your actual Twilio account details)
-const accountSid = "VA7c2a6093375e4eaabb4532a075e75c24";
-const authToken = "2affc047ecbdae3861d9c45e263cadd4";
-const twilioClient = new twilio(accountSid, authToken);
-const twilioPhoneNumber = "09239190323"; // Your Twilio phone number for sending messages
->>>>>>> 68dea45148421db1e04cde390d7bfc35439faf33
-
+const { v4: uuidv4 } = require("uuid"); // Generates a u
 // In-memory OTP store (should be replaced with a persistent store)
 const otpStore = {};
 
