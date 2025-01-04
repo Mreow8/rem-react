@@ -55,6 +55,7 @@ const StoreForm = () => {
     const userId = localStorage.getItem("userId");
 
     const formDataToSend = new FormData();
+    formDataToSend.append("user_id", userId);
     formDataToSend.append("store_image", image);
     formDataToSend.append("store_name", formData.storeName);
     formDataToSend.append("phone", formData.phone);
@@ -64,7 +65,6 @@ const StoreForm = () => {
     formDataToSend.append("city", formData.city);
     formDataToSend.append("barangay", formData.barangay);
     formDataToSend.append("postal_code", formData.postalCode);
-    formDataToSend.append("user_id", userId);
 
     try {
       const response = await fetch(

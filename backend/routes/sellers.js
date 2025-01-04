@@ -105,9 +105,9 @@ router.post("/", upload.single("store_image"), async (req, res) => {
 });
 
 router.get("/:userId", async (req, res) => {
-  const { user_id } = req.params;
+  const { userId } = req.params;
 
-  if (!user_id) {
+  if (!userId) {
     return res.status(400).json({ message: "User ID is required." });
   }
 
