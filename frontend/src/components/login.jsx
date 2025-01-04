@@ -106,7 +106,7 @@ const Login = () => {
       try {
         // Send the phone number to the backend to check if it exists and send OTP
         const response = await fetch(
-          "https://your-backend-url.com/api/send-otp", // Replace with your backend URL
+          "https://rem-reacts.onrender.com/api/auth/send-otp", // Replace with your backend URL
           {
             method: "POST",
             headers: {
@@ -137,7 +137,7 @@ const Login = () => {
     if (verificationCode) {
       try {
         const response = await fetch(
-          "https://your-backend-url.com/api/verify-otp", // Replace with your backend URL
+          "https://rem-reacts.onrender.com/api/auth/verify-otp", // Replace with your backend URL
           {
             method: "POST",
             headers: {
@@ -173,7 +173,7 @@ const Login = () => {
       try {
         // Send the new password to the backend for updating
         const response = await fetch(
-          "https://your-backend-url.com/api/update-password", // Replace with your backend URL
+          "https://rem-reacts.onrender.com/api/auth/update-password", // Replace with your backend URL
           {
             method: "POST",
             headers: {
