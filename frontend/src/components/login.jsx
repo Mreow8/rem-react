@@ -10,6 +10,8 @@ const Login = () => {
     identifier: "",
     password: "",
   });
+  const [phone, setPhone] = useState(""); // State to store formatted phone number
+
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,9 +22,28 @@ const Login = () => {
   const [newPassword, setNewPassword] = useState(""); // New password input
   const navigate = useNavigate();
 
+  const handlePhoneChange = (event) => {
+    let value = event.target.value.trim();
+    if (value.startsWith("09")) {
+      value = "+63" + value.slice(1); // Remove the '0' and add '+63'
+    }
+    setPhone(value); // Update the phone state
+  };
+
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setCredentials((prev) => ({ ...prev, [id]: value }));
+
+    // If the field is phone number (identifier), format it to include the country code
+    if (id === "identifier" && value.startsWith("09")) {
+      // Format the phone number to prepend '+63' for local numbers starting with '09'
+      setCredentials((prev) => ({
+        ...prev,
+        [id]: "+63" + value.slice(1), // Replace '0' with '+63'
+      }));
+    } else {
+      // For other fields (like email or password), just update the value normally
+      setCredentials((prev) => ({ ...prev, [id]: value }));
+    }
   };
 
   const isValidPhoneNumber = (phone) => {
@@ -93,7 +114,14 @@ const Login = () => {
   };
 
   const handlePhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value);
+    let value = e.target.value.trim(); // Get the input value without leading/trailing spaces
+
+    // Check if the value starts with '09' and prepend '+63'
+    if (value.startsWith("09")) {
+      value = "+63" + value.slice(1); // Replace '0' with '+63'
+    }
+
+    setPhoneNumber(value); // Update the phone number state with the formatted value
   };
 
   const handleVerificationCodeChange = (e) => {
