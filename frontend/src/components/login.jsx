@@ -116,8 +116,11 @@ const Login = () => {
     setIsModalOpen(true);
   };
 
+  const handleVerificationCodeChange = (e) => {
+    setVerificationCode(e.target.value);
+  };
   const handlePhoneNumberChange = (e) => {
-    let value = e.target.value.trim(); // Get the input value without leading/trailing spaces
+    let value = e.target.value.trim();
 
     // Check if the value starts with '09' and prepend '+63'
     if (value.startsWith("09")) {
@@ -127,11 +130,6 @@ const Login = () => {
     setPhoneNumber(value); // Update the phone number state with the formatted value
   };
 
-  const handleVerificationCodeChange = (e) => {
-    setVerificationCode(e.target.value);
-  };
-
-  // Submit phone number for OTP verification
   const handlePhoneVerification = async () => {
     if (isValidPhoneNumber(phoneNumber)) {
       try {
