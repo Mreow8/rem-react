@@ -108,7 +108,7 @@ body {
   border-radius: 10px;
   border-radius: 5px;
 }
-.btn:hover {
+.btnss:hover {
   background-color: initial !important; /* Reset background color */
   color: initial !important; /* Reset text color */
   text-decoration: none !important; /* Remove underline or decoration */
