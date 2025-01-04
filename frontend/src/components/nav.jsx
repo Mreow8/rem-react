@@ -30,8 +30,8 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
           );
           if (response.ok) {
             const data = await response.json();
-            setSellerStoreName(data.store_name);
-            setSellerStoreId(data.store_id); // Adjust property name from backend response
+            sellerStoreName(data.store_name);
+            sellerStoreId(data.store_id);
           } else {
             console.error("Failed to fetch seller data");
           }
