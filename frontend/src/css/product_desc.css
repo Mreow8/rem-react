@@ -247,6 +247,7 @@ button {
   .product-description {
     margin-right: 10px;
     flex: 0 0 100%;
+    width: 100%;
   }
   .product-description {
     font-size: 12px;
@@ -257,6 +258,10 @@ button {
     flex-direction: column; /* Stack image and content vertically */
     align-items: center;
     gap: 15px;
+  }
+  .product-card1 img {
+    width: 100%;
+    height: auto;
   }
   .product-card-content {
     align-items: center;
