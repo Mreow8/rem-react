@@ -17,7 +17,8 @@ const StoreForm = () => {
   });
 
   const [image, setImage] = useState(null);
-  const regions = ["Metro Manila", "Visayas", "Luzon", "Mindanao"];
+  const [loading, setLoading] = useState(false); // State to track loading status
+  const [regions] = useState(["Metro Manila", "Visayas", "Luzon", "Mindanao"]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,6 +50,8 @@ const StoreForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading state to true while submitting
+
     const userId = localStorage.getItem("userId");
 
     const formDataToSend = new FormData();
@@ -109,11 +112,20 @@ const StoreForm = () => {
         icon: "error",
         confirmButtonText: "OK",
       });
+    } finally {
+      setLoading(false); // Turn off loading state once the request completes
     }
   };
 
   return (
     <div className="seller-container-wrapper">
+      {/* Floating loading message */}
+      {loading && (
+        <div className="floating-loading-message">
+          Please wait... submitting your form.
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <div className="seller-container">
           <p>
