@@ -122,13 +122,17 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
                     <p style={{ fontSize: "15px" }}>My Profile</p>
                   </Link>
                   {renderSellerSection()}
-                  <button
-                    style={{ fontSize: "15px", padding: "0px" }}
-                    onClick={handleLogoutClick}
-                    className="btn btn-sm ms-3"
+                  <p
+                    className="logout-section mb-0"
+                    style={{ fontSize: "12px" }}
                   >
-                    Logout
-                  </button>
+                    <span
+                      className="text-dark cursor-pointer"
+                      onClick={handleLogoutClick}
+                    >
+                      Logout
+                    </span>
+                  </p>
                 </div>
               )}
             </div>
