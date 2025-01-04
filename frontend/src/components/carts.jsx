@@ -417,7 +417,7 @@ const Navbar = () => {
                                   {item.product_name}
                                 </p>
                               </div>
-                              <div>
+                              <div className="prod-container">
                                 <p>Php {item.product_price}</p>
                                 <div className="quantity">
                                   <button
