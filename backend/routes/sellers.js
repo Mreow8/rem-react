@@ -118,7 +118,7 @@ router.get("/:userId", async (req, res) => {
   `;
 
   try {
-    const result = await pool.query(query, [user_id]);
+    const result = await pool.query(query, [userId]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "Seller not found." });
