@@ -14,7 +14,6 @@ General Layout .checkout-container {
   margin-bottom: 20px;
 }
 
-/* Layout for Fixed and Scrollable Sections */
 .checkout-layout {
   display: flex;
   gap: 20px;

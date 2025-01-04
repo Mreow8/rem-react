@@ -335,12 +335,13 @@ const Navbar = () => {
           checked={isAllItemsChecked()}
           onChange={(e) => handleGlobalCheckboxChange(e.target.checked)}
         />
+
+        <p>Total: Php {totalAmount.toFixed(2)}</p>
+        <p>Items in Cart: {totalQuantity}</p>
         <button onClick={removeCheckedItems} className="delete-button">
           <FontAwesomeIcon icon={faTrash} style={{ fontSize: "20px" }} />
         </button>
 
-        <p>Total: Php {totalAmount.toFixed(2)}</p>
-        <p>Items in Cart: {totalQuantity}</p>
         <Link to="/checkout">
           <button disabled={getCheckedItemsDetails().length === 0}>
             Checkout

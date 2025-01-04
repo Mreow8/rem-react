@@ -1,13 +1,3 @@
-/* Ensure no global background is applied */
-body {
-  background: none;
-  margin: 0;
-  height: 100vh;
-  width: 100%;
-  max-width: 1200px;
-  font-family: Arial, sans-serif;
-}
-
 .navbar.fixed-top {
   margin-bottom: 20px;
   position: fixed;
