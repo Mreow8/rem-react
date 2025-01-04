@@ -54,7 +54,7 @@ body {
 
 .add-product-btn {
   padding: 10px 20px;
-  background-color: #28a745; /* Green for add button */
+  /* Green for add button */
   color: white;
   font-size: 1rem;
   font-weight: bold;
@@ -62,10 +62,6 @@ body {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-
-.add-product-btn:hover {
-  background-color: #218838; /* Darker green on hover */
 }
 
 /* Loading and Error Messages */
@@ -111,4 +107,10 @@ body {
 
   border-radius: 10px;
   border-radius: 5px;
+}
+.btn:hover {
+  background-color: initial !important; /* Reset background color */
+  color: initial !important; /* Reset text color */
+  text-decoration: none !important; /* Remove underline or decoration */
+  border: initial !important; /* Reset border */
 }
