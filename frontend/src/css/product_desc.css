@@ -78,6 +78,9 @@ button {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+  #productss {
+    width: 100%;
+  }
   .button-group button,
   .back-to-products {
     font-size: 14px;
@@ -242,12 +245,12 @@ button {
 
   .product-details,
   .product-description {
-    margin-left: 10px;
     margin-right: 10px;
     flex: 0 0 100%;
   }
   .product-description {
     font-size: 12px;
+    margin-left: 10px;
     margin-top: 10px;
   }
   .product-card1 {
@@ -281,6 +284,12 @@ button {
   }
   .seller-info {
     width: 100%;
+  }
+  .seller-images {
+    height: 100px;
+  }
+  .product-card-content {
+    margin: none;
   }
 }
 .seller-info {
