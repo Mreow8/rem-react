@@ -73,7 +73,6 @@ const Shop = () => {
           </button>
         </div>
       )}
-      {/* If showAddProductForm is true, display the floating AddProductForm */}
       {showAddProductForm && (
         <AddProductForm setShowAddProductForm={setShowAddProductForm} />
       )}
@@ -102,7 +101,15 @@ const Shop = () => {
               );
             })
           ) : (
-            <p>No products available for this store.</p>
+            <div>
+              <p>No products available for this store.</p>
+              <button
+                onClick={() => setShowAddProductForm(true)}
+                className="btn btn-primary"
+              >
+                Add Product
+              </button>
+            </div>
           )}
         </div>
       </div>

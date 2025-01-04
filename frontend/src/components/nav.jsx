@@ -124,7 +124,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
                   {renderSellerSection()}
                   <p
                     className="logout-section mb-0"
-                    style={{ fontSize: "12px" }}
+                    style={{ fontSize: "15px" }}
                   >
                     <span
                       className="text-dark cursor-pointer"
