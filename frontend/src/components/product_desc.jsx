@@ -165,23 +165,21 @@ const ProductDesc = () => {
             </div>
           </div>
           <div className="seller-info">
-            <div className="cards">
-              <img
-                src={product.seller_image || "placeholder_image.png"}
-                className="seller-images"
-                alt="Seller"
-              />
-              <div className="seller-info-content">
-                <div className="seller-name-location">
-                  <p className="store-name">{product.store_name}</p>
-                  <p className="location">{product.province}</p>
-                </div>
-                <div className="button-group">
-                  <button>Message</button>
-                  <button onClick={openShop} className="open-shop">
-                    Shop
-                  </button>
-                </div>
+            <img
+              src={product.seller_image || "placeholder_image.png"}
+              className="seller-images"
+              alt="Seller"
+            />
+            <div className="seller-info-content">
+              <div className="seller-name-location">
+                <p className="store-name">{product.store_name}</p>
+                <p className="location">{product.province}</p>
+              </div>
+              <div className="button-group">
+                <button>Message</button>
+                <button onClick={openShop} className="open-shop">
+                  Shop
+                </button>
               </div>
             </div>
           </div>

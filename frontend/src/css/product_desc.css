@@ -104,7 +104,7 @@ button {
 }
 
 .product-details {
-  flex: 0 0 60%; /* Adjust width for better alignment */
+  margin-left: 25px;
 }
 
 .product-description {
@@ -279,7 +279,7 @@ button {
   .product-title {
     align-items: center;
   }
-  .seller-info .cards {
+  .seller-info {
     width: 100%;
   }
 }
@@ -290,7 +290,7 @@ button {
   margin-bottom: -20px;
 }
 
-.seller-info .cards {
+.seller-info {
   display: flex;
   flex-direction: row; /* Align items horizontally */
   align-items: center;
