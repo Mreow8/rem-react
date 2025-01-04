@@ -84,7 +84,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 10px 20px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -260,7 +260,7 @@ body {
   }
 
   /* Stack name and price */
-  .product-card .product-name,
+  .product-card .product-names,
   .product-card p {
     margin-bottom: 5px;
   }

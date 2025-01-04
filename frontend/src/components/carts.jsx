@@ -413,7 +413,7 @@ const Navbar = () => {
                                 className="image-product"
                               />
                               <div className="random">
-                                <p className="product-name">
+                                <p className="product-names">
                                   {item.product_name}
                                 </p>
                               </div>
