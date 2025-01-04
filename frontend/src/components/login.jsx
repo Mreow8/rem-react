@@ -22,40 +22,67 @@ const Login = () => {
   const [newPassword, setNewPassword] = useState(""); // New password input
   const navigate = useNavigate();
 
-  const handlePhoneChange = (event) => {
-    let value = event.target.value.trim();
-    if (value.startsWith("09")) {
-      value = "+63" + value.slice(1); // Remove the '0' and add '+63'
-    }
-    setPhone(value); // Update the phone state
-  };
-
   const handleChange = (e) => {
     const { id, value } = e.target;
 
-    // If the field is phone number (identifier), format it to include the country code
-    if (id === "identifier" && value.startsWith("09")) {
-      // Format the phone number to prepend '+63' for local numbers starting with '09'
-      setCredentials((prev) => ({
-        ...prev,
-        [id]: "+63" + value.slice(1), // Replace '0' with '+63'
-      }));
-    } else {
-      // For other fields (like email or password), just update the value normally
-      setCredentials((prev) => ({ ...prev, [id]: value }));
-    }
-  };
-
-  const isValidPhoneNumber = (phone) => {
-    return (
-      (phone.startsWith("09") && phone.length === 11 && /^\d+$/.test(phone)) || // Local format (starts with 09)
-      (phone.startsWith("+639") && phone.length === 13 && /^\d+$/.test(phone)) // International format (starts with +639)
-    );
+    setCredentials((prev) => ({ ...prev, [id]: value }));
   };
 
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+  const handlePhoneNumberChange = (e) => {
+    let value = e.target.value.trim();
+
+    // Check if the value starts with '09' and prepend '+63'
+    if (value.startsWith("09")) {
+      value = "+63" + value.slice(1); // Replace '0' with '+63'
+    }
+
+    setPhoneNumber(value); // Update the phone number state with the formatted value
+  };
+
+  const isValidPhoneNumber = (phone) => {
+    // Check for valid phone number (local or international)
+    return (
+      (phone.startsWith("+63") &&
+        phone.length === 13 &&
+        /^\+63\d+$/.test(phone)) || // International format +639....
+      (phone.startsWith("09") && phone.length === 11 && /^\d+$/.test(phone)) // Local format 09....
+    );
+  };
+
+  const handlePhoneVerification = async () => {
+    // Ensure the phone number is valid
+    if (isValidPhoneNumber(phoneNumber)) {
+      try {
+        // Send the phone number to the backend to check if it exists and send OTP
+        const response = await fetch(
+          "https://rem-reacts.onrender.com/api/auth/send-otp", // Replace with your backend URL
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ phone: phoneNumber }),
+          }
+        );
+
+        if (response.ok) {
+          setIsVerificationSent(true); // Mark that the verification code has been sent
+          alert("Verification code sent to " + phoneNumber);
+        } else {
+          const data = await response.json();
+          alert(data.message || "Failed to send verification code.");
+        }
+      } catch (error) {
+        console.error("Error sending OTP:", error);
+        alert("An error occurred while sending OTP.");
+      }
+    } else {
+      alert("Please enter a valid phone number.");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -119,118 +146,6 @@ const Login = () => {
   const handleVerificationCodeChange = (e) => {
     setVerificationCode(e.target.value);
   };
-  const handlePhoneNumberChange = (e) => {
-    let value = e.target.value.trim();
-
-    // Check if the value starts with '09' and prepend '+63'
-    if (value.startsWith("09")) {
-      value = "+63" + value.slice(1); // Replace '0' with '+63'
-    }
-
-    setPhoneNumber(value); // Update the phone number state with the formatted value
-  };
-
-  const handlePhoneVerification = async () => {
-    if (isValidPhoneNumber(phoneNumber)) {
-      try {
-        // Send the phone number to the backend to check if it exists and send OTP
-        const response = await fetch(
-          "https://rem-reacts.onrender.com/api/auth/send-otp", // Replace with your backend URL
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ phone: phoneNumber }),
-          }
-        );
-
-        if (response.ok) {
-          setIsVerificationSent(true); // Mark that the verification code has been sent
-          alert("Verification code sent to " + phoneNumber);
-        } else {
-          const data = await response.json();
-          alert(data.message || "Failed to send verification code.");
-        }
-      } catch (error) {
-        console.error("Error sending OTP:", error);
-        alert("An error occurred while sending OTP.");
-      }
-    } else {
-      alert("Please enter a valid phone number.");
-    }
-  };
-
-  // Submit verification code
-  const handleVerificationCodeSubmit = async () => {
-    if (verificationCode) {
-      try {
-        const response = await fetch(
-          "https://rem-reacts.onrender.com/api/auth/verify-otp", // Replace with your backend URL
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              phone: phoneNumber,
-              code: verificationCode,
-            }),
-          }
-        );
-
-        if (response.ok) {
-          alert("Verification successful.");
-          setIsModalOpen(false); // Close the modal after verification
-          setIsCodeVerified(true); // Mark as verified
-        } else {
-          const data = await response.json();
-          alert(data.message || "Invalid verification code.");
-        }
-      } catch (error) {
-        console.error("Error verifying code:", error);
-        alert("An error occurred while verifying the code.");
-      }
-    } else {
-      alert("Please enter the verification code.");
-    }
-  };
-
-  // Handle new password submission
-  const handleNewPasswordSubmit = async () => {
-    if (newPassword) {
-      try {
-        // Send the new password to the backend for updating
-        const response = await fetch(
-          "https://rem-reacts.onrender.com/api/auth/update-password", // Replace with your backend URL
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              phone: phoneNumber,
-              newPassword: newPassword,
-            }),
-          }
-        );
-
-        if (response.ok) {
-          alert("Password updated successfully.");
-          setIsModalOpen(false); // Close the modal after updating
-        } else {
-          const data = await response.json();
-          alert(data.message || "Failed to update password.");
-        }
-      } catch (error) {
-        console.error("Error updating password:", error);
-        alert("An error occurred while updating the password.");
-      }
-    } else {
-      alert("Please enter a new password.");
-    }
-  };
-
   return (
     <div className="login-page">
       <div
