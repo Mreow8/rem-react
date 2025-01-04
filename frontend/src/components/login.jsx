@@ -47,7 +47,10 @@ const Login = () => {
   };
 
   const isValidPhoneNumber = (phone) => {
-    return phone.startsWith("09") && phone.length === 11 && /^\d+$/.test(phone);
+    return (
+      (phone.startsWith("09") && phone.length === 11 && /^\d+$/.test(phone)) || // Local format (starts with 09)
+      (phone.startsWith("+639") && phone.length === 13 && /^\d+$/.test(phone)) // International format (starts with +639)
+    );
   };
 
   const isValidEmail = (email) => {
