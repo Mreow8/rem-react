@@ -104,7 +104,7 @@ router.post("/", upload.single("store_image"), async (req, res) => {
   }
 });
 // GET route to fetch seller details based on user_id
-router.get("/:user_id", async (req, res) => {
+router.get("/:userId", async (req, res) => {
   const { user_id } = req.params; // Get user_id from URL parameters
 
   if (!user_id) {
