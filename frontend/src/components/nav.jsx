@@ -16,9 +16,32 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setUsername(localStorage.getItem("username"));
-    setSellerStoreName(localStorage.getItem("sellerStoreName"));
-    setSellerStoreId(localStorage.getItem("sellerStoreId"));
+    const storedUsername = localStorage.getItem("username");
+    setUsername(storedUsername);
+
+    // Fetch seller data if the user is logged in
+    if (storedUsername) {
+      const userId = localStorage.getItem("userId");
+
+      const fetchSellerData = async () => {
+        try {
+          const response = await fetch(
+            `https://rem-reacts.onrender.com/api/seller/${userId}`
+          );
+          if (response.ok) {
+            const data = await response.json();
+            setSellerStoreName(data.store_name); // Adjust property name from backend response
+            setSellerStoreId(data.store_id); // Adjust property name from backend response
+          } else {
+            console.error("Failed to fetch seller data");
+          }
+        } catch (error) {
+          console.error("Error fetching seller data:", error);
+        }
+      };
+
+      fetchSellerData();
+    }
 
     // Add event listener to close the menu if the user clicks anywhere on the page
     const handleClickOutside = (event) => {
@@ -58,12 +81,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
   };
 
   const renderSellerSection = () => {
-    if (
-      sellerStoreId &&
-      sellerStoreId !== "null" &&
-      sellerStoreName &&
-      sellerStoreName !== "null"
-    ) {
+    if (sellerStoreId && sellerStoreName) {
       return (
         <Link to={`/sellerprofile/${sellerStoreId}`} id="store_link">
           <p>{sellerStoreName}</p>

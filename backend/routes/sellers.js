@@ -103,5 +103,43 @@ router.post("/", upload.single("store_image"), async (req, res) => {
     res.status(500).json({ message: "Error saving seller data" });
   }
 });
+// GET route to fetch seller details based on user_id
+router.get("/:user_id", async (req, res) => {
+  const { user_id } = req.params; // Get user_id from URL parameters
+
+  if (!user_id) {
+    return res.status(400).json({ message: "User ID is required." });
+  }
+
+  // SQL query to fetch seller details
+  const query = `
+    SELECT store_id, store_name, phone, email, region, province, city, barangay, postal_code, image
+    FROM stores
+    WHERE user_id = $1;
+  `;
+
+  try {
+    const result = await pool.query(query, [user_id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Seller not found." });
+    }
+
+    // Send the seller data as response
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error("Error fetching seller data:", error.message);
+
+    if (error.code === "ECONNREFUSED") {
+      // Handle connection error
+      return res.status(503).json({
+        message: "Database connection failed. Please try again later.",
+      });
+    }
+
+    // General server error
+    res.status(500).json({ message: "Error fetching seller data" });
+  }
+});
 
 module.exports = router; // Export the router
