@@ -4,12 +4,9 @@ body {
   font-family: "Arial", sans-serif;
   background-color: #f7f7f7;
   color: #333;
-  max-width: 1200px !important;
 }
 
 .App {
-  max-width: 1200px !important;
-
   margin: 0 auto !important;
   padding: 20px;
 }
