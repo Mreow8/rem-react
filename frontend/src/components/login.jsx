@@ -13,6 +13,9 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [phoneNumber, setPhoneNumber] = useState(""); // State for phone number input
+  const [verificationCode, setVerificationCode] = useState(""); // State for verification code input
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -100,6 +103,33 @@ const Login = () => {
     setError("");
   };
 
+  // Handle Forgot Password click
+  const handleForgotPasswordClick = () => {
+    setIsModalOpen(true); // Show the modal
+  };
+
+  // Handle phone number input change
+  const handlePhoneNumberChange = (e) => {
+    setPhoneNumber(e.target.value);
+  };
+
+  // Handle verification code input change
+  const handleVerificationCodeChange = (e) => {
+    setVerificationCode(e.target.value);
+  };
+
+  // Submit phone number for verification
+  const handlePhoneVerification = () => {
+    if (isValidPhoneNumber(phoneNumber)) {
+      // Here you can send the phone number to the backend for OTP sending
+      alert("Verification code sent to " + phoneNumber);
+      // Close the modal after sending the verification code
+      setIsModalOpen(false);
+    } else {
+      alert("Please enter a valid phone number.");
+    }
+  };
+
   return (
     <div className="login-page">
       <div
@@ -185,6 +215,71 @@ const Login = () => {
           <p className="text-center mt-3">
             Don't have an account? <Link to="/signup">Sign Up</Link>
           </p>
+          <a href="#" onClick={handleForgotPasswordClick}>
+            Forgot Password?
+          </a>
+        </div>
+      </div>
+      {/* Forgot Password Modal */}
+      <div
+        className={`modal ${isModalOpen ? "show" : ""}`}
+        style={{ display: isModalOpen ? "block" : "none" }}
+        tabIndex="-1"
+        aria-labelledby="forgotPasswordModal"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="forgotPasswordModal">
+                Forgot Password
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                onClick={() => setIsModalOpen(false)}
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="mb-3">
+                <label htmlFor="phoneNumber" className="form-label">
+                  Enter your phone number
+                </label>
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  className="form-control"
+                  placeholder="Enter your phone number"
+                  value={phoneNumber}
+                  onChange={handlePhoneNumberChange}
+                  required
+                />
+              </div>
+              <button
+                className="btn btn-primary"
+                onClick={handlePhoneVerification}
+              >
+                Send Verification Code
+              </button>
+              {verificationCode && (
+                <div className="mb-3 mt-3">
+                  <label htmlFor="verificationCode" className="form-label">
+                    Enter verification code
+                  </label>
+                  <input
+                    type="text"
+                    id="verificationCode"
+                    className="form-control"
+                    placeholder="Enter code"
+                    value={verificationCode}
+                    onChange={handleVerificationCodeChange}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
