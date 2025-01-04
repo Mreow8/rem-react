@@ -5,7 +5,7 @@ body {
   display: flex; /* Use flexbox to align children in a row */
   align-items: center; /* Vertically align items */
   gap: 10px; /* Add space between items */
-  width: 65%;
+
   justify-content: space-around;
 }
 
@@ -347,8 +347,12 @@ body {
   }
 }
 #random {
-  display: inline-block; /* Default inline layout */
-  align-items: center; /* Align items vertically */
-  gap: 15px; /* Add spacing between elements */
-  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+}
+
+.random,
+.prod-container {
+  display: inline-block;
+  margin-right: 10px; /* Adjust space between elements as needed */
 }
