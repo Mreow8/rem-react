@@ -1,6 +1,18 @@
 body {
   background-color: rgb(196, 198, 199);
 }
+.prod-container {
+  display: flex; /* Use flexbox to align children in a row */
+  align-items: center; /* Vertically align items */
+  gap: 10px; /* Add space between items */
+}
+
+.prod-container p,
+.prod-container .quantity,
+.prod-container .delete-button {
+  margin: 0; /* Remove default margin for inline alignment */
+}
+
 .quantity .button {
   box-decoration-break: unset;
   all: unset;
