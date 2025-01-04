@@ -26,7 +26,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
       const fetchSellerData = async () => {
         try {
           const response = await fetch(
-            `https://rem-reacts.onrender.com/api/seller/${userId}`
+            `https://rem-reacts.onrender.com/api/sellers/${userId}`
           );
           if (response.ok) {
             const data = await response.json();

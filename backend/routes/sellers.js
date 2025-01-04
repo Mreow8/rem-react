@@ -103,15 +103,14 @@ router.post("/", upload.single("store_image"), async (req, res) => {
     res.status(500).json({ message: "Error saving seller data" });
   }
 });
-// GET route to fetch seller details based on user_id
+
 router.get("/:userId", async (req, res) => {
-  const { user_id } = req.params; // Get user_id from URL parameters
+  const { user_id } = req.params;
 
   if (!user_id) {
     return res.status(400).json({ message: "User ID is required." });
   }
 
-  // SQL query to fetch seller details
   const query = `
     SELECT store_id, store_name, phone, email, region, province, city, barangay, postal_code, image
     FROM stores
