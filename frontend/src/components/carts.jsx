@@ -429,9 +429,7 @@ const Navbar = () => {
                                     >
                                       -
                                     </button>
-                                    <span style={{ marginTop: "20px" }}>
-                                      {item.quantity}
-                                    </span>
+                                    <span>{item.quantity}</span>
                                     <button
                                       className="plus-button"
                                       onClick={() =>
