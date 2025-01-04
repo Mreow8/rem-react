@@ -32,11 +32,9 @@ router.post("/send-otp", async (req, res) => {
       return res.status(404).json({ message: "Phone number not registered." });
     }
 
-    // Generate a 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000);
 
-    // Store OTP with a unique key (use user phone and a UUID for uniqueness)
-    otpStore[phone] = { otp, expiry: Date.now() + 300000 }; // OTP expires in 5 minutes
+    otpStore[phone] = { otp, expiry: Date.now() + 300000 };
 
     // Send OTP via Twilio
     await twilioClient.messages.create({

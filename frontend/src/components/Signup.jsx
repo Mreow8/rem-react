@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 const SignUp = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [phone, setPhone] = useState(""); // State to store formatted phone number
   const navigate = useNavigate();
 
   // Function to clear error message when an input field is focused
@@ -16,21 +17,29 @@ const SignUp = () => {
     setError("");
   };
 
+  // Handle phone number input and automatically format it
+  const handlePhoneChange = (event) => {
+    let value = event.target.value.trim();
+    if (value.startsWith("09")) {
+      value = "+63" + value.slice(1); // Remove the '0' and add '+63'
+    }
+    setPhone(value); // Update the phone state
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const phone = event.target.phoneInput.value.trim();
     const password = event.target.passwordInput.value.trim();
     const username = event.target.usernameInput.value.trim();
 
     // Validate phone number
     if (
-      !phone.startsWith("09") ||
-      phone.length !== 11 ||
-      !/^\d+$/.test(phone)
+      !phone.startsWith("+63") ||
+      phone.length !== 13 ||
+      !/^\+63\d+$/.test(phone)
     ) {
       setError(
-        "Please enter a valid phone number (starting with '09' and 11 digits)."
+        "Please enter a valid phone number (starting with '+63' and 13 digits)."
       );
       return;
     }
@@ -157,6 +166,8 @@ const SignUp = () => {
                 id="phoneInput"
                 name="phoneInput"
                 placeholder="Enter your phone number"
+                value={phone} // Set the phone state as the value
+                onChange={handlePhoneChange} // Format the phone number on change
                 required
                 onFocus={clearErrorOnFocus} // Clear error on focus
               />
