@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import AddProductForm from "./addproducts";
 import ProductDesc from "./product_desc";
-
+import Loading from "./loading";
 const Shop = () => {
   const { id } = useParams(); // Store ID
   const [storeData, setStoreData] = useState(null); // To hold seller data
@@ -62,7 +62,7 @@ const Shop = () => {
   }, []); // Empty dependency array to run once when the component mounts
 
   if (loading) {
-    return <div className="loading-message">Loading store data...</div>;
+    return <Loading />;
   }
 
   if (error) {
