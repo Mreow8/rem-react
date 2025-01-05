@@ -112,12 +112,7 @@ router.get("/:userId", async (req, res) => {
   }
 
   const query = `
-    SELECT products.*, stores.store_id, stores.store_name, stores.phone, stores.email, 
-       stores.region, stores.province, stores.city, stores.barangay, stores.postal_code, stores.image
-FROM stores
-INNER JOIN products ON products.store_id = stores.store_id
-WHERE stores.user_id = $1;
-
+SELECT stores.* FROM stores WHERE user_id = $1;
   `;
 
   try {
