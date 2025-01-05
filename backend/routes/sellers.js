@@ -114,7 +114,7 @@ router.get("/:userId", async (req, res) => {
   const query = `
 SELECT stores.* FROM stores WHERE user_id = $1;
   `;
-
+  console.log("Fetching seller data for user ID:", userId);
   try {
     const result = await pool.query(query, [userId]);
 
