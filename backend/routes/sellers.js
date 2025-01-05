@@ -141,49 +141,45 @@ router.get("/product/:sellerId", async (req, res) => {
   const { sellerId } = req.params;
 
   if (!sellerId) {
+    console.error("Seller ID is missing in the request.");
     return res.status(400).json({ message: "Seller ID is required." });
   }
 
   const query = `
-    SELECT products.* FROM products
+    SELECT products.* 
+    FROM products 
     WHERE store_id = $1;
   `;
 
-  console.log("Fetching products for seller ID:", sellerId);
+  console.log("Executing query for Seller ID:", sellerId);
+  console.log("Query:", query);
 
   try {
     const result = await pool.query(query, [sellerId]);
+    console.log("Query Result:", result.rows);
 
     if (result.rows.length === 0) {
-      // Trap for no products
-      console.warn(`No products found for seller ID: ${sellerId}`);
+      console.warn(`No products found for Seller ID: ${sellerId}`);
       return res.status(200).json({
         message: "No products found for this seller.",
-        suggestion: "Add your first product to start selling!",
-        products: [], // Return an empty array for consistency
+        products: [], // Return an empty array
       });
     }
 
-    // Map and format the product data, if needed
-    const products = result.rows.map((row) => ({
-      ...row,
-      product_image: row.product_image, // Ensure product_image is correctly mapped
-    }));
-
-    // Send the list of products as response
-    res.status(200).json(products);
+    res.status(200).json({
+      message: "Products fetched successfully.",
+      products: result.rows,
+    });
   } catch (error) {
-    console.error("Error fetching products data:", error.message);
+    console.error("Error executing query:", error.message);
 
     if (error.code === "ECONNREFUSED") {
-      // Handle connection error
       return res.status(503).json({
         message: "Database connection failed. Please try again later.",
       });
     }
 
-    // General server error
-    res.status(500).json({ message: "Error fetching products data" });
+    res.status(500).json({ message: "Error fetching products data." });
   }
 });
 
