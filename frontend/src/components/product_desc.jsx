@@ -177,7 +177,6 @@ const ProductDesc = () => {
                 <p className="location">{product.province}</p>
               </div>
               <div className="button-group">
-                <button>Message</button>
                 <button onClick={openShop} className="open-shop">
                   Shop
                 </button>

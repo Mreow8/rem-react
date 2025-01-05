@@ -63,8 +63,12 @@ const Shop = () => {
       <Nav /> {/* Include navigation */}
       {seller && (
         <div className="seller-info">
-          <img src={seller.image} alt={seller.name} className="seller-image" />
-          <h2 className="seller-name">{seller.name}</h2>
+          <img
+            src={seller.seller_image}
+            alt={seller.store_name}
+            className="seller-image"
+          />
+          <h2 className="seller-name">{seller.store_name}</h2>
           <p>
             {seller.region}, {seller.province}
           </p>
