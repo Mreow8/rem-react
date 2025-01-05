@@ -20,7 +20,7 @@ const Shop = () => {
     const fetchStoreData = async () => {
       try {
         const response = await fetch(
-          `https://rem-reacts.onrender.com/api/products/${id}`
+          `https://rem-reacts.onrender.com/api/sellers/${id}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch products.");
