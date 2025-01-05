@@ -9,7 +9,7 @@ import ProductDesc from "./product_desc";
 import Loading from "./loading";
 
 const Shop = () => {
-  const { id } = useParams(); // Store ID
+  const { id } = useParams(); // Store ID from URL params
   const [storeData, setStoreData] = useState(null); // To hold seller data
   const [productsData, setProductsData] = useState([]); // To hold product data
   const [loading, setLoading] = useState(true);

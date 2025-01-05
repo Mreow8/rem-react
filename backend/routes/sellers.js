@@ -122,7 +122,6 @@ SELECT stores.* FROM stores WHERE store_id = $1;
       return res.status(404).json({ message: "Seller not found." });
     }
 
-    // Send the seller data as response
     res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error("Error fetching seller data [[[]]]:", error.message);
