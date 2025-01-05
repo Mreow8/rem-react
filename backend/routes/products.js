@@ -119,6 +119,10 @@ router.post("/", upload.single("product_image"), async (req, res) => {
 // GET Route for Single Product by ID
 router.get("/:id", async (req, res) => {
   const productId = parseInt(req.params.id);
+  console.log("Product ID:", productId);
+  if (isNaN(productId)) {
+    return res.status(400).json({ message: "Invalid product ID" });
+  }
 
   try {
     const query = `
