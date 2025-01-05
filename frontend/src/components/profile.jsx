@@ -21,14 +21,106 @@ const App = () => {
   const [addressData, setAddressData] = useState({
     fullName: "",
     phoneNumber: "",
-    region: "",
+    region: "Luzon", // Default region
     province: "",
     city: "",
     barangay: "",
     postalCode: "",
-    label: "Home", // default label for address
+    label: "Home",
   });
 
+  // Complete data for the 3 main island groups (regions) and their provinces
+  const regions = {
+    Luzon: {
+      provinces: [
+        "Metro Manila",
+        "Bulacan",
+        "Cavite",
+        "Laguna",
+        "Batangas",
+        "Pampanga",
+        "Quezon",
+        "Bataan",
+        "Tarlac",
+        "Zambales",
+        "Pangasinan",
+        "Nueva Ecija",
+        "Aurora",
+        "Benguet",
+        "Ifugao",
+        "Kalinga",
+        "Mountain Province",
+        "Isabela",
+        "Cagayan",
+        "Tuguegarao",
+        "Albay",
+        "Camarines Sur",
+        "Camarines Norte",
+        "Sorsogon",
+        "Catanduanes",
+        "Masbate",
+        // You can add more provinces here
+      ],
+    },
+    Visayas: {
+      provinces: [
+        "Negros Occidental",
+        "Cebu",
+        "Iloilo",
+        "Leyte",
+        "Bohol",
+        "Samar",
+        "Negros Oriental",
+        "Aklan",
+        "Antique",
+        "Capiz",
+        "Guimaras",
+        "Biliran",
+        // You can add more provinces here
+      ],
+    },
+    Mindanao: {
+      provinces: [
+        "Davao del Sur",
+        "Davao del Norte",
+        "Davao Oriental",
+        "Davao de Oro",
+        "Bukidnon",
+        "Agusan del Norte",
+        "Agusan del Sur",
+        "Surigao del Norte",
+        "Surigao del Sur",
+        "Zamboanga del Norte",
+        "Zamboanga del Sur",
+        "Zamboanga Sibugay",
+        "Sultan Kudarat",
+        "Cotabato",
+        "South Cotabato",
+        "Lanao del Norte",
+        "Lanao del Sur",
+        "Misamis Oriental",
+        "Misamis Occidental",
+        "Samar",
+        "Tawi-Tawi",
+        // You can add more provinces here
+      ],
+    },
+  };
+  const handleRegionChange = (e) => {
+    const selectedRegion = e.target.value;
+    setAddressData({
+      ...addressData,
+      region: selectedRegion,
+      province: "", // Reset province when region changes
+    });
+  };
+
+  const handleProvinceChange = (e) => {
+    setAddressData({
+      ...addressData,
+      province: e.target.value,
+    });
+  };
   const [activeContent, setActiveContent] = useState("profile"); // Added state for activeContent
 
   const showContent = (contentId) => {
@@ -313,24 +405,35 @@ const App = () => {
                 </div>
                 <div>
                   <label htmlFor="region">Region: </label>
-                  <input
-                    type="text"
+                  <select
                     id="region"
                     name="region"
                     value={addressData.region}
-                    onChange={handleAddressChange}
-                  />
+                    onChange={handleRegionChange}
+                  >
+                    <option value="Luzon">Luzon</option>
+                    <option value="Visayas">Visayas</option>
+                    <option value="Mindanao">Mindanao</option>
+                  </select>
                 </div>
                 <div>
                   <label htmlFor="province">Province: </label>
-                  <input
-                    type="text"
+                  <select
                     id="province"
                     name="province"
                     value={addressData.province}
-                    onChange={handleAddressChange}
-                  />
+                    onChange={handleProvinceChange}
+                  >
+                    {regions[addressData.region]?.provinces.map(
+                      (province, index) => (
+                        <option key={index} value={province}>
+                          {province}
+                        </option>
+                      )
+                    )}
+                  </select>
                 </div>
+
                 <div>
                   <label htmlFor="city">City: </label>
                   <input
