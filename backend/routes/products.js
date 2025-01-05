@@ -163,5 +163,33 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT products.*, stores.store_name
+      FROM products
+      INNER JOIN stores ON products.store_id = stores.store_id
+    `);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error("Error retrieving products:", error);
+    res
+      .status(500)
+      .json({ message: "Error retrieving products", error: error.message });
+  }
+});
+
+// GET Route for Categories
+router.get("/categories", async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      "SELECT DISTINCT category AS name FROM products"
+    );
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error retrieving categories:", error);
+    res.status(500).json({ message: "Error retrieving categories." });
+  }
+});
 // Export the Router
 module.exports = router;
