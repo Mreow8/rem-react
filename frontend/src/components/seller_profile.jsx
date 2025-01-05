@@ -7,6 +7,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import AddProductForm from "./addproducts";
 import ProductDesc from "./product_desc";
 import Loading from "./loading";
+
 const Shop = () => {
   const { id } = useParams(); // Store ID
   const [storeData, setStoreData] = useState(null); // To hold seller data
@@ -38,6 +39,8 @@ const Shop = () => {
         setStoreData(data);
       } catch (error) {
         setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -54,6 +57,8 @@ const Shop = () => {
         setProductsData(data.products || []); // Assuming the products are inside the `products` field in the response.
       } catch (error) {
         setError(error.message);
+      } finally {
+        setLoading(false); // Ensure loading is false
       }
     };
 
@@ -68,14 +73,6 @@ const Shop = () => {
   if (error) {
     return <div className="error-message">Error: {error}</div>;
   }
-
-  const openShop = () => {
-    if (storeData && storeData.store_id) {
-      navigate(`/sellerprofile/${storeData.store_id}`);
-    } else {
-      alert("Seller ID is missing!");
-    }
-  };
 
   return (
     <div className="store-container">
