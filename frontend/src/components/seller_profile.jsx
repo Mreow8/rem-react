@@ -84,7 +84,7 @@ const Shop = () => {
       {storeData && (
         <div className="seller-info">
           <img
-            src={storeData.seller_image || "placeholder_seller_image.png"}
+            src={storeData.image || "placeholder_seller_image.png"}
             alt={storeData.store_name || "Seller"}
             className="seller-image"
           />
