@@ -323,6 +323,9 @@ body {
     padding: 5px 10px;
     font-size: 14px;
   }
+  .seller-image {
+    margin: 0;
+  }
 }
 
 @media (max-width: 480px) {

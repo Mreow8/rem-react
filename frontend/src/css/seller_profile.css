@@ -114,3 +114,15 @@ body {
   text-decoration: none !important; /* Remove underline or decoration */
   border: initial !important; /* Reset border */
 }
+@media (max-width: 768px) {
+  .buttones {
+    font-size: 12px;
+  }
+  .product-list h3 {
+    margin-top: 10%;
+    text-align: center;
+  }
+  .seller-info {
+    flex-direction: column;
+  }
+}

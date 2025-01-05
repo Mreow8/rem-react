@@ -262,7 +262,6 @@ const App = () => {
     }));
   };
 
-  // Add address
   const addAddress = async () => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
@@ -270,15 +269,23 @@ const App = () => {
       return;
     }
 
+    // Include userId in the addressData being sent in the request body
+    const addressDataWithUserId = {
+      ...addressData,
+      userId: userId, // Add userId to the request body
+    };
+
+    console.log("addressData", addressDataWithUserId); // Log the data before sending the request
+
     try {
       const response = await fetch(
-        `https://rem-reacts.onrender.com/api/addresses/${userId}`,
+        `https://rem-reacts.onrender.com/api/addresses`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(addressData),
+          body: JSON.stringify(addressDataWithUserId),
         }
       );
 
