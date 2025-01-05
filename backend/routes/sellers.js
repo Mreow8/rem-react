@@ -139,10 +139,10 @@ SELECT stores.* FROM stores WHERE store_id = $1;
   }
 });
 
-router.get("/products/:storedid", async (req, res) => {
-  const { storedid } = req.params;
+router.get("/product/:sellerId", async (req, res) => {
+  const { sellerId } = req.params;
 
-  if (!storedid) {
+  if (!sellerId) {
     return res.status(400).json({ message: "Seller ID is required." });
   }
 
@@ -154,7 +154,7 @@ router.get("/products/:storedid", async (req, res) => {
   console.log("Fetching products for seller ID:", sellerId);
 
   try {
-    const result = await pool.query(query, [storedid]);
+    const result = await pool.query(query, [sellerId]);
 
     if (result.rows.length === 0) {
       return res
