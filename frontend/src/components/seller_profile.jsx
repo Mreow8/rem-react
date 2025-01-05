@@ -38,6 +38,7 @@ const Shop = () => {
         const data = await response.json();
         setStoreData(data);
       } catch (error) {
+        console.error(error);
         setError(error.message);
       } finally {
         setLoading(false);
