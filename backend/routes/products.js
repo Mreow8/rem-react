@@ -34,15 +34,27 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     product_quantity,
     product_author,
     product_description,
-    category,
+    product_category,
+    product_publisher,
+    product_dimensions,
+    product_weight,
+    product_pages,
   } = req.body;
 
-  const productImage = req.file ? req.file.path : null; // Cloudinary file URL
+  const productImage = req.file ? req.file.path : null; // Path to the uploaded image
 
-  if (!store_id || !product_name || !product_price || !product_quantity) {
+  // Validate required fields
+  if (
+    !store_id ||
+    !product_name ||
+    !product_price ||
+    !product_quantity ||
+    !product_category
+  ) {
     return res.status(400).json({ message: "Required fields are missing." });
   }
 
+  // Log the incoming data for debugging purposes
   console.log("Inserting product data:", {
     store_id,
     product_name,
@@ -50,14 +62,32 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     product_quantity,
     product_author,
     product_description,
-    category,
+    product_category,
+    product_publisher,
+    product_dimensions,
+    product_weight,
+    product_pages,
     productImage,
   });
 
-  // SQL query to insert product details
+  // SQL query to insert product details into the products table
   const query = `
-    INSERT INTO products (store_id, product_name, product_price, product_quantity, product_author, product_description, category, product_image)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;
+    INSERT INTO products (
+      store_id,
+      product_name,
+      product_price,
+      stock,
+      product_author,
+      product_description,
+      category,
+      product_image,
+      product_publisher,
+      product_dimensions,
+      product_weight,
+      product_pages
+    ) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    RETURNING id;
   `;
 
   try {
@@ -65,22 +95,28 @@ router.post("/", upload.single("product_image"), async (req, res) => {
       store_id,
       product_name,
       product_price,
-      product_quantity,
+      product_quantity, // Stock
       product_author,
       product_description,
-      category,
+      product_category,
       productImage,
+      product_publisher,
+      product_dimensions,
+      product_weight,
+      product_pages,
     ]);
 
+    // Respond with success
     res.status(201).json({
       message: "Product added successfully!",
-      productId: result.rows[0].id,
+      productId: result.rows[0].id, // Return the newly created product ID
     });
   } catch (error) {
     console.error("Error saving product data:", error.message);
 
+    // Handle specific errors
     if (error.code === "23505") {
-      // Handle unique violation error
+      // Handle unique violation error (for example, product name or SKU already exists)
       return res.status(409).json({
         message: "Conflict: A product with this data already exists.",
       });

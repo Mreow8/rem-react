@@ -189,7 +189,7 @@ const ProductDesc = () => {
         <div className="product-description">
           <div className="card">
             <p>Product Description</p>
-            <p style={{ fontSize: "20px" }}>{product.product_description}</p>
+            <p style={{ fontSize: "20px" }}>{product.product_dimensions}</p>
           </div>
           <div className="card">
             <p>Product Synopsis</p>

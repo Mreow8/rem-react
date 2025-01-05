@@ -57,12 +57,11 @@ function AddProductForm({ setShowAddProductForm }) {
     productData.append("product_dimensions", formData.product_dimensions);
     productData.append("product_weight", formData.product_weight);
     productData.append("product_pages", formData.product_pages);
-
     productData.append("store_id", storeId);
 
     try {
       const response = await fetch(
-        "https://rem-reacts.onrender.com/api/products",
+        "https://rem-reacts.onrender.com/api/products", // Your API endpoint
         {
           method: "POST",
           body: productData,
