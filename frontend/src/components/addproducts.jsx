@@ -52,7 +52,7 @@ function AddProductForm({ setShowAddProductForm }) {
     productData.append("product_quantity", formData.product_quantity);
     productData.append("product_author", formData.product_author);
     productData.append("product_description", formData.product_description);
-    productData.append("product_category", formData.product_category);
+    productData.append("category", formData.product_category);
     productData.append("product_publisher", formData.product_publisher);
     productData.append("product_dimensions", formData.product_dimensions);
     productData.append("product_weight", formData.product_weight);
