@@ -137,7 +137,6 @@ SELECT stores.* FROM stores WHERE store_id = $1;
     res.status(500).json({ message: "Error fetching seller data //" });
   }
 });
-
 router.get("/product/:sellerId", async (req, res) => {
   const { sellerId } = req.params;
 
@@ -156,16 +155,23 @@ router.get("/product/:sellerId", async (req, res) => {
     const result = await pool.query(query, [sellerId]);
 
     if (result.rows.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No products found for this seller." });
+      // Trap for no products
+      console.warn(`No products found for seller ID: ${sellerId}`);
+      return res.status(200).json({
+        message: "No products found for this seller.",
+        suggestion: "Add your first product to start selling!",
+        products: [], // Return an empty array for consistency
+      });
     }
-    const product = {
-      ...rows[0],
-      product_image: rows[0].product_image,
-    };
+
+    // Map and format the product data, if needed
+    const products = result.rows.map((row) => ({
+      ...row,
+      product_image: row.product_image, // Ensure product_image is correctly mapped
+    }));
+
     // Send the list of products as response
-    res.status(200).json(result.rows);
+    res.status(200).json(products);
   } catch (error) {
     console.error("Error fetching products data:", error.message);
 
