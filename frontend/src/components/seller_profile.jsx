@@ -18,10 +18,10 @@ const Shop = () => {
   const navigate = useNavigate(); // Navigation handler
 
   useEffect(() => {
-    const storedid = localStorage.getItem("sellerStoreId");
+    const storedid = id || localStorage.getItem("sellerStoreId"); // Use URL param first, then fallback to localStorage
 
     if (!storedid) {
-      setError("Seller store ID not found in local storage.");
+      setError("Store ID not found.");
       setLoading(false);
       return;
     }
@@ -53,7 +53,7 @@ const Shop = () => {
           throw new Error("Failed to fetch product data.");
         }
         const data = await response.json();
-        setProductsData(data.products || []); // Handle empty or missing products
+        setProductsData(data.products || []); // Handle empty or missing products gracefully
       } catch (error) {
         console.error("Error fetching product data:", error);
         setError(error.message);
@@ -68,7 +68,7 @@ const Shop = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array to run once when the component mounts
+  }, [id]); // Run every time the store ID changes
 
   if (loading) {
     return <Loading />;
