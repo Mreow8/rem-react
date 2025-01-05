@@ -11,6 +11,10 @@ function AddProductForm({ setShowAddProductForm }) {
     product_author: "",
     product_description: "",
     product_category: "",
+    product_publisher: "",
+    product_dimensions: "",
+    product_weight: "",
+    product_pages: "",
   });
 
   const handleChange = (e) => {
@@ -49,6 +53,11 @@ function AddProductForm({ setShowAddProductForm }) {
     productData.append("product_author", formData.product_author);
     productData.append("product_description", formData.product_description);
     productData.append("product_category", formData.product_category);
+    productData.append("product_publisher", formData.product_publisher);
+    productData.append("product_dimensions", formData.product_dimensions);
+    productData.append("product_weight", formData.product_weight);
+    productData.append("product_pages", formData.product_pages);
+
     productData.append("store_id", storeId);
 
     try {
@@ -77,6 +86,10 @@ function AddProductForm({ setShowAddProductForm }) {
         product_author: "",
         product_description: "",
         product_category: "",
+        product_publisher: "",
+        product_dimensions: "",
+        product_weight: "",
+        product_pages: "",
       });
       document.getElementById("product_image").value = ""; // Reset file input
     } catch (error) {
@@ -168,13 +181,53 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_description">Product Description</label>
-            <textarea
-              id="product_description"
-              name="product_description"
+            <label htmlFor="product_publisher">Product Publisher</label>
+            <input
+              type="text"
+              id="product_publisher"
+              name="product_publisher"
               className="form-control"
-              placeholder="Product Description"
-              value={formData.product_description}
+              placeholder="Product Publisher"
+              value={formData.product_publisher}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="product_dimensions">Product Dimensions</label>
+            <input
+              type="text"
+              id="product_dimensions"
+              name="product_dimensions"
+              className="form-control"
+              placeholder="Product Dimensions"
+              value={formData.product_dimensions}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="product_weight">Product Weight</label>
+            <input
+              type="number"
+              id="product_weight"
+              name="product_weight"
+              className="form-control"
+              placeholder="Product Weight"
+              value={formData.product_weight}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="product_pages">Product Pages</label>
+            <input
+              type="number"
+              id="product_pages"
+              name="product_pages"
+              className="form-control"
+              placeholder="Product Pages"
+              value={formData.product_pages}
               onChange={handleChange}
             />
           </div>
@@ -183,7 +236,6 @@ function AddProductForm({ setShowAddProductForm }) {
             Add Product
           </button>
 
-          {/* Close button */}
           <button
             type="button"
             onClick={() => setShowAddProductForm(false)}

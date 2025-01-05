@@ -141,6 +141,7 @@ const ProductDesc = () => {
               />
               <div className="product-card-content">
                 <p className="product-title">{product.product_name}</p>
+                <p>{product.sold}</p>
                 <p className="text-danger">Php {product.product_price}</p>
 
                 <div className="input-group">

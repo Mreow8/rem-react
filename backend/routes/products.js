@@ -35,6 +35,10 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     product_author,
     product_description,
     category,
+    product_publisher,
+    product_dimensions,
+    product_weight,
+    product_pages,
   } = req.body;
 
   const productImage = req.file ? req.file.path : null; // Cloudinary file URL
@@ -51,13 +55,23 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     product_author,
     product_description,
     category,
+    product_publisher,
+    product_dimensions,
+    product_weight,
+    product_pages,
+
     productImage,
   });
 
   // SQL query to insert product details
   const query = `
-    INSERT INTO products (store_id, product_name, product_price, product_quantity, product_author, product_description, category, product_image)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;
+    INSERT INTO products (
+      store_id, product_name, product_price, stock, product_author, 
+      product_description, category, product_image, product_publisher, 
+      product_dimensions, product_weight, product_pages, 
+    )
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) 
+    RETURNING id;
   `;
 
   try {
@@ -65,11 +79,15 @@ router.post("/", upload.single("product_image"), async (req, res) => {
       store_id,
       product_name,
       product_price,
-      product_quantity,
+      product_quantity, // this will be mapped to 'stock'
       product_author,
       product_description,
       category,
       productImage,
+      product_publisher,
+      product_dimensions,
+      product_weight,
+      product_pages,
     ]);
 
     res.status(201).json({
@@ -98,47 +116,27 @@ router.post("/", upload.single("product_image"), async (req, res) => {
   }
 });
 
-// GET Route to Retrieve All Products
-router.get("/", async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT products.*, stores.store_name
-      FROM products
-      INNER JOIN stores ON products.store_id = stores.store_id
-    `);
-    res.status(200).json(result.rows);
-  } catch (error) {
-    console.error("Error retrieving products:", error);
-    res
-      .status(500)
-      .json({ message: "Error retrieving products", error: error.message });
-  }
-});
-
-// GET Route for Categories
-router.get("/categories", async (req, res) => {
-  try {
-    const { rows } = await pool.query(
-      "SELECT DISTINCT category AS name FROM products"
-    );
-    res.status(200).json(rows);
-  } catch (error) {
-    console.error("Error retrieving categories:", error);
-    res.status(500).json({ message: "Error retrieving categories." });
-  }
-});
-
 // GET Route for Single Product by ID
 router.get("/:id", async (req, res) => {
   const productId = parseInt(req.params.id);
 
   try {
     const query = `
-      SELECT products.*, stores.store_name, stores.province, stores.image AS seller_image 
+      SELECT 
+        products.*, 
+        stores.store_name, 
+        stores.province, 
+        stores.image AS seller_image, 
+        products.product_publisher, 
+        products.product_dimensions, 
+        products.product_weight, 
+        products.product_pages, 
+        products.sold 
       FROM products 
       INNER JOIN stores ON stores.store_id = products.store_id 
       WHERE products.id = $1
     `;
+
     const { rows } = await pool.query(query, [productId]);
 
     if (rows.length === 0) {
@@ -151,6 +149,11 @@ router.get("/:id", async (req, res) => {
       ...rows[0],
       product_image: rows[0].product_image,
       seller_image: rows[0].seller_image,
+      product_publisher: rows[0].product_publisher,
+      product_dimensions: rows[0].product_dimensions,
+      product_weight: rows[0].product_weight,
+      product_pages: rows[0].product_pages,
+      sold: rows[0].sold,
     };
 
     res.json(product);
