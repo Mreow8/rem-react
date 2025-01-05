@@ -47,7 +47,6 @@ const ProductDesc = () => {
   const decreaseQuantity = () => {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
-
   const handleBuyNow = () => {
     const storedUserId = localStorage.getItem("userId");
     if (!storedUserId) {
@@ -55,9 +54,18 @@ const ProductDesc = () => {
       return;
     }
 
-    // Save the product and quantity to localStorage
-    localStorage.setItem("product_id", product.id);
-    localStorage.setItem("quantity", quantity);
+    // Get the product details
+    const productId = product.id;
+    const quantity = quantity;
+
+    // Get the current cart items from localStorage
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
+
+    // Add or update the product in cartItems
+    cartItems[productId] = { quantity: quantity };
+
+    // Save the updated cartItems back to localStorage
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
     // Navigate to the checkout page
     navigate("/checkout");
