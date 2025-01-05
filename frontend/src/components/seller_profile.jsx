@@ -100,22 +100,24 @@ const Shop = () => {
         <h3>Products</h3>
         <div className="products-container">
           {productsData.length > 0 ? (
-            productsData.map((product) => (
-              <div key={product.id} className="product-item">
-                <Link
-                  to={`/product_desc/${product.id}`}
-                  className="product-item-link"
-                >
-                  <img
-                    src={product.product_image || "placeholder_image.png"}
-                    alt={product.product_name || "Product Image"}
-                    className="product-image"
-                  />
-                  <h4 className="product-name">{product.product_name}</h4>
-                  <p className="product-price">Php {product.product_price}</p>
-                </Link>
-              </div>
-            ))
+            productsData.map((product) => {
+              return (
+                <div key={product.id} className="product-item">
+                  <Link
+                    to={`/product_desc/${product.id}`}
+                    className="product-item-link"
+                  >
+                    <img
+                      src={product.product_image || "placeholder_image.png"}
+                      alt={product.product_name || "Product Image"}
+                      className="product-image"
+                    />
+                    <h4 className="product-name">{product.product_name}</h4>
+                    <p className="product-price">Php {product.product_price}</p>
+                  </Link>
+                </div>
+              );
+            })
           ) : (
             <div>
               <p>No products available for this store.</p>
