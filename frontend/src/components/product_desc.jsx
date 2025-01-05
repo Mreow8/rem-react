@@ -61,12 +61,11 @@ const ProductDesc = () => {
     // Get the current cart items from localStorage
     const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
 
-    // Add or update the product in cartItems
     cartItems[productId] = { quantity: quantity };
 
     // Save the updated cartItems back to localStorage
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
+    console.log("Cart Items:", cartItems);
     // Navigate to the checkout page
     navigate("/checkout");
   };
