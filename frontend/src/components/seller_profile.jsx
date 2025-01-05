@@ -99,7 +99,7 @@ const Shop = () => {
       <div className="product-list">
         <h3>Products</h3>
         <div className="products-container">
-          {productsData && productsData.length > 0 ? (
+          {productsData.length > 0 ? (
             productsData.map((product) => (
               <div key={product.id} className="product-item">
                 <Link
