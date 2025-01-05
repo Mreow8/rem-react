@@ -54,7 +54,13 @@ const ProductDesc = () => {
       navigate("/login");
       return;
     }
-    // Handle Buy Now logic here
+
+    // Save the product and quantity to localStorage
+    localStorage.setItem("product_id", product.id);
+    localStorage.setItem("quantity", quantity);
+
+    // Navigate to the checkout page
+    navigate("/checkout");
   };
 
   const handleAddToCart = async () => {

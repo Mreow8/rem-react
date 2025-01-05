@@ -24,8 +24,8 @@ const AddressForm = ({ onSubmit, onClose }) => {
 
   const handleAddressSubmit = (event) => {
     event.preventDefault();
-    onSubmit(newAddress); // Pass the new address to the parent component
-    onClose(); // Close the modal after submission
+    onSubmit(newAddress);
+    onClose();
   };
 
   return (
