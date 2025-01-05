@@ -116,7 +116,7 @@ router.get("/:userId", async (req, res) => {
        stores.region, stores.province, stores.city, stores.barangay, stores.postal_code, stores.image
 FROM stores
 INNER JOIN products ON products.store_id = stores.store_id
-WHERE stores.store_id = $1;
+WHERE stores.user_id = $1;
 
   `;
 
