@@ -139,7 +139,7 @@ SELECT stores.* FROM stores WHERE store_id = $1;
   }
 });
 
-router.get("/product/:storedid", async (req, res) => {
+router.get("/products/:storedid", async (req, res) => {
   const { storedid } = req.params;
 
   if (!storedid) {
