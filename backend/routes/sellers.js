@@ -112,7 +112,7 @@ router.get("/:userId", async (req, res) => {
   }
 
   const query = `
-SELECT stores.* FROM stores WHERE user_id = $1;
+SELECT stores.* FROM stores WHERE store_id = $1;
   `;
   console.log("Fetching seller data for user ID:", userId);
   try {
@@ -136,6 +136,46 @@ SELECT stores.* FROM stores WHERE user_id = $1;
 
     // General server error
     res.status(500).json({ message: "Error fetching seller data //" });
+  }
+});
+
+router.get("/product/:storedid", async (req, res) => {
+  const { storedid } = req.params;
+
+  if (!storedid) {
+    return res.status(400).json({ message: "Seller ID is required." });
+  }
+
+  const query = `
+    SELECT products.* FROM products
+    WHERE store_id = $1;
+  `;
+
+  console.log("Fetching products for seller ID:", sellerId);
+
+  try {
+    const result = await pool.query(query, [storedid]);
+
+    if (result.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No products found for this seller." });
+    }
+
+    // Send the list of products as response
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error("Error fetching products data:", error.message);
+
+    if (error.code === "ECONNREFUSED") {
+      // Handle connection error
+      return res.status(503).json({
+        message: "Database connection failed. Please try again later.",
+      });
+    }
+
+    // General server error
+    res.status(500).json({ message: "Error fetching products data" });
   }
 });
 

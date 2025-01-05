@@ -21,7 +21,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
 
     // Fetch seller data if the user is logged in
     if (storedUsername) {
-      const userId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("sellerStoreId");
       console.log("userId", userId);
       const fetchSellerData = async () => {
         try {

@@ -9,32 +9,57 @@ import ProductDesc from "./product_desc";
 
 const Shop = () => {
   const { id } = useParams(); // Store ID
-  const [storeData, setStoreData] = useState(null); // To hold both seller and product data
+  const [storeData, setStoreData] = useState(null); // To hold seller data
+  const [productsData, setProductsData] = useState([]); // To hold product data
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAddProductForm, setShowAddProductForm] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const storedid = localStorage.getItem("sellerStoreId");
+
+    if (!storedid) {
+      setError("Seller store ID not found in local storage.");
+      setLoading(false);
+      return;
+    }
+
+    // Fetch Seller Information
     const fetchStoreData = async () => {
       try {
         const response = await fetch(
-          `https://rem-reacts.onrender.com/api/sellers/${id}`
+          `https://rem-reacts.onrender.com/api/sellers/${storedid}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch store data.");
         }
         const data = await response.json();
-        setStoreData(data); // Set both seller and products
+        setStoreData(data);
       } catch (error) {
         setError(error.message);
-      } finally {
-        setLoading(false);
+      }
+    };
+
+    // Fetch Products Information
+    const fetchProductsData = async () => {
+      try {
+        const response = await fetch(
+          `https://rem-reacts.onrender.com/api/sellers/products/${storedid}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch product data.");
+        }
+        const data = await response.json();
+        setProductsData(data.products || []); // Assuming the products are inside the `products` field in the response.
+      } catch (error) {
+        setError(error.message);
       }
     };
 
     fetchStoreData();
-  }, [id]);
+    fetchProductsData();
+  }, []); // Empty dependency array to run once when the component mounts
 
   if (loading) {
     return <div className="loading-message">Loading store data...</div>;
@@ -77,8 +102,8 @@ const Shop = () => {
       <div className="product-list">
         <h3>Products</h3>
         <div className="products-container">
-          {storeData && storeData.products && storeData.products.length > 0 ? (
-            storeData.products.map((product) => (
+          {productsData && productsData.length > 0 ? (
+            productsData.map((product) => (
               <div key={product.id} className="product-item">
                 <Link
                   to={`/product_desc/${product.id}`}
