@@ -5,10 +5,11 @@ import "../css/seller_profile.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import AddProductForm from "./addproducts";
+import ProductDesc from "./product_desc";
 
 const Shop = () => {
   const { id } = useParams(); // Store ID
-  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
   const [seller, setSeller] = useState(null); // To hold seller information
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,16 +20,14 @@ const Shop = () => {
     const fetchStoreData = async () => {
       try {
         const response = await fetch(
-          `https://rem-reacts.onrender.com/api/products?storeId=${id}`
+          `https://rem-reacts.onrender.com/api/products/${id}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch products.");
         }
         const data = await response.json();
 
-        // Assuming the backend returns the seller info and products together
-        setSeller(data.seller); // Set the seller information
-        setProducts(data.products); // Set the list of products
+        setProduct(data); // Set the list of products
       } catch (error) {
         setError(error.message);
       } finally {
@@ -61,13 +60,13 @@ const Shop = () => {
       {seller && (
         <div className="seller-info">
           <img
-            src={seller.seller_image || "placeholder_seller_image.png"}
-            alt={seller.store_name}
+            src={product.seller_image || "placeholder_seller_image.png"}
+            alt={product.store_name}
             className="seller-image"
           />
-          <h2 className="seller-name">{seller.store_name}</h2>
+          <h2 className="seller-name">{product.store_name}</h2>
           <p>
-            {seller.region}, {seller.province}
+            {product.region}, {product.province}
           </p>
           <button onClick={() => setShowAddProductForm(true)}>
             Add Product
