@@ -230,6 +230,18 @@ function AddProductForm({ setShowAddProductForm }) {
               onChange={handleChange}
             />
           </div>
+          <div className="form-group">
+            <label htmlFor="product_description">Product Description</label>
+            <textarea
+              id="product_description"
+              name="product_description"
+              className="form-control"
+              placeholder="Product Description"
+              value={formData.product_description}
+              onChange={handleChange}
+              rows="4" // Adjust the number of rows as needed
+            />
+          </div>
 
           <button type="submit" className="btns btn-primary btn-block">
             Add Product
