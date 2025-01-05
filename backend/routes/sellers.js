@@ -160,7 +160,10 @@ router.get("/product/:sellerId", async (req, res) => {
         .status(404)
         .json({ message: "No products found for this seller." });
     }
-
+    const product = {
+      ...rows[0],
+      product_image: rows[0].product_image,
+    };
     // Send the list of products as response
     res.status(200).json(result.rows);
   } catch (error) {
