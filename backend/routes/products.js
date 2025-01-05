@@ -1,117 +1,199 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import Nav from "./nav";
-import "../css/seller_profile.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import AddProductForm from "./addproducts";
+const express = require("express");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+const pool = require("../config/db"); // This should be the correct import
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const router = express.Router();
 
-const Shop = () => {
-  const { id } = useParams(); // Store ID
-  const [products, setProducts] = useState([]);
-  const [seller, setSeller] = useState(null); // To hold seller information
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [showAddProductForm, setShowAddProductForm] = useState(false);
-  const navigate = useNavigate();
+cloudinary.config({
+  cloud_name: "dejfzfdk0", // Replace with your Cloudinary Cloud Name
+  api_key: "567128668369977", // Replace with your API Key
+  api_secret: "-5FfUruzAK7jEpBKdZ3Xn1RXVU8", // Replace with your API Secret
+});
 
-  useEffect(() => {
-    const fetchStoreData = async () => {
-      try {
-        const response = await fetch(
-          `https://rem-reacts.onrender.com/api/products?storeId=${id}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch products.");
-        }
-        const data = await response.json();
+// Configure Multer with Cloudinary storage
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "products",
+    allowedFormats: ["jpg", "jpeg", "png"],
+    public_id: (req, file) => Date.now() + "-" + file.originalname,
+  },
+});
 
-        // Assuming the backend returns the seller info and products together
-        setSeller(data.seller); // Set the seller information
-        setProducts(data.products); // Set the list of products
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
+const upload = multer({ storage });
+
+// POST route to create a new product
+router.post("/", upload.single("product_image"), async (req, res) => {
+  const {
+    store_id,
+    product_name,
+    product_price,
+    product_quantity,
+    product_author,
+    product_description,
+    product_category,
+    product_publisher,
+    product_dimensions,
+    product_weight,
+    product_pages,
+  } = req.body;
+
+  const productImage = req.file ? req.file.path : null; // Path to the uploaded image
+
+  // Validate required fields
+  if (
+    !store_id ||
+    !product_name ||
+    !product_price ||
+    !product_quantity ||
+    !product_category
+  ) {
+    return res.status(400).json({ message: "Required fields are missing." });
+  }
+
+  // Log the incoming data for debugging purposes
+  console.log("Inserting product data:", {
+    store_id,
+    product_name,
+    product_price,
+    product_quantity,
+    product_author,
+    product_description,
+    product_category,
+    product_publisher,
+    product_dimensions,
+    product_weight,
+    product_pages,
+    productImage,
+  });
+
+  // SQL query to insert product details into the products table
+  const query = `
+    INSERT INTO products (
+      store_id,
+      product_name,
+      product_price,
+      stock,
+      product_author,
+      product_description,
+      category,
+      product_image,
+      product_publisher,
+      product_dimensions,
+      product_weight,
+      product_pages
+    ) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    RETURNING id;
+  `;
+
+  try {
+    const result = await pool.query(query, [
+      store_id,
+      product_name,
+      product_price,
+      product_quantity, // Stock
+      product_author,
+      product_description,
+      product_category,
+      productImage,
+      product_publisher,
+      product_dimensions,
+      product_weight,
+      product_pages,
+    ]);
+
+    // Respond with success
+    res.status(201).json({
+      message: "Product added successfully!",
+      productId: result.rows[0].id, // Return the newly created product ID
+    });
+  } catch (error) {
+    console.error("Error saving product data:", error.message);
+
+    // Handle specific errors
+    if (error.code === "23505") {
+      // Handle unique violation error (for example, product name or SKU already exists)
+      return res.status(409).json({
+        message: "Conflict: A product with this data already exists.",
+      });
+    }
+
+    if (error.code === "ECONNREFUSED") {
+      // Handle database connection error
+      return res.status(503).json({
+        message: "Database connection failed. Please try again later.",
+      });
+    }
+
+    // General server error
+    res.status(500).json({ message: "Error saving product data" });
+  }
+});
+
+// GET Route to Retrieve All Products
+router.get("/", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT products.*, stores.store_name
+      FROM products
+      INNER JOIN stores ON products.store_id = stores.store_id
+    `);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error("Error retrieving products:", error);
+    res
+      .status(500)
+      .json({ message: "Error retrieving products", error: error.message });
+  }
+});
+
+// GET Route for Categories
+router.get("/categories", async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      "SELECT DISTINCT category AS name FROM products"
+    );
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error retrieving categories:", error);
+    res.status(500).json({ message: "Error retrieving categories." });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  const productId = parseInt(req.params.id);
+
+  try {
+    const query = `
+      SELECT products.*, stores.store_name, stores.province, stores.image AS seller_image 
+      FROM products 
+      INNER JOIN stores ON stores.store_id = products.store_id 
+      WHERE products.id = $1
+    `;
+    const { rows } = await pool.query(query, [productId]);
+
+    if (rows.length === 0) {
+      return res
+        .status(404)
+        .json({ message: `Product not found for ID: ${productId}` });
+    }
+
+    const product = {
+      ...rows[0],
+      product_image: rows[0].product_image,
+      seller_image: rows[0].seller_image,
     };
 
-    fetchStoreData();
-  }, [id]);
-
-  if (loading) {
-    return <div className="loading-message">Loading products...</div>;
+    res.json(product);
+  } catch (error) {
+    console.error("Error retrieving product:", error);
+    res.status(500).json({ message: "Error retrieving product" });
   }
+});
 
-  if (error) {
-    return <div className="error-message">Error: {error}</div>;
-  }
-
-  const openShop = () => {
-    if (seller && seller.store_id) {
-      navigate(`/sellerprofile/${seller.store_id}`);
-    } else {
-      alert("Seller ID is missing!");
-    }
-  };
-
-  return (
-    <div className="store-container">
-      <Nav />
-      {seller && (
-        <div className="seller-info">
-          <img
-            src={seller.seller_image || "placeholder_seller_image.png"}
-            alt={seller.store_name}
-            className="seller-image"
-          />
-          <h2 className="seller-name">{seller.store_name}</h2>
-          <p>
-            {seller.region}, {seller.province}
-          </p>
-          <button onClick={() => setShowAddProductForm(true)}>
-            Add Product
-          </button>
-        </div>
-      )}
-      {showAddProductForm && (
-        <AddProductForm setShowAddProductForm={setShowAddProductForm} />
-      )}
-      <div className="product-list">
-        <h3>Products</h3>
-        <div className="products-container">
-          {products.length > 0 ? (
-            products.map((product) => (
-              <div key={product.id} className="product-item">
-                <Link
-                  to={`/product_desc/${product.id}`}
-                  className="product-item-link"
-                >
-                  <img
-                    src={product.product_image || "placeholder_image.png"}
-                    alt={product.product_name || "Product Image"}
-                    className="product-image"
-                  />
-                  <h4 className="product-name">{product.product_name}</h4>
-                  <p className="product-price">Php {product.product_price}</p>
-                </Link>
-              </div>
-            ))
-          ) : (
-            <div>
-              <p>No products available for this store.</p>
-              <button
-                onClick={() => setShowAddProductForm(true)}
-                className="btn-primary"
-              >
-                Add Product
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Shop;
+// Export the Router
+module.exports = router;
