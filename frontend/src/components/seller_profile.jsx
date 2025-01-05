@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom"; // Import Link
+import { useParams, Link } from "react-router-dom";
 import Nav from "./nav";
 import "../css/seller_profile.css";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import AddProductForm from "./addproducts"; // Import the AddProductForm
+import AddProductForm from "./addproducts";
 
 const Shop = () => {
   const { id } = useParams();
@@ -12,32 +12,18 @@ const Shop = () => {
   const [seller, setSeller] = useState(null); // To hold seller information
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showAddProductForm, setShowAddProductForm] = useState(false); // State to show/hide the add product form
-
-  // Fetch seller data from localStorage
-  const sellerStoreId = localStorage.getItem("sellerStoreId");
-  const sellerStoreName = localStorage.getItem("sellerStoreName");
+  const [showAddProductForm, setShowAddProductForm] = useState(false);
 
   useEffect(() => {
     const fetchStoreData = async () => {
       try {
         const response = await fetch(
-          `https://rem-reacts.onrender.com/api/products?storeId=${id}` // Fetch products for the specific store
+          `https://rem-reacts.onrender.com/api/products?storeId=${id}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch products.");
         }
         const data = await response.json();
-
-        // Assuming products have seller details
-        if (data.length > 0) {
-          setSeller({
-            name: sellerStoreName || data[0].store_name, // Use sellerStoreName from localStorage or fallback to data[0].store_name
-            image: data[0].seller_image || "placeholder_seller_image.png", // Use seller image or placeholder
-            region: data[0].region,
-            province: data[0].province,
-          });
-        }
 
         setProducts(data); // Set the list of products
       } catch (error) {
@@ -48,7 +34,7 @@ const Shop = () => {
     };
 
     fetchStoreData();
-  }, [id, sellerStoreId, sellerStoreName]);
+  }, [id]);
 
   if (loading) {
     return <div className="loading-message">Loading products...</div>;
@@ -60,17 +46,17 @@ const Shop = () => {
 
   return (
     <div className="store-container">
-      <Nav /> {/* Include navigation */}
+      <Nav />
       {seller && (
         <div className="seller-info">
           <img
-            src={seller.seller_image}
-            alt={seller.store_name}
+            src={product.seller_image}
+            alt={product.store_name}
             className="seller-image"
           />
-          <h2 className="seller-name">{seller.store_name}</h2>
+          <h2 className="seller-name">{product.store_name}</h2>
           <p>
-            {seller.region}, {seller.province}
+            {product.region}, {product.province}
           </p>
           <button onClick={() => setShowAddProductForm(true)}>
             Add Product
@@ -80,7 +66,6 @@ const Shop = () => {
       {showAddProductForm && (
         <AddProductForm setShowAddProductForm={setShowAddProductForm} />
       )}
-      {/* Product List */}
       <div className="product-list">
         <h3>Products</h3>
         <div className="products-container">
@@ -88,7 +73,6 @@ const Shop = () => {
             products.map((product) => {
               return (
                 <div key={product.id} className="product-item">
-                  {/* Link to product details page */}
                   <Link
                     to={`/product_desc/${product.id}`}
                     className="product-item-link"
