@@ -43,6 +43,7 @@ const Checkout = () => {
       alert("Please select an address before placing an order.");
       return;
     }
+
     const orderData = {
       products: products.map((product) => ({
         product_id: product.product_id,
@@ -176,6 +177,7 @@ const Checkout = () => {
       return acc;
     }, {});
     setGroupedProducts(grouped);
+    console.log("Grouped products:", grouped);
   };
 
   const calculateTotalAmount = (items) => {
