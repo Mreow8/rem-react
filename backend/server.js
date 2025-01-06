@@ -9,6 +9,7 @@ const sellersRoutes = require("./routes/sellers");
 const cartsRoutes = require("./routes/carts");
 const addressRoutes = require("./routes/address");
 const authsRoutes = require("./routes/auth");
+const orderRoutes = require("./routes/auth");
 
 const app = express();
 const PORT = 3001; // Use environment port or 3001
@@ -43,7 +44,7 @@ app.use("/api/products", productsRoutes);
 app.use("/api/sellers", sellersRoutes);
 app.use("/api/cart", cartsRoutes);
 app.use("/api/addresses", addressRoutes);
-app.use("/api/auth", authsRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Route to create a Paymongo payment link
 app.get("/create-payment-link", (req, res) => {

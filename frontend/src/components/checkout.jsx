@@ -11,11 +11,58 @@ const Checkout = () => {
   const [error, setError] = useState(null);
   const [groupedProducts, setGroupedProducts] = useState({});
   const [totalAmount, setTotalAmount] = useState(0);
-  const [shippingFee, setShippingFee] = useState(50); // Example shipping fee
+  const [shippingFee, setShippingFee] = useState(0); // Shipping fee is initially 0
   const [address, setAddress] = useState(null); // Store the full address object
   const [paymentMethod, setPaymentMethod] = useState("Credit Card");
   const [isAddressModalVisible, setIsAddressModalVisible] = useState(false);
   const [addresses, setAddresses] = useState([]);
+  const [sellerRegion, setSellerRegion] = useState(""); // Store seller's region
+
+  const shippingRates = [
+    { from_region: "Luzon", to_region: "Luzon", shipping_fee: 90.0 },
+    { from_region: "Luzon", to_region: "Visayas", shipping_fee: 120.0 },
+    { from_region: "Luzon", to_region: "Mindanao", shipping_fee: 150.0 },
+    { from_region: "Visayas", to_region: "Luzon", shipping_fee: 120.0 },
+    { from_region: "Visayas", to_region: "Visayas", shipping_fee: 90.0 },
+    { from_region: "Visayas", to_region: "Mindanao", shipping_fee: 150.0 },
+    { from_region: "Mindanao", to_region: "Luzon", shipping_fee: 150.0 },
+    { from_region: "Mindanao", to_region: "Visayas", shipping_fee: 150.0 },
+    { from_region: "Mindanao", to_region: "Mindanao", shipping_fee: 90.0 },
+  ];
+
+  const calculateShippingFee = (buyerRegion, sellerRegion) => {
+    const shippingRate = shippingRates.find(
+      (rate) =>
+        rate.from_region === sellerRegion && rate.to_region === buyerRegion
+    );
+    return shippingRate ? shippingRate.shipping_fee : 0;
+  };
+
+  const handlePlaceOrder = async () => {
+    if (!address) {
+      alert("Please select an address before placing an order.");
+      return;
+    }
+    const orderData = {
+      products: products.map((product) => ({
+        product_id: product.product_id,
+        quantity: product.quantity,
+      })),
+      address_id: address.address_id, // Assuming `address_id` is part of the address object
+      payment_method: paymentMethod,
+      shipping_fee: shippingFee,
+      total_amount: totalAmount + shippingFee,
+    };
+
+    try {
+      const response = await saveOrder(orderData);
+      console.log("Order saved successfully:", response);
+      alert("Order placed successfully!");
+      navigate("/orders"); // Redirect to an orders page after successful placement
+    } catch (error) {
+      alert("Failed to place order. Please try again.");
+    }
+  };
 
   // Function to calculate seller total
   const calculateSellerTotal = (products) => {
@@ -52,6 +99,11 @@ const Checkout = () => {
             ...product,
             quantity: cartData[productId].quantity,
           });
+
+          // Set the seller's region from the product data
+          if (product.store_region) {
+            setSellerRegion(product.store_region);
+          }
         }
 
         setProducts(fetchedProducts);
@@ -82,6 +134,14 @@ const Checkout = () => {
     fetchCartItems();
     fetchAddresses();
   }, []);
+
+  useEffect(() => {
+    if (address && sellerRegion) {
+      // Calculate shipping fee when the address is selected
+      const calculatedFee = calculateShippingFee(address.region, sellerRegion);
+      setShippingFee(calculatedFee);
+    }
+  }, [address, sellerRegion]);
 
   const groupProductsBySeller = (products) => {
     const grouped = products.reduce((acc, product) => {
@@ -213,7 +273,9 @@ const Checkout = () => {
           </div>
 
           <p>Selected Payment Method: {paymentMethod}</p>
-          <button className="checkout-button">Place Order</button>
+          <button onClick={handlePlaceOrder} className="checkout-button">
+            Place Order
+          </button>
         </div>
       </div>
 
