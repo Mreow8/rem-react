@@ -53,12 +53,12 @@ const Checkout = () => {
       shipping_fee: shippingFee,
       total_amount: totalAmount + shippingFee,
     };
-
+    console.log("Order data:", orderData);
     try {
       const response = await saveOrder(orderData);
       console.log("Order saved successfully:", response);
       alert("Order placed successfully!");
-      navigate("/success"); // Redirect to an orders page after successful placement
+      navigate("/success");
     } catch (error) {
       console.error("Error placing order:", error);
       alert(`Failed to place order: ${error.message || error}`);
