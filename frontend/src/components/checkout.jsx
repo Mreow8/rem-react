@@ -13,7 +13,7 @@ const Checkout = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [shippingFee, setShippingFee] = useState(0); // Shipping fee is initially 0
   const [address, setAddress] = useState(null); // Store the full address object
-  const [paymentMethod, setPaymentMethod] = useState("Credit Card");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [isAddressModalVisible, setIsAddressModalVisible] = useState(false);
   const [addresses, setAddresses] = useState([]);
   const [sellerRegion, setSellerRegion] = useState(""); // Store seller's region
@@ -299,7 +299,14 @@ const Checkout = () => {
           </div>
 
           <p>Selected Payment Method: {paymentMethod}</p>
-          <button onClick={handlePlaceOrder} className="checkout-button">
+          {!paymentMethod && (
+            <p style={{ color: "red" }}>Please select a payment method.</p>
+          )}
+          <button
+            onClick={handlePlaceOrder}
+            className="checkout-button"
+            disabled={!paymentMethod}
+          >
             Place Order
           </button>
         </div>
