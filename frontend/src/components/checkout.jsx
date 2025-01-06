@@ -135,6 +135,7 @@ const Checkout = () => {
     fetchCartItems();
     fetchAddresses();
   }, []);
+
   const saveOrder = async (orderData) => {
     try {
       const response = await fetch(
@@ -151,7 +152,7 @@ const Checkout = () => {
       if (!response.ok) {
         throw new Error("Failed to place order");
       }
-
+      console.log("Order data:", orderData);
       return await response.json();
     } catch (error) {
       throw new Error(
