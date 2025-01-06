@@ -7,7 +7,6 @@ router.post("/", async (req, res) => {
     req.body;
 
   try {
-    // Use pool.query() instead of dbClient.query()
     const orderResult = await pool.query(
       `INSERT INTO orders (address_id, payment_method, shipping_fee, total_amount, created_at)
        VALUES ($1, $2, $3, $4, NOW()) RETURNING order_id`,
@@ -20,7 +19,7 @@ router.post("/", async (req, res) => {
     for (const product of products) {
       const { product_id, quantity } = product;
       await pool.query(
-        `INSERT INTO order_items (order_id, product_id, quantity)
+        `INSERT INTO orders_items (order_id, product_id, quantity)
          VALUES ($1, $2, $3)`,
         [orderId, product_id, quantity]
       );
