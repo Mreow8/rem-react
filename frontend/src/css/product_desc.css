@@ -11,7 +11,6 @@
   font-size: 14px !important;
 }
 #butt {
-  background: none;
   border: none;
 }
 .input-group {
@@ -19,8 +18,9 @@
 }
 #quan {
   margin-bottom: 0;
+  text-align: center;
 }
-/* product_desc.css */
+
 .buy-now {
   background-color: #4caf50;
 }
@@ -262,6 +262,7 @@ button {
   }
   .product-card-content {
     align-items: center;
+    margin: 0;
   }
 
   .button-group {
@@ -289,9 +290,6 @@ button {
   }
   .seller-images {
     height: 100px;
-  }
-  .product-card-content {
-    margin: none;
   }
 }
 .seller-info {

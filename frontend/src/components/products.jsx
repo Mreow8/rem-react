@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/products.css";
 import Nav from "./nav";
-import Loading from "./loading"; // Import Loading component
+import Loading from "./loading";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -12,15 +12,15 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false); // For categories modal
   const [sortOrder, setSortOrder] = useState(""); // "" means no sorting initially
+  const navigate = useNavigate();
 
   const handlePriceSort = (order) => {
-    setSortOrder(order); // Update the sort order
+    setSortOrder(order);
   };
 
   useEffect(() => {
-    // Retrieve the username from localStorage
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
       setUsername(storedUsername);
@@ -51,20 +51,20 @@ const ProductList = () => {
   const filteredProducts = products
     .filter(
       (product) =>
-        (selectedCategory === "" || product.category === selectedCategory) && // Filter by category
-        product.product_name.toLowerCase().includes(searchQuery.toLowerCase()) // Filter by search query
+        (selectedCategory === "" || product.category === selectedCategory) &&
+        product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .sort((a, b) => {
       if (sortOrder === "lowToHigh") {
-        return a.product_price - b.product_price; // Ascending order
+        return a.product_price - b.product_price;
       } else if (sortOrder === "highToLow") {
-        return b.product_price - a.product_price; // Descending order
+        return b.product_price - a.product_price;
       }
-      return 0; // No sorting
+      return 0;
     });
 
   if (loading) {
-    return <Loading />; // Show the Loading screen while data is being fetched
+    return <Loading />;
   }
 
   if (error) {
@@ -72,7 +72,8 @@ const ProductList = () => {
   }
 
   const handleCategoryClick = (categoryName) => {
-    setSelectedCategory(categoryName); // Set selected category
+    setSelectedCategory(categoryName);
+    setIsModalOpen(false); // Close the modal after selecting a category
   };
 
   return (
@@ -80,7 +81,8 @@ const ProductList = () => {
       <Nav />
       <div className="products-main">
         <div id="categories-container">
-          <ul className="categories-list">
+          {/* For large screens */}
+          <ul className="categories-list large-screen">
             {categories.map((cat, idx) => (
               <li
                 key={idx}
@@ -97,12 +99,44 @@ const ProductList = () => {
                 onChange={(e) => handlePriceSort(e.target.value)}
                 style={{ marginLeft: "10px" }}
               >
-                <option value="">Sort by</option> {/* Default option */}
+                <option value="">Sort by</option>
                 <option value="lowToHigh">Low to High</option>
                 <option value="highToLow">High to Low</option>
               </select>
             </li>
           </ul>
+
+          {/* For small screens */}
+          <button
+            className="categories-modal-button"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Categories
+          </button>
+
+          {isModalOpen && (
+            <div className="modal-overlay">
+              <div className="categories-modal">
+                <button
+                  className="close-modal"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  &times;
+                </button>
+                <ul className="categories-list">
+                  {categories.map((cat, idx) => (
+                    <li
+                      key={idx}
+                      className="category-item"
+                      onClick={() => handleCategoryClick(cat.name)}
+                    >
+                      {cat.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="container">

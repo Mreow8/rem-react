@@ -58,7 +58,7 @@ const Checkout = () => {
     try {
       const response = await saveOrder(orderData);
       console.log("Order saved successfully:", response);
-      alert("Order placed successfully!");
+
       navigate("/success");
     } catch (error) {
       console.error("Error placing order:", error);

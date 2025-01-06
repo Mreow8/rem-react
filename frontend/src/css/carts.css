@@ -40,7 +40,8 @@ body {
 }
 
 .check {
-  margin-left: 10%;
+  margin-left: 20px;
+  margin-right: 20px;
   width: 20px !important;
 }
 
@@ -292,7 +293,6 @@ body {
     margin-right: 30px;
   }
   .product-card .delete-button {
-    position: absolute;
     top: 10px;
     left: 10px;
   }
@@ -322,8 +322,6 @@ body {
   .fixed-bottom-bar button {
     width: auto;
     margin-bottom: 0;
-    float: right;
-    margin-top: 10px;
   }
 
   .image-product {
@@ -335,7 +333,9 @@ body {
     display: inline-flex;
     align-items: flex-start;
   }
-
+  .fixed-bottom-bar a {
+    float: right;
+  }
   .random,
   .quan {
     width: 100%; /* Make the divs take full width */
