@@ -131,6 +131,7 @@ const StoreForm = () => {
       return;
     }
 
+    // Proceed with form submission if validation passes
     const userId = localStorage.getItem("userId");
 
     const formDataToSend = new FormData();
