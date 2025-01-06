@@ -25,6 +25,43 @@ const upload = multer({ storage });
 
 const router = express.Router(); // Create a new router
 
+router.get("/checkStoreName", async (req, res) => {
+  const { storeName } = req.query;
+
+  if (!storeName) {
+    return res.status(400).json({ message: "Store name is required." });
+  }
+
+  const query = `
+    SELECT store_name 
+    FROM stores 
+    WHERE store_name ILIKE $1;
+  `;
+
+  try {
+    console.log("Checking store name (case-insensitive):", storeName);
+
+    // Use ILIKE for case-insensitive matching
+    const result = await pool.query(query, [storeName]);
+
+    if (result.rows.length > 0) {
+      return res.status(200).json({ isUnique: false });
+    }
+
+    res.status(200).json({ isUnique: true });
+  } catch (error) {
+    console.error("Error checking store name:", error.message);
+
+    if (error.code === "ECONNREFUSED") {
+      return res.status(503).json({
+        message: "Database connection failed. Please try again later.",
+      });
+    }
+
+    res.status(500).json({ message: "Error checking store name." });
+  }
+});
+
 // POST route to create a new seller
 router.post("/", upload.single("store_image"), async (req, res) => {
   const {
