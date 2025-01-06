@@ -1,9 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../css/products.css";
-import Nav from "./nav";
-import Loading from "./loading";
-
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -12,8 +6,8 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false); // For categories modal
-  const [sortOrder, setSortOrder] = useState(""); // "" means no sorting initially
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState("");
   const navigate = useNavigate();
 
   const handlePriceSort = (order) => {
@@ -72,8 +66,14 @@ const ProductList = () => {
   }
 
   const handleCategoryClick = (categoryName) => {
-    setSelectedCategory(categoryName);
-    setIsModalOpen(false); // Close the modal after selecting a category
+    if (selectedCategory !== categoryName) {
+      setSelectedCategory(categoryName);
+      setIsModalOpen(false); // Close the modal after selecting a category
+    }
+  };
+
+  const handleShowAllClick = () => {
+    setSelectedCategory(""); // Reset category filter to show all products
   };
 
   return (
@@ -81,8 +81,16 @@ const ProductList = () => {
       <Nav />
       <div className="products-main">
         <div id="categories-container">
-          {/* For large screens */}
           <ul className="categories-list large-screen">
+            <li>
+              <a
+                href="#"
+                onClick={handleShowAllClick}
+                className="category-item"
+              >
+                All Products
+              </a>
+            </li>
             {categories.map((cat, idx) => (
               <li
                 key={idx}
@@ -124,6 +132,15 @@ const ProductList = () => {
                   &times;
                 </button>
                 <ul className="categories-list">
+                  <li>
+                    <a
+                      href="#"
+                      onClick={handleShowAllClick}
+                      className="category-item"
+                    >
+                      All Products
+                    </a>
+                  </li>
                   {categories.map((cat, idx) => (
                     <li
                       key={idx}
@@ -175,5 +192,3 @@ const ProductList = () => {
     </div>
   );
 };
-
-export default ProductList;
