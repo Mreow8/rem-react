@@ -58,10 +58,10 @@ const Checkout = () => {
       const response = await saveOrder(orderData);
       console.log("Order saved successfully:", response);
       alert("Order placed successfully!");
-      navigate("/orders"); // Redirect to an orders page after successful placement
+      navigate("/success"); // Redirect to an orders page after successful placement
     } catch (error) {
       console.error("Error placing order:", error);
-      alert("Failed to place order. Please try again.");
+      alert(`Failed to place order: ${error.message || error}`);
     }
   };
 
