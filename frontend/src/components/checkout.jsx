@@ -114,30 +114,6 @@ const Checkout = () => {
         setLoading(false);
       }
     };
-    const saveOrder = async (orderData) => {
-      try {
-        const response = await fetch(
-          "https://rem-reacts.onrender.com/api/orders",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(orderData),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to place order");
-        }
-
-        return await response.json(); // This will return the response from the backend
-      } catch (error) {
-        throw new Error(
-          error.message || "An error occurred while placing the order"
-        );
-      }
-    };
 
     const fetchAddresses = async () => {
       const userId = localStorage.getItem("userId");
@@ -157,6 +133,30 @@ const Checkout = () => {
     fetchCartItems();
     fetchAddresses();
   }, []);
+  const saveOrder = async (orderData) => {
+    try {
+      const response = await fetch(
+        "https://rem-reacts.onrender.com/api/orders",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to place order");
+      }
+
+      return await response.json();
+    } catch (error) {
+      throw new Error(
+        error.message || "An error occurred while placing the order"
+      );
+    }
+  };
 
   useEffect(() => {
     if (address && sellerRegion) {
