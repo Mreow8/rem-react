@@ -19,6 +19,7 @@ const StoreForm = () => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false); // State to track loading status
   const [regions] = useState(["Metro Manila", "Visayas", "Luzon", "Mindanao"]);
+  const [errors, setErrors] = useState({}); // State for validation errors
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,12 +36,12 @@ const StoreForm = () => {
       const isValidSize = file.size <= 5 * 1024 * 1024; // 5MB max
 
       if (!isValidType) {
-        alert("Please upload an image file.");
+        Swal.fire("Invalid File", "Please upload an image file.", "error");
         return;
       }
 
       if (!isValidSize) {
-        alert("File size exceeds 5MB.");
+        Swal.fire("File Too Large", "File size exceeds 5MB.", "error");
         return;
       }
 
@@ -48,9 +49,87 @@ const StoreForm = () => {
     }
   };
 
+  const validate = async () => {
+    const newErrors = {};
+
+    if (!formData.storeName.trim()) {
+      newErrors.storeName = "Store name is required.";
+    } else {
+      // Check if store name already exists
+      try {
+        const response = await fetch(
+          `https://rem-reacts.onrender.com/api/sellers/checkStoreName?storeName=${formData.storeName}`
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          if (!data.isUnique) {
+            newErrors.storeName = "Store name is already taken.";
+          }
+        } else {
+          Swal.fire("Error", "Failed to check store name uniqueness.", "error");
+        }
+      } catch (error) {
+        console.error("Error checking store name uniqueness:", error);
+        Swal.fire("Error", "Failed to check store name uniqueness.", "error");
+      }
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required.";
+    } else if (!/^\d{10,12}$/.test(formData.phone)) {
+      newErrors.phone = "Phone number must be 10-12 digits.";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (
+      !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(formData.email)
+    ) {
+      newErrors.email = "Email is not valid.";
+    }
+
+    if (!formData.region) {
+      newErrors.region = "Region is required.";
+    }
+
+    if (!formData.province.trim()) {
+      newErrors.province = "Province is required.";
+    }
+
+    if (!formData.city.trim()) {
+      newErrors.city = "City is required.";
+    }
+
+    if (!formData.barangay.trim()) {
+      newErrors.barangay = "Barangay is required.";
+    }
+
+    if (!formData.postalCode.trim()) {
+      newErrors.postalCode = "Postal code is required.";
+    } else if (!/^\d{4,5}$/.test(formData.postalCode)) {
+      newErrors.postalCode = "Postal code must be 4-5 digits.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading state to true while submitting
+
+    setLoading(true); // Set loading state to true
+    const isValid = await validate();
+
+    if (!isValid) {
+      setLoading(false);
+      Swal.fire(
+        "Validation Error",
+        "Please fix the errors in the form.",
+        "error"
+      );
+      return;
+    }
 
     const userId = localStorage.getItem("userId");
 
@@ -83,35 +162,24 @@ const StoreForm = () => {
         localStorage.setItem("sellerStoreId", sellerStoreId);
         localStorage.setItem("storeName", formData.storeName);
 
-        // SweetAlert Success Message
         Swal.fire({
           title: "Success!",
           text: "You have successfully registered as a seller.",
           icon: "success",
           confirmButtonText: "OK",
         }).then(() => {
-          // Navigate after success
           navigate(`/sellerprofile/${sellerStoreId}`);
         });
       } else {
         const errorData = await response.json();
-        console.error("Error:", errorData.message);
-        // Optionally, display an error message to the user here
-        Swal.fire({
-          title: "Error",
-          text: errorData.message || "Something went wrong.",
-          icon: "error",
-          confirmButtonText: "OK",
-        });
+        Swal.fire(
+          "Error",
+          errorData.message || "Something went wrong.",
+          "error"
+        );
       }
     } catch (error) {
-      console.error("Error:", error);
-      Swal.fire({
-        title: "Error",
-        text: "An unexpected error occurred.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+      Swal.fire("Error", "An unexpected error occurred.", "error");
     } finally {
       setLoading(false); // Turn off loading state once the request completes
     }
@@ -155,11 +223,7 @@ const StoreForm = () => {
                 <img
                   src={URL.createObjectURL(image)}
                   alt="Selected"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </div>
             </div>
@@ -175,6 +239,7 @@ const StoreForm = () => {
               onChange={handleChange}
               required
             />
+            <p className="error">{errors.storeName}</p>
           </div>
 
           <div>
@@ -184,7 +249,9 @@ const StoreForm = () => {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
+              required
             />
+            <p className="error">{errors.phone}</p>
           </div>
 
           <div>
@@ -194,7 +261,9 @@ const StoreForm = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              required
             />
+            <p className="error">{errors.email}</p>
           </div>
 
           <div>
@@ -212,9 +281,9 @@ const StoreForm = () => {
                 </option>
               ))}
             </select>
+            <p className="error">{errors.region}</p>
           </div>
 
-          {/* Other Fields for Address */}
           <div>
             <label>Province:</label>
             <input
@@ -222,7 +291,9 @@ const StoreForm = () => {
               name="province"
               value={formData.province}
               onChange={handleChange}
+              required
             />
+            <p className="error">{errors.province}</p>
           </div>
 
           <div>
@@ -232,7 +303,9 @@ const StoreForm = () => {
               name="city"
               value={formData.city}
               onChange={handleChange}
+              required
             />
+            <p className="error">{errors.city}</p>
           </div>
 
           <div>
@@ -242,17 +315,21 @@ const StoreForm = () => {
               name="barangay"
               value={formData.barangay}
               onChange={handleChange}
+              required
             />
+            <p className="error">{errors.barangay}</p>
           </div>
 
           <div>
             <label>Postal Code:</label>
             <input
-              type="number"
+              type="text"
               name="postalCode"
               value={formData.postalCode}
               onChange={handleChange}
+              required
             />
+            <p className="error">{errors.postalCode}</p>
           </div>
 
           <button type="submit">Submit</button>
