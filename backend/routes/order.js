@@ -7,9 +7,10 @@ router.post("/", async (req, res) => {
     req.body;
 
   try {
-    const orderResult = await dbClient.query(
+    // Use pool.query() instead of dbClient.query()
+    const orderResult = await pool.query(
       `INSERT INTO orders (address_id, payment_method, shipping_fee, total_amount, created_at)
-         VALUES ($1, $2, $3, $4, NOW()) RETURNING order_id`,
+       VALUES ($1, $2, $3, $4, NOW()) RETURNING order_id`,
       [address_id, payment_method, shipping_fee, total_amount]
     );
 
@@ -18,9 +19,9 @@ router.post("/", async (req, res) => {
     // Save each product in the order
     for (const product of products) {
       const { product_id, quantity } = product;
-      await dbClient.query(
+      await pool.query(
         `INSERT INTO order_items (order_id, product_id, quantity)
-           VALUES ($1, $2, $3)`,
+         VALUES ($1, $2, $3)`,
         [orderId, product_id, quantity]
       );
     }
@@ -31,3 +32,5 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+module.exports = router;
