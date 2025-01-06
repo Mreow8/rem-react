@@ -9,8 +9,8 @@ router.post("/", async (req, res) => {
   try {
     // Use pool.query() instead of dbClient.query()
     const orderResult = await pool.query(
-      `INSERT INTO orders (address_id, payment_method, shipping_fee, total_amount, created_at)
-       VALUES ($1, $2, $3, $4, NOW()) RETURNING order_id`,
+      `INSERT INTO orders (user_id, address_id, payment_method, shipping_fee, total_amount, created_at)
+       VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING order_id`,
       [address_id, payment_method, shipping_fee, total_amount]
     );
 
