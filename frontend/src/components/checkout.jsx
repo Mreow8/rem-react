@@ -46,7 +46,7 @@ const Checkout = () => {
 
     const orderData = {
       products: products.map((product) => ({
-        product_id: product.product_id,
+        product_id: product.id,
         quantity: product.quantity,
       })),
       address_id: address.id,
@@ -102,8 +102,8 @@ const Checkout = () => {
             quantity: cartData[productId].quantity,
           });
 
-          if (product.store_region) {
-            setSellerRegion(product.store_region);
+          if (product.region) {
+            setSellerRegion(product.region);
           }
         }
 
