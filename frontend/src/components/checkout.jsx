@@ -48,7 +48,7 @@ const Checkout = () => {
         product_id: product.product_id,
         quantity: product.quantity,
       })),
-      address_id: address.address_id,
+      address_id: address.id,
       payment_method: paymentMethod,
       shipping_fee: shippingFee,
       total_amount: totalAmount + shippingFee,
