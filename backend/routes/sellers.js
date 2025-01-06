@@ -61,6 +61,41 @@ router.get("/checkStoreName", async (req, res) => {
     res.status(500).json({ message: "Error checking store name." });
   }
 });
+router.get("/checkPhone", async (req, res) => {
+  const { phone } = req.query;
+
+  if (!phone) {
+    return res.status(400).json({ message: "Phone number is required." });
+  }
+
+  const query = `
+    SELECT phone 
+    FROM stores 
+    WHERE phone = $1;
+  `;
+
+  try {
+    console.log("Checking phone number:", phone);
+
+    const result = await pool.query(query, [phone]);
+
+    if (result.rows.length > 0) {
+      return res.status(200).json({ isUnique: false });
+    }
+
+    res.status(200).json({ isUnique: true });
+  } catch (error) {
+    console.error("Error checking phone number:", error.message);
+
+    if (error.code === "ECONNREFUSED") {
+      return res.status(503).json({
+        message: "Database connection failed. Please try again later.",
+      });
+    }
+
+    res.status(500).json({ message: "Error checking phone number." });
+  }
+});
 
 // POST route to create a new seller
 router.post("/", upload.single("store_image"), async (req, res) => {

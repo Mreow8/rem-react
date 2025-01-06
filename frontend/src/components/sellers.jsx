@@ -55,7 +55,6 @@ const StoreForm = () => {
     if (!formData.storeName.trim()) {
       newErrors.storeName = "Store name is required.";
     } else {
-      // Check if store name already exists
       try {
         const response = await fetch(
           `https://rem-reacts.onrender.com/api/sellers/checkStoreName?storeName=${formData.storeName}`
@@ -79,6 +78,29 @@ const StoreForm = () => {
       newErrors.phone = "Phone number is required.";
     } else if (!/^\d{10,12}$/.test(formData.phone)) {
       newErrors.phone = "Phone number must be 10-12 digits.";
+    } else {
+      // Check if phone number is already taken
+      try {
+        const response = await fetch(
+          `https://rem-reacts.onrender.com/api/sellers/checkPhone?phone=${formData.phone}`
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          if (!data.isUnique) {
+            newErrors.phone = "Phone number is already taken.";
+          }
+        } else {
+          Swal.fire(
+            "Error",
+            "Failed to check phone number uniqueness.",
+            "error"
+          );
+        }
+      } catch (error) {
+        console.error("Error checking phone number uniqueness:", error);
+        Swal.fire("Error", "Failed to check phone number uniqueness.", "error");
+      }
     }
 
     if (!formData.email.trim()) {
@@ -333,7 +355,9 @@ const StoreForm = () => {
             <p className="error">{errors.postalCode}</p>
           </div>
 
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit"}
+          </button>
         </div>
       </form>
     </div>
