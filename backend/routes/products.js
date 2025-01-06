@@ -159,7 +159,7 @@ router.get("/:id", async (req, res) => {
 
   try {
     const query = `
-      SELECT products.*, stores.store_name, stores.province, stores.image AS seller_image ,stores.region,
+      SELECT products.*, stores.store_name, stores.province, stores.image AS seller_image, stores.region
       FROM products 
       INNER JOIN stores ON stores.store_id = products.store_id 
       WHERE products.id = $1

@@ -100,7 +100,6 @@ const Checkout = () => {
             quantity: cartData[productId].quantity,
           });
 
-          // Set the seller's region from the product data
           if (product.store_region) {
             setSellerRegion(product.store_region);
           }
