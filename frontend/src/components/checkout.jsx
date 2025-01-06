@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../css/checkout.css";
 import Loading from "./loading"; // Assuming you have a loading component
-import { useHistory } from "react-router-dom"; // Import useHistory for redirection
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const history = useHistory(); // Initialize useHistory for navigation
+  const navigate = useNavigate(); // Initialize useNavigate for navigation
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -118,7 +118,7 @@ const Checkout = () => {
 
   // Function to handle the "Add Address" button click
   const handleAddAddressClick = () => {
-    history.push("/profile"); // Redirect to profile page where user can add an address
+    navigate("/profile"); // Redirect to profile page where user can add an address
   };
 
   if (loading) {
