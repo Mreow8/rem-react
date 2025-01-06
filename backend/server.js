@@ -9,7 +9,7 @@ const sellersRoutes = require("./routes/sellers");
 const cartsRoutes = require("./routes/carts");
 const addressRoutes = require("./routes/address");
 const authsRoutes = require("./routes/auth");
-const orderRoutes = require("./routes/auth");
+const orderRoutes = require("./routes/order");
 
 const app = express();
 const PORT = 3001; // Use environment port or 3001
