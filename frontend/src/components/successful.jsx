@@ -20,6 +20,7 @@ const SuccessPage = () => {
       />
       <h1 style={{ marginTop: "20px" }}>Order Placed!.</h1>
       <button>
+        Order_List
         <Link to="/order_list"></Link>
       </button>
     </div>
