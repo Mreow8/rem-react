@@ -1,5 +1,6 @@
 import React from "react";
 import successGif from "../assets/successful.gif"; // Make sure to adjust the path to your gif file
+import { Link } from "react-router-dom";
 
 const SuccessPage = () => {
   return (
@@ -17,7 +18,10 @@ const SuccessPage = () => {
         alt="Success"
         style={{ width: "200px", height: "auto" }}
       />
-      <h1 style={{ marginTop: "20px" }}>Payment Successful.</h1>
+      <h1 style={{ marginTop: "20px" }}>Order Placed!.</h1>
+      <button>
+        <Link to="/order_list"></Link>
+      </button>
     </div>
   );
 };
