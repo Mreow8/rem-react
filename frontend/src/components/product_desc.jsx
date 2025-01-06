@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import Nav from "./nav";
 import "../css/product_desc.css";
 import Loading from "./loading";
+
 const ProductDesc = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -12,6 +13,7 @@ const ProductDesc = () => {
   const [username, setUsername] = useState(null);
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState(null); // State for success message
+  const location = useLocation(); // Hook to get the current route
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -40,6 +42,17 @@ const ProductDesc = () => {
     fetchProductDetails();
   }, [id]);
 
+  useEffect(() => {
+    // Clear cartItems from localStorage if not on a specific product or checkout page
+    const isProductPage = location.pathname.includes(`/products/${id}`);
+    const isCheckoutPage = location.pathname === "/checkout";
+
+    if (!isProductPage && !isCheckoutPage) {
+      localStorage.removeItem("cartItems");
+      console.log("Cart cleared as the user navigated away.");
+    }
+  }, [location, id]);
+
   const increaseQuantity = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
@@ -47,6 +60,7 @@ const ProductDesc = () => {
   const decreaseQuantity = () => {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
+
   const handleBuyNow = () => {
     const storedUserId = localStorage.getItem("userId");
     if (!storedUserId) {
@@ -54,20 +68,14 @@ const ProductDesc = () => {
       return;
     }
 
-    // Get the product details
     const productId = product.id;
-
-    // Get the current cart items from localStorage
     const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
 
-    // Add or update the product in cartItems
     cartItems[productId] = { quantity };
 
-    // Save the updated cartItems back to localStorage
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     console.log("Cart Items:", cartItems);
 
-    // Navigate to the checkout page
     navigate("/checkout");
   };
 
@@ -82,13 +90,12 @@ const ProductDesc = () => {
     }
 
     try {
-      // Log the data being sent in the POST request
       const requestData = {
         user_id: storedUserId,
         product_id: product.id,
         quantity: quantity,
       };
-      console.log("Sending data to API:", requestData); // This will print the data to the console
+      console.log("Sending data to API:", requestData);
 
       const response = await fetch("https://rem-reacts.onrender.com/api/cart", {
         method: "POST",
@@ -103,9 +110,8 @@ const ProductDesc = () => {
       }
 
       const data = await response.json();
-      setSuccessMessage(data.message); // Show success message
+      setSuccessMessage(data.message);
 
-      // Hide the message after 3 seconds
       setTimeout(() => {
         setSuccessMessage(null);
       }, 3000);
@@ -116,7 +122,7 @@ const ProductDesc = () => {
   };
 
   if (loading) {
-    return <Loading />; // Show the Loading screen while data is being fetched
+    return <Loading />;
   }
   if (error) {
     return <div className="error-message">Error: {error}</div>;
@@ -125,12 +131,14 @@ const ProductDesc = () => {
   if (!product) {
     return <div className="no-product-message">No product found.</div>;
   }
+
   const handleBackToProducts = () => {
-    navigate("/products"); // Navigate to the products page
+    navigate("/products");
   };
+
   const openShop = () => {
     if (product && product.store_id) {
-      navigate(`/sellerprofile/${product.store_id}`); // Navigate to the seller's shop page
+      navigate(`/sellerprofile/${product.store_id}`);
     } else {
       alert("Seller ID is missing!");
     }
@@ -145,7 +153,6 @@ const ProductDesc = () => {
       <div className="desc-con"></div>
       <div className="product-containers">
         <div id="productss">
-          {/* Product Details Section */}
           <div className="product-details">
             <div className="card product-card1">
               <img
@@ -198,7 +205,6 @@ const ProductDesc = () => {
             </div>
           </div>
         </div>
-        {/* Product Description and Synopsis Section */}
         <div className="product-description">
           <div className="card">
             <p>Product Description</p>
@@ -212,8 +218,6 @@ const ProductDesc = () => {
           </div>
         </div>
       </div>
-
-      {/* Seller Information Section */}
     </div>
   );
 };
