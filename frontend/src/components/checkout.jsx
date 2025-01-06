@@ -48,7 +48,7 @@ const Checkout = () => {
         product_id: product.product_id,
         quantity: product.quantity,
       })),
-      address_id: address.address_id, // Assuming `address_id` is part of the address object
+      address_id: address.address_id,
       payment_method: paymentMethod,
       shipping_fee: shippingFee,
       total_amount: totalAmount + shippingFee,
@@ -60,6 +60,7 @@ const Checkout = () => {
       alert("Order placed successfully!");
       navigate("/orders"); // Redirect to an orders page after successful placement
     } catch (error) {
+      console.error("Error placing order:", error);
       alert("Failed to place order. Please try again.");
     }
   };
@@ -160,7 +161,6 @@ const Checkout = () => {
 
   useEffect(() => {
     if (address && sellerRegion) {
-      // Calculate shipping fee when the address is selected
       const calculatedFee = calculateShippingFee(address.region, sellerRegion);
       setShippingFee(calculatedFee);
     }
