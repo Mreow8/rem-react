@@ -78,7 +78,8 @@ const ProductList = () => {
     }
   };
 
-  const handleShowAllClick = () => {
+  const handleShowAllClick = (e) => {
+    e.preventDefault(); // Prevent default anchor behavior
     setSelectedCategory(""); // Reset category filter to show all products
   };
 
@@ -87,7 +88,7 @@ const ProductList = () => {
       <Nav />
       <div className="products-main">
         <div id="categories-container">
-          <ul className="categories-list large-screen">
+          <ul className="categories-list">
             <li>
               <a
                 href="#"
@@ -120,14 +121,16 @@ const ProductList = () => {
             </li>
           </ul>
 
-          {/* For small screens */}
+          {/* Modal button for small screens */}
           <button
             className="categories-modal-button"
             onClick={() => setIsModalOpen(true)}
+            style={{ display: "none" }} // Hide this for larger screens
           >
             Categories
           </button>
 
+          {/* Modal for small screens */}
           {isModalOpen && (
             <div className="modal-overlay">
               <div className="categories-modal">
