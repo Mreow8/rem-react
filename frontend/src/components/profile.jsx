@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import Nav from "./nav";
 import "../css/profile.css";
 import Loading from "./loading";
 import noimage from "../assets/catno.png";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa"; // Add FaEdit for the edit icon
+import { Link } from "react-router-dom";
 
 const App = () => {
   const [username, setUsername] = useState(null);
@@ -18,58 +18,116 @@ const App = () => {
     email: false,
   });
   const [addresses, setAddresses] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const [addressData, setAddressData] = useState({
     fullName: "",
     phoneNumber: "",
-    region: "Luzon",
+    region: "Luzon", // Default region
     province: "",
     city: "",
     barangay: "",
     postalCode: "",
     label: "Home",
   });
-  const [orders, setOrders] = useState([]);
-  const [ordersLoading, setOrdersLoading] = useState(true);
-  const [ordersError, setOrdersError] = useState(null);
-  const [activeContent, setActiveContent] = useState("profile");
 
+  // Complete data for the 3 main island groups (regions) and their provinces
   const regions = {
-    Luzon: { provinces: ["Metro Manila", "Bulacan", "Cavite", "Laguna"] },
-    Visayas: { provinces: ["Cebu", "Iloilo", "Leyte"] },
+    Luzon: {
+      provinces: [
+        "Metro Manila",
+        "Bulacan",
+        "Cavite",
+        "Laguna",
+        "Batangas",
+        "Pampanga",
+        "Quezon",
+        "Bataan",
+        "Tarlac",
+        "Zambales",
+        "Pangasinan",
+        "Nueva Ecija",
+        "Aurora",
+        "Benguet",
+        "Ifugao",
+        "Kalinga",
+        "Mountain Province",
+        "Isabela",
+        "Cagayan",
+        "Tuguegarao",
+        "Albay",
+        "Camarines Sur",
+        "Camarines Norte",
+        "Sorsogon",
+        "Catanduanes",
+        "Masbate",
+        // You can add more provinces here
+      ],
+    },
+    Visayas: {
+      provinces: [
+        "Negros Occidental",
+        "Cebu",
+        "Iloilo",
+        "Leyte",
+        "Bohol",
+        "Samar",
+        "Negros Oriental",
+        "Aklan",
+        "Antique",
+        "Capiz",
+        "Guimaras",
+        "Biliran",
+        // You can add more provinces here
+      ],
+    },
     Mindanao: {
-      provinces: ["Davao del Sur", "Bukidnon", "Zamboanga del Norte"],
+      provinces: [
+        "Davao del Sur",
+        "Davao del Norte",
+        "Davao Oriental",
+        "Davao de Oro",
+        "Bukidnon",
+        "Agusan del Norte",
+        "Agusan del Sur",
+        "Surigao del Norte",
+        "Surigao del Sur",
+        "Zamboanga del Norte",
+        "Zamboanga del Sur",
+        "Zamboanga Sibugay",
+        "Sultan Kudarat",
+        "Cotabato",
+        "South Cotabato",
+        "Lanao del Norte",
+        "Lanao del Sur",
+        "Misamis Oriental",
+        "Misamis Occidental",
+        "Samar",
+        "Tawi-Tawi",
+        // You can add more provinces here
+      ],
     },
   };
-
-  const navigate = useNavigate();
-
-  // Fetch Orders
-  const fetchOrders = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      if (!userId) {
-        navigate("/login");
-        return;
-      }
-
-      const response = await fetch(
-        `https://rem-reacts.onrender.com/api/orders/${userId}`
-      );
-      const data = await response.json();
-
-      if (data.orders) {
-        setOrders(data.orders);
-      } else {
-        setOrdersError("No orders found.");
-      }
-    } catch (err) {
-      setOrdersError("Error fetching orders.");
-    } finally {
-      setOrdersLoading(false);
-    }
+  const handleRegionChange = (e) => {
+    const selectedRegion = e.target.value;
+    setAddressData({
+      ...addressData,
+      region: selectedRegion,
+      province: "", // Reset province when region changes
+    });
   };
 
-  // Fetch User Profile and Addresses
+  const handleProvinceChange = (e) => {
+    setAddressData({
+      ...addressData,
+      province: e.target.value,
+    });
+  };
+  const [activeContent, setActiveContent] = useState("profile"); // Added state for activeContent
+
+  const showContent = (contentId) => {
+    setActiveContent(contentId);
+  };
+
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
@@ -78,20 +136,22 @@ const App = () => {
 
     const userId = localStorage.getItem("userId");
     if (userId) {
-      fetchUserProfile(userId);
+      fetchUserProfile(userId); // Fetch user profile data
       fetchAddresses(userId);
-      fetchOrders();
     } else {
       setLoading(false);
     }
   }, []);
 
+  // Fetch user profile
   const fetchUserProfile = async (userId) => {
     try {
       const response = await fetch(
         `https://rem-reacts.onrender.com/api/profile/${userId}`
       );
-      if (!response.ok) throw new Error("Failed to fetch profile");
+      if (!response.ok) {
+        throw new Error("Failed to fetch profile");
+      }
       const data = await response.json();
       setProfileData({
         phoneNumber: data.phoneNumber || "",
@@ -99,11 +159,13 @@ const App = () => {
       });
     } catch (error) {
       console.error("Error fetching user profile:", error);
+      alert("An error occurred while fetching the profile.");
     } finally {
       setLoading(false);
     }
   };
 
+  // Fetch addresses
   const fetchAddresses = async (userId) => {
     try {
       const response = await fetch(
@@ -116,11 +178,18 @@ const App = () => {
     }
   };
 
+  // Fetch notifications
+
+  // Handle profile changes
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
-    setProfileData((prevData) => ({ ...prevData, [name]: value }));
+    setProfileData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
+  // Handle edit click
   const handleEditClick = (field) => {
     setIsEditing((prevState) => ({
       ...prevState,
@@ -128,54 +197,58 @@ const App = () => {
     }));
   };
 
+  // Update profile
   const updateProfile = async () => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
       alert("User not logged in. Cannot update profile.");
       return;
     }
-    const updatedProfile = {
-      phoneNumber: profileData.phoneNumber,
-      email: profileData.email,
-    };
+
+    const updatedProfile = {};
+    if (profileData.phoneNumber)
+      updatedProfile.phoneNumber = profileData.phoneNumber;
+    if (profileData.email) updatedProfile.email = profileData.email;
+
     try {
       const response = await fetch(
         `https://rem-reacts.onrender.com/api/profile/${userId}`,
         {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify(updatedProfile),
         }
       );
+
       if (response.ok) {
         alert("Profile updated successfully!");
       } else {
-        alert("Failed to update profile.");
+        const errorData = await response.json();
+        alert(`Failed to update profile: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
+      alert("An error occurred while updating the profile. Please try again.");
     }
   };
 
-  const handleRegionChange = (e) => {
-    const selectedRegion = e.target.value;
-    setAddressData((prevData) => ({
-      ...prevData,
-      region: selectedRegion,
-      province: "",
-    }));
-  };
-
-  const handleProvinceChange = (e) => {
-    setAddressData((prevData) => ({
-      ...prevData,
-      province: e.target.value,
-    }));
-  };
-
+  // Handle address change
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
-    setAddressData((prevData) => ({ ...prevData, [name]: value }));
+    setAddressData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Toggle address label between "Home" and "Work"
+  const toggleAddressLabel = () => {
+    setAddressData((prevData) => ({
+      ...prevData,
+      label: prevData.label === "Home" ? "Work" : "Home",
+    }));
   };
 
   const addAddress = async () => {
@@ -184,128 +257,247 @@ const App = () => {
       alert("User not logged in. Cannot add address.");
       return;
     }
+
+    // Include userId in the addressData being sent in the request body
+    const addressDataWithUserId = {
+      ...addressData,
+      userId: userId, // Add userId to the request body
+    };
+
+    console.log("addressData", addressDataWithUserId); // Log the data before sending the request
+
     try {
       const response = await fetch(
         `https://rem-reacts.onrender.com/api/addresses`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...addressData, userId }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(addressDataWithUserId),
         }
       );
+
       if (response.ok) {
         alert("Address added successfully!");
-        fetchAddresses(userId);
+        fetchAddresses(userId); // Re-fetch addresses to update the list
       } else {
-        alert("Failed to add address.");
+        const errorData = await response.json();
+        alert(`Failed to add address: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Error adding address:", error);
+      alert("An error occurred while adding the address. Please try again.");
     }
   };
 
-  const handlePayNow = (orderId) => {
-    navigate(`/pay/${orderId}`);
-  };
-
-  if (loading) return <Loading />;
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="App">
       <Nav username={username} />
+      <header className="App-header"></header>
       <div className="img-container">
         <div className="other-container">
           <p>{username}</p>
           <p>My Account</p>
           <a
             href="#"
-            onClick={() => setActiveContent("profile")}
+            onClick={() => showContent("profile")}
             className={activeContent === "profile" ? "active" : ""}
           >
             Profile
           </a>
           <a
             href="#"
-            onClick={() => setActiveContent("address")}
+            onClick={() => showContent("address")}
             className={activeContent === "address" ? "active" : ""}
           >
             Address
           </a>
           <a
             href="#"
-            onClick={() => setActiveContent("orders")}
-            className={activeContent === "orders" ? "active" : ""}
+            onClick={() => showContent("notifications")}
+            className={activeContent === "notifications" ? "active" : ""}
           >
-            Orders
+            Notification
           </a>
         </div>
 
         <div className="profile-container">
           {activeContent === "profile" && (
             <div className="img-prof-container">
-              <p>Profile Information</p>
-              <div>
-                <label>Username:</label>
-                <input type="text" value={username} readOnly />
-              </div>
-              <div>
-                <label>Phone Number:</label>
-                <input
-                  type="text"
-                  value={profileData.phoneNumber}
-                  readOnly={!isEditing.phoneNumber}
-                  onChange={handleProfileChange}
-                />
-                <FaEdit onClick={() => handleEditClick("phoneNumber")} />
-              </div>
-              <div>
-                <label>Email:</label>
-                <input
-                  type="email"
-                  value={profileData.email}
-                  readOnly={!isEditing.email}
-                  onChange={handleProfileChange}
-                />
-                <FaEdit onClick={() => handleEditClick("email")} />
-              </div>
-              <button onClick={updateProfile}>Save Changes</button>
-            </div>
-          )}
+              <div className="content">
+                <p>Profile Information</p>
+                <p>Manage and protect your account</p>
 
-          {activeContent === "address" && (
-            <div className="address-container">
-              <div className="address-form">
-                <h3>Add Address</h3>
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={addressData.fullName}
-                  onChange={handleAddressChange}
-                  name="fullName"
-                />
-                <button onClick={addAddress}>Add Address</button>
-              </div>
-            </div>
-          )}
+                <div>
+                  <label htmlFor="username">Username: </label>
+                  <input type="text" id="username" value={username} readOnly />
+                </div>
 
-          {activeContent === "orders" && (
-            <div className="orders-container">
-              <h3>Your Orders</h3>
-              {ordersLoading ? (
-                <p>Loading...</p>
-              ) : ordersError ? (
-                <p>{ordersError}</p>
-              ) : (
-                orders.map((order) => (
-                  <div key={order.order_id}>
-                    <h4>Order ID: {order.order_id}</h4>
-                    <p>Total: Php {order.total_amount}</p>
-                  </div>
-                ))
-              )}
+                <div>
+                  <label htmlFor="phoneNumber">Phone Number: </label>
+                  <input
+                    type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={profileData.phoneNumber}
+                    onChange={handleProfileChange}
+                    readOnly={!isEditing.phoneNumber} // Make readOnly based on editing state
+                  />
+
+                  <FaEdit onClick={() => handleEditClick("phoneNumber")} />
+                </div>
+
+                <div>
+                  <label htmlFor="email">Email: </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={profileData.email}
+                    onChange={handleProfileChange}
+                    readOnly={!isEditing.email} // Read-only when not editing
+                  />
+
+                  <FaEdit onClick={() => handleEditClick("email")} />
+                </div>
+
+                <button type="button" onClick={updateProfile}>
+                  Save Changes
+                </button>
+              </div>
             </div>
           )}
         </div>
+
+        {activeContent === "address" && (
+          <div className="address-container">
+            <div className="address-box">
+              <p>Address Information</p>
+              <div className="address-form">
+                <div>
+                  <label htmlFor="fullName">Full Name: </label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    value={addressData.fullName}
+                    onChange={handleAddressChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="phoneNumber">Phone Number: </label>
+                  <input
+                    type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={addressData.phoneNumber}
+                    onChange={handleAddressChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="region">Region: </label>
+                  <select
+                    id="region"
+                    name="region"
+                    value={addressData.region}
+                    onChange={handleRegionChange}
+                  >
+                    <option value="Luzon">Luzon</option>
+                    <option value="Visayas">Visayas</option>
+                    <option value="Mindanao">Mindanao</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="province">Province: </label>
+                  <select
+                    id="province"
+                    name="province"
+                    value={addressData.province}
+                    onChange={handleProvinceChange}
+                  >
+                    {regions[addressData.region]?.provinces.map(
+                      (province, index) => (
+                        <option key={index} value={province}>
+                          {province}
+                        </option>
+                      )
+                    )}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="city">City: </label>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    value={addressData.city}
+                    onChange={handleAddressChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="barangay">Barangay: </label>
+                  <input
+                    type="text"
+                    id="barangay"
+                    name="barangay"
+                    value={addressData.barangay}
+                    onChange={handleAddressChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="postalCode">Postal Code: </label>
+                  <input
+                    type="text"
+                    id="postalCode"
+                    name="postalCode"
+                    value={addressData.postalCode}
+                    onChange={handleAddressChange}
+                  />
+                </div>
+                <button type="button" onClick={toggleAddressLabel}>
+                  {addressData.label === "Home" ? "Set as Work" : "Set as Home"}
+                </button>
+                <button onClick={addAddress}>Add Address</button>
+              </div>
+            </div>
+            <div className="saved-addresses-box">
+              <h3>Saved Addresses</h3>
+              <div className="saved-addresses">
+                {addresses.map((address, index) => (
+                  <div key={index} className="saved-address">
+                    {address.user_id}, {address.phone_number},{address.region},{" "}
+                    {address.province}, {address.city},{address.barangay},{" "}
+                    {address.postal_code}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeContent === "notifications" && (
+          <div className="notifications-container">
+            <h3>Notifications</h3>
+
+            <div className="no-notifications">
+              <img
+                src={noimage}
+                alt="No Notifications"
+                className="no-notifications-image"
+              />
+              <p>No new notifications.</p>
+              <Link to="/order_list">
+                <button>Order List</button>
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
