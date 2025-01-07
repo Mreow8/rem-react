@@ -56,7 +56,7 @@ app.post("/api/create-payment-link", async (req, res) => {
       "SELECT total_amount FROM orders WHERE order_id = $1",
       [orderId]
     );
-
+    console.log(orderQuery);
     if (orderQuery.rows.length === 0) {
       return res.status(404).json({ error: "Order not found" });
     }
