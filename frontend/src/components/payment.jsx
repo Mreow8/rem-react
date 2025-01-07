@@ -30,6 +30,7 @@ const PaymentPage = () => {
           setError("Failed to generate payment link.");
         }
       } catch (err) {
+        console.error("Error", err);
         setError("Error generating payment link.");
       } finally {
         setLoading(false);
