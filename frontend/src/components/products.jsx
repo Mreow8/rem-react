@@ -107,27 +107,30 @@ const ProductList = () => {
                 {cat.name}
               </li>
             ))}
+            <li>
+              Price
+              <select
+                className="price-sort-dropdown"
+                onChange={(e) => handlePriceSort(e.target.value)}
+                style={{ marginLeft: "10px" }}
+              >
+                <option value="">Sort by</option>
+                <option value="lowToHigh">Low to High</option>
+                <option value="highToLow">High to Low</option>
+              </select>
+            </li>
           </ul>
-          <li>
-            Price
-            <select
-              className="price-sort-dropdown"
-              onChange={(e) => handlePriceSort(e.target.value)}
-              style={{ marginLeft: "10px" }}
-            >
-              <option value="">Sort by</option>
-              <option value="lowToHigh">Low to High</option>
-              <option value="highToLow">High to Low</option>
-            </select>
-          </li>
+
           {/* Modal button for small screens */}
           <button
             className="categories-modal-button"
             onClick={() => setIsModalOpen(true)}
-            // Hide this for larger screens
+            style={{ display: "none" }} // Hide this for larger screens
           >
             Categories
           </button>
+
+          {/* Modal for small screens */}
           {isModalOpen && (
             <div className="modal-overlay">
               <div className="categories-modal">

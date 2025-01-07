@@ -104,21 +104,6 @@
 }
 
 @media (max-width: 768px) {
-  .categories-list.large-screen {
-    display: none;
-  }
-  .categories-list {
-    display: none;
-  }
-
-  .price-sort-dropdown {
-    display: block; /* Show the price dropdown */
-  }
-
-  .categories-modal-button {
-    display: block;
-    margin: 10px 0;
-  }
   .search-input {
     display: none;
   }
@@ -141,7 +126,6 @@
   }
 
   .categories-list {
-    display: none;
     font-size: 12px !important;
   }
 
@@ -276,6 +260,17 @@
 
 .categories-modal-button:hover {
   background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .categories-list.large-screen {
+    display: none;
+  }
+
+  .categories-modal-button {
+    display: block;
+    margin: 10px 0;
+  }
 }
 
 /* General styles for categories list */
