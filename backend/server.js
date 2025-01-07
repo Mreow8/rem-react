@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const axios = require("axios"); // Replace `paymongo` with `axios` for official API calls
 const path = require("path");
-const paymongo = require("paymongo");
 const pool = require("./config/db");
 const authRoutes = require("./routes/profile");
 const productsRoutes = require("./routes/products");
@@ -13,6 +13,7 @@ const orderRoutes = require("./routes/order");
 const app = express();
 const PORT = 3001;
 const CORS_ORIGIN = "https://rem-react.onrender.com";
+const PAYMONGO_API_KEY = "sk_test_Mis39QoZrL271hGzDmFXB61J"; // Replace with your PayMongo API key
 
 // Middleware
 app.use(express.json());
@@ -43,6 +44,7 @@ app.use("/api/cart", cartsRoutes);
 app.use("/api/addresses", addressRoutes);
 app.use("/api/orders", orderRoutes);
 
+// PayMongo Payment Link Endpoint
 app.post("/api/create-payment-link", async (req, res) => {
   const { orderId, description } = req.body;
 
@@ -56,34 +58,50 @@ app.post("/api/create-payment-link", async (req, res) => {
       "SELECT total_amount FROM orders WHERE order_id = $1",
       [orderId]
     );
-    console.log(orderQuery);
+
     if (orderQuery.rows.length === 0) {
       return res.status(404).json({ error: "Order not found" });
     }
 
-    const amount = orderQuery.rows[0].total_amount;
+    const amount = orderQuery.rows[0].total_amount * 100; // Convert PHP to centavos
 
-    // Create the PayMongo payment link
-    paymongo.apiKey = "sk_test_f4HS6zEv2XSaTjYYyagCcUcu"; // Replace with your PayMongo API key
-
-    const paymentLink = await paymongo.paymentLinks.create({
-      amount: amount * 100, // Convert PHP to centavos
-      description,
-      redirect: {
-        success: `https://rem-react.onrender.com/success?orderId=${orderId}`,
-        failed: `https://rem-react.onrender.com/failed?orderId=${orderId}`,
+    // Create a payment link via the official PayMongo API
+    const response = await axios.post(
+      "https://api.paymongo.com/v1/links",
+      {
+        data: {
+          attributes: {
+            amount,
+            description,
+            redirect: {
+              success: `https://rem-react.onrender.com/success?orderId=${orderId}`,
+              failed: `https://rem-react.onrender.com/failed?orderId=${orderId}`,
+            },
+          },
+        },
       },
-    });
+      {
+        headers: {
+          Authorization: `Basic ${Buffer.from(PAYMONGO_API_KEY).toString(
+            "base64"
+          )}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    res.json({ paymentLinkUrl: paymentLink.data.attributes.url });
+    // Send the generated payment link to the client
+    res.json({ paymentLinkUrl: response.data.data.attributes.url });
   } catch (err) {
-    console.error("Error creating payment link:", err.message); // Log the error message
-    console.error("Error details:", err); // Log the full error object
-    console.error("Error creating payment link:", err);
+    console.error(
+      "Error creating payment link:",
+      err.response?.data || err.message
+    );
     res.status(500).json({ error: "Failed to create payment link" });
   }
 });
 
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
