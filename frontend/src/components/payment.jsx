@@ -24,14 +24,16 @@ const PaymentPage = () => {
           }
         );
         const data = await response.json();
-        console.log("Payment Link Data:", data);
+
+        console.log("Response from backend:", data); // Log backend response for debugging
+
         if (data.paymentLinkUrl) {
           setPaymentLink(data.paymentLinkUrl);
         } else {
           setError("Failed to generate payment link.");
         }
       } catch (err) {
-        console.error("Error", err);
+        console.error("Error generating payment link:", err);
         setError("Error generating payment link.");
       } finally {
         setLoading(false);

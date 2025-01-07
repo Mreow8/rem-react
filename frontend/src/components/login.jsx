@@ -57,7 +57,6 @@ const Login = () => {
     // Ensure the phone number is valid
     if (isValidPhoneNumber(phoneNumber)) {
       try {
-        // Send the phone number to the backend to check if it exists and send OTP
         const response = await fetch(
           "https://rem-reacts.onrender.com/api/auth/send-otp", // Replace with your backend URL
           {

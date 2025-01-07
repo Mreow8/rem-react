@@ -14,6 +14,7 @@ const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 // Generates a u
 // In-memory OTP store (should be replaced with a persistent store)
 const otpStore = {};
+
 router.post("/send-otp", async (req, res) => {
   const { phone } = req.body;
 
@@ -22,7 +23,6 @@ router.post("/send-otp", async (req, res) => {
   }
 
   try {
-    // Check if the phone number already exists in the database
     const checkPhoneQuery = "SELECT * FROM users WHERE phone = $1";
     const { rows: phoneRows } = await pool.query(checkPhoneQuery, [phone]);
 
