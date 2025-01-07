@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./loading";
+
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,6 +20,12 @@ const OrderList = () => {
         const response = await fetch(
           `https://rem-react.onrender.com/api/orders/${userId}`
         );
+
+        // Check if the response is OK (status code 200-299)
+        if (!response.ok) {
+          throw new Error(`Failed to fetch orders: ${response.statusText}`);
+        }
+
         const data = await response.json();
 
         if (data.orders) {
@@ -27,7 +34,9 @@ const OrderList = () => {
           setError("No orders found.");
         }
       } catch (err) {
-        setError("Error fetching orders.");
+        // Log the error for debugging purposes
+        console.error("Error fetching orders:", err);
+        setError(err.message || "Error fetching orders.");
       } finally {
         setLoading(false);
       }
@@ -36,34 +45,34 @@ const OrderList = () => {
     fetchOrders();
   }, [navigate]);
 
-  // const handlePayNow = async (orderId, totalAmount) => {
-  //   try {
-  //     const response = await fetch(
-  //       "https://rem-react.onrender.com/api/create-payment-link",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           orderId,
-  //           amount: totalAmount,
-  //           description: `Payment for Order #${orderId}`,
-  //         }),
-  //       }
-  //     );
+  const handlePayNow = async (orderId, totalAmount) => {
+    try {
+      const response = await fetch(
+        "https://rem-react.onrender.com/api/create-payment-link",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            orderId,
+            amount: totalAmount,
+            description: `Payment for Order #${orderId}`,
+          }),
+        }
+      );
 
-  //     const data = await response.json();
-  //     if (data.paymentLinkUrl) {
-  //       window.location.href = data.paymentLinkUrl; // Redirect to PayMongo payment link
-  //     } else {
-  //       alert("Failed to generate payment link.");
-  //     }
-  //   } catch (err) {
-  //     console.error("Error generating payment link:", err);
-  //     alert("Error generating payment link.");
-  //   }
-  // };
+      const data = await response.json();
+      if (data.paymentLinkUrl) {
+        window.location.href = data.paymentLinkUrl; // Redirect to PayMongo payment link
+      } else {
+        alert("Failed to generate payment link.");
+      }
+    } catch (err) {
+      console.error("Error generating payment link:", err);
+      alert("Error generating payment link.");
+    }
+  };
 
   if (loading) {
     return <Loading />;

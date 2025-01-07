@@ -49,7 +49,7 @@ router.get("/:userId", async (req, res) => {
     res.json({ orders }); // Respond with the orders in JSON format
   } catch (error) {
     console.error("Error fetching orders:", error);
-    res.status(500).json({ message: "Error fetching orders" });
+    res.status(500).json({ message: "Error fetching ordersss" });
   }
 });
 
