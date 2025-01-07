@@ -24,6 +24,7 @@ const PaymentPage = () => {
           }
         );
         const data = await response.json();
+        console.log("Payment Link Data:", data);
         if (data.paymentLinkUrl) {
           setPaymentLink(data.paymentLinkUrl);
         } else {

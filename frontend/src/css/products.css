@@ -11,6 +11,7 @@
 #categories-container {
   position: fixed;
   top: 100px;
+  display: inline-flex;
 }
 .categories-list {
   list-style: none;

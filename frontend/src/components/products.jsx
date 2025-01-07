@@ -152,7 +152,7 @@ const ProductList = () => {
             </div>
           )}
           <div>
-            <p>Price</p>
+            <p style={{ display: "inline-flex", marginTop: "8px" }}>Price</p>
             <select
               className="price-sort-dropdown"
               onChange={(e) => handlePriceSort(e.target.value)}
