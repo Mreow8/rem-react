@@ -5,7 +5,7 @@ import Loading from "./loading";
 import noimage from "../assets/catno.png";
 import { FaEdit } from "react-icons/fa"; // Add FaEdit for the edit icon
 import { Link } from "react-router-dom";
-
+import OrderList from "./OrderList";
 const App = () => {
   const [username, setUsername] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -319,13 +319,12 @@ const App = () => {
           </a>
           <a
             href="#"
-            onClick={() => showContent("notifications")}
-            className={activeContent === "notifications" ? "active" : ""}
+            onClick={() => setActiveContent("orders")}
+            className={activeContent === "orders" ? "active" : ""}
           >
-            Notification
+            Order List
           </a>
         </div>
-
         <div className="profile-container">
           {activeContent === "profile" && (
             <div className="img-prof-container">
@@ -373,7 +372,6 @@ const App = () => {
             </div>
           )}
         </div>
-
         {activeContent === "address" && (
           <div className="address-container">
             <div className="address-box">
@@ -480,24 +478,7 @@ const App = () => {
             </div>
           </div>
         )}
-
-        {activeContent === "notifications" && (
-          <div className="notifications-container">
-            <h3>Notifications</h3>
-
-            <div className="no-notifications">
-              <img
-                src={noimage}
-                alt="No Notifications"
-                className="no-notifications-image"
-              />
-              <p>No new notifications.</p>
-              <Link to="/order_list">
-                <button>Order List</button>
-              </Link>
-            </div>
-          </div>
-        )}
+        {activeContent === "orders" && <OrderList />} {/* Render OrderList */}
       </div>
     </div>
   );
