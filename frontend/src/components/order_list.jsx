@@ -37,7 +37,6 @@ const OrderList = () => {
   }, [navigate]);
 
   const handlePayNow = (orderId) => {
-    // Assume payment logic here. For now, we'll just navigate to a payment page.
     navigate(`/pay/${orderId}`);
   };
 

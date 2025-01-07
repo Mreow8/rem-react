@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"; // Import useParams from react-router-dom
 
-const PaymentPage = ({ match }) => {
-  const { orderId } = match.params; // Get the orderId from URL params
+const PaymentPage = () => {
+  const { orderId } = useParams(); // Get the orderId from URL params using useParams
   const [paymentLink, setPaymentLink] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
