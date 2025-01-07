@@ -511,10 +511,9 @@ const App = () => {
                   className="no-notifications-image"
                 />
                 <p>No new notifications.</p>
-                <button>
-                  Order_List
-                  <Link to="/order_list"></Link>
-                </button>
+                <Link to="/order_list">
+                  <button>Order List</button>
+                </Link>
               </div>
             )}
           </div>
