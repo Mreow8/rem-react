@@ -43,15 +43,27 @@ app.use("/api/cart", cartsRoutes);
 app.use("/api/addresses", addressRoutes);
 app.use("/api/orders", orderRoutes);
 
-// Create PayMongo payment link
 app.post("/api/create-payment-link", async (req, res) => {
-  const { orderId, amount, description } = req.body;
+  const { orderId, description } = req.body;
 
-  if (!orderId || !amount || !description) {
+  if (!orderId || !description) {
     return res.status(400).json({ error: "Missing required parameters" });
   }
 
   try {
+    // Query the database to get the order's total amount
+    const orderQuery = await pool.query(
+      "SELECT total_amount FROM orders WHERE order_id = $1",
+      [orderId]
+    );
+
+    if (orderQuery.rows.length === 0) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    const amount = orderQuery.rows[0].total_amount;
+
+    // Create the PayMongo payment link
     paymongo.apiKey = "sk_test_f4HS6zEv2XSaTjYYyagCcUcu"; // Replace with your PayMongo API key
 
     const paymentLink = await paymongo.paymentLinks.create({
@@ -70,7 +82,6 @@ app.post("/api/create-payment-link", async (req, res) => {
   }
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -14,6 +14,7 @@ import Checkout from "./components/checkout";
 import Success from "./components/successful";
 import Failed from "./components/failed";
 import Order_list from "./components/order_list";
+import Payment from "./components/payment";
 
 const App = () => {
   return (
@@ -30,9 +31,9 @@ const App = () => {
         <Route path="/add_to_cart" element={<Carts />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/checkout" element={<Checkout />} />
         <Route path="/success" element={<Success />} />
         <Route path="/order_list" element={<Order_list />} />
+        <Route path="/pay:orderId" element={<Payment />} />
       </Routes>
     </Router>
   );
