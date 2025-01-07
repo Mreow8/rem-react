@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Loading from "./loading";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
@@ -11,21 +10,15 @@ const OrderList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const userId = localStorage.getItem("userId");
+        const userId = localStorage.getItem("userId"); // Assuming user_id is stored in localStorage
         if (!userId) {
-          navigate("/login");
+          navigate("/login"); // Redirect to login if user is not logged in
           return;
         }
 
         const response = await fetch(
-          `https://rem-react.onrender.com/api/orders/${userId}`
+          `https://rem-reacts.onrender.com/api/orders/${userId}`
         );
-
-        // Check if the response is OK (status code 200-299)
-        if (!response.ok) {
-          throw new Error(`Failed to fetch orders: ${response.statusText}`);
-        }
-
         const data = await response.json();
 
         if (data.orders) {
@@ -34,9 +27,7 @@ const OrderList = () => {
           setError("No orders found.");
         }
       } catch (err) {
-        // Log the error for debugging purposes
-        console.error("Error fetching orders:", err);
-        setError(err.message || "Error fetching orders.");
+        setError("Error fetching orders.");
       } finally {
         setLoading(false);
       }
@@ -45,37 +36,13 @@ const OrderList = () => {
     fetchOrders();
   }, [navigate]);
 
-  const handlePayNow = async (orderId, totalAmount) => {
-    try {
-      const response = await fetch(
-        "https://rem-react.onrender.com/api/create-payment-link",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            orderId,
-            amount: totalAmount,
-            description: `Payment for Order #${orderId}`,
-          }),
-        }
-      );
-
-      const data = await response.json();
-      if (data.paymentLinkUrl) {
-        window.location.href = data.paymentLinkUrl; // Redirect to PayMongo payment link
-      } else {
-        alert("Failed to generate payment link.");
-      }
-    } catch (err) {
-      console.error("Error generating payment link:", err);
-      alert("Error generating payment link.");
-    }
+  const handlePayNow = (orderId) => {
+    // Assume payment logic here. For now, we'll just navigate to a payment page.
+    navigate(`/pay/${orderId}`);
   };
 
   if (loading) {
-    return <Loading />;
+    return <div>Loading...</div>;
   }
 
   if (error) {
@@ -96,13 +63,10 @@ const OrderList = () => {
               </p>
               <p>Payment Method: {order.payment_method}</p>
 
+              {/* Conditionally render the Pay Now button */}
               {order.payment_method === "Online Payment" &&
               order.status === "pending" ? (
-                <button
-                  onClick={() =>
-                    handlePayNow(order.order_id, order.total_amount)
-                  }
-                >
+                <button onClick={() => handlePayNow(order.order_id)}>
                   Pay Now
                 </button>
               ) : (
