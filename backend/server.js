@@ -77,10 +77,10 @@ app.post("/api/create-payment-link", async (req, res) => {
 
     res.json({ paymentLinkUrl: paymentLink.data.attributes.url });
   } catch (err) {
-    console.error("Error creating payment link:", err);
-    res.status(500).json({ error: "Failed to create payment link" });
     console.error("Error creating payment link:", err.message); // Log the error message
     console.error("Error details:", err); // Log the full error object
+    console.error("Error creating payment link:", err);
+    res.status(500).json({ error: "Failed to create payment link" });
   }
 });
 
