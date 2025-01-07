@@ -107,25 +107,13 @@ const ProductList = () => {
                 {cat.name}
               </li>
             ))}
-            <li>
-              Price
-              <select
-                className="price-sort-dropdown"
-                onChange={(e) => handlePriceSort(e.target.value)}
-                style={{ marginLeft: "10px" }}
-              >
-                <option value="">Sort by</option>
-                <option value="lowToHigh">Low to High</option>
-                <option value="highToLow">High to Low</option>
-              </select>
-            </li>
           </ul>
 
           {/* Modal button for small screens */}
           <button
             className="categories-modal-button"
             onClick={() => setIsModalOpen(true)}
-            style={{ display: "none" }} // Hide this for larger screens
+            // Hide this for larger screens
           >
             Categories
           </button>
@@ -163,6 +151,18 @@ const ProductList = () => {
               </div>
             </div>
           )}
+          <div>
+            <p>Price</p>
+            <select
+              className="price-sort-dropdown"
+              onChange={(e) => handlePriceSort(e.target.value)}
+              style={{ marginLeft: "10px" }}
+            >
+              <option value="">Sort by</option>
+              <option value="lowToHigh">Low to High</option>
+              <option value="highToLow">High to Low</option>
+            </select>
+          </div>
         </div>
 
         <div className="container">

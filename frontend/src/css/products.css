@@ -127,6 +127,7 @@
 
   .categories-list {
     font-size: 12px !important;
+    display: none;
   }
 
   .loading-message,
