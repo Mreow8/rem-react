@@ -4,6 +4,7 @@ import "../css/profile.css";
 import Loading from "./loading";
 import noimage from "../assets/catno.png";
 import { FaEdit } from "react-icons/fa"; // Add FaEdit for the edit icon
+import { Link } from "react-router-dom";
 
 const App = () => {
   const [username, setUsername] = useState(null);
