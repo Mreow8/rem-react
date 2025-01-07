@@ -10,14 +10,14 @@ const OrderList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const userId = localStorage.getItem("userId"); // Assuming user_id is stored in localStorage
+        const userId = localStorage.getItem("userId");
         if (!userId) {
-          navigate("/login"); // Redirect to login if user is not logged in
+          navigate("/login");
           return;
         }
 
         const response = await fetch(
-          `https://rem-reacts.onrender.com/api/orders/${userId}`
+          `https://rem-react.onrender.com/api/orders/${userId}`
         );
         const data = await response.json();
 
@@ -36,9 +36,33 @@ const OrderList = () => {
     fetchOrders();
   }, [navigate]);
 
-  const handlePayNow = (orderId) => {
-    // Assume payment logic here. For now, we'll just navigate to a payment page.
-    navigate(`/pay/${orderId}`);
+  const handlePayNow = async (orderId, totalAmount) => {
+    try {
+      const response = await fetch(
+        "https://rem-react.onrender.com/api/create-payment-link",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            orderId,
+            amount: totalAmount,
+            description: `Payment for Order #${orderId}`,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      if (data.paymentLinkUrl) {
+        window.location.href = data.paymentLinkUrl; // Redirect to PayMongo payment link
+      } else {
+        alert("Failed to generate payment link.");
+      }
+    } catch (err) {
+      console.error("Error generating payment link:", err);
+      alert("Error generating payment link.");
+    }
   };
 
   if (loading) {
@@ -63,10 +87,13 @@ const OrderList = () => {
               </p>
               <p>Payment Method: {order.payment_method}</p>
 
-              {/* Conditionally render the Pay Now button */}
               {order.payment_method === "Online Payment" &&
               order.status === "pending" ? (
-                <button onClick={() => handlePayNow(order.order_id)}>
+                <button
+                  onClick={() =>
+                    handlePayNow(order.order_id, order.total_amount)
+                  }
+                >
                   Pay Now
                 </button>
               ) : (
