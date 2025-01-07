@@ -10,7 +10,7 @@ const OrderList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const userId = localStorage.getItem("user_id"); // Assuming user_id is stored in localStorage
+        const userId = localStorage.getItem("userId"); // Assuming user_id is stored in localStorage
         if (!userId) {
           navigate("/login"); // Redirect to login if user is not logged in
           return;
