@@ -138,7 +138,6 @@ const App = () => {
     if (userId) {
       fetchUserProfile(userId); // Fetch user profile data
       fetchAddresses(userId);
-      fetchNotifications(userId); // Fetch notifications on load
     } else {
       setLoading(false);
     }
@@ -180,17 +179,6 @@ const App = () => {
   };
 
   // Fetch notifications
-  const fetchNotifications = async (userId) => {
-    try {
-      const response = await fetch(
-        `https://rem-reacts.onrender.com/api/notifications/${userId}`
-      );
-      const data = await response.json();
-      setNotifications(data.notifications || []);
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
-  };
 
   // Handle profile changes
   const handleProfileChange = (e) => {
@@ -496,26 +484,18 @@ const App = () => {
         {activeContent === "notifications" && (
           <div className="notifications-container">
             <h3>Notifications</h3>
-            {notifications.length > 0 ? (
-              notifications.map((notification, index) => (
-                <div key={index} className="notification-item">
-                  <p>{notification.message}</p>
-                  <small>{notification.created_at}</small>
-                </div>
-              ))
-            ) : (
-              <div className="no-notifications">
-                <img
-                  src={noimage}
-                  alt="No Notifications"
-                  className="no-notifications-image"
-                />
-                <p>No new notifications.</p>
-                <Link to="/order_list">
-                  <button>Order List</button>
-                </Link>
-              </div>
-            )}
+
+            <div className="no-notifications">
+              <img
+                src={noimage}
+                alt="No Notifications"
+                className="no-notifications-image"
+              />
+              <p>No new notifications.</p>
+              <Link to="/order_list">
+                <button>Order List</button>
+              </Link>
+            </div>
           </div>
         )}
       </div>

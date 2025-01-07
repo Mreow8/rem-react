@@ -31,18 +31,22 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
 router.get("/:userId", async (req, res) => {
   const { userId } = req.params;
 
   try {
     const result = await pool.query(
-      `SELECT * FROM orders WHERE user_id = $1 ORDER BY created_at DESC`,
-      [userId]
+      `SELECT * 
+       FROM orders 
+       INNER JOIN addresses 
+       ON orders.address_id = addresses.id 
+       WHERE addresses.user_id = $1 
+       ORDER BY orders.created_at DESC`,
+      [userId] // Use the parameterized userId
     );
 
-    const orders = result.rows;
-    res.json({ orders });
+    const orders = result.rows; // Extract the query result
+    res.json({ orders }); // Respond with the orders in JSON format
   } catch (error) {
     console.error("Error fetching orders:", error);
     res.status(500).json({ message: "Error fetching orders" });
