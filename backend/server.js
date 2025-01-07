@@ -49,6 +49,7 @@ app.post("/api/create-payment-link", async (req, res) => {
   const { orderId, description } = req.body;
 
   if (!orderId || !description) {
+    console.error("Missing parameters:", { orderId, description });
     return res.status(400).json({ error: "Missing required parameters" });
   }
 
@@ -60,12 +61,14 @@ app.post("/api/create-payment-link", async (req, res) => {
     );
 
     if (orderQuery.rows.length === 0) {
+      console.error("Order not found:", orderId);
       return res.status(404).json({ error: "Order not found" });
     }
 
     const amount = orderQuery.rows[0].total_amount * 100; // Convert PHP to centavos
+    console.log("Order amount fetched from DB:", amount);
 
-    // Create a payment link via the official PayMongo API
+    // Send request to PayMongo API to create a payment link
     const response = await axios.post(
       "https://api.paymongo.com/v1/links",
       {
@@ -90,14 +93,23 @@ app.post("/api/create-payment-link", async (req, res) => {
       }
     );
 
+    console.log("Payment link created:", response.data.data.attributes.url);
+
     // Send the generated payment link to the client
-    res.json({ paymentLinkUrl: response.data.data.attributes.url });
+    return res.json({ paymentLinkUrl: response.data.data.attributes.url });
   } catch (err) {
-    console.error(
-      "Error creating payment link:",
-      err.response?.data || err.message
-    );
-    res.status(500).json({ error: "Failed to create payment link" });
+    console.error("Error during payment link creation:", err.message);
+
+    if (err.response) {
+      console.error("Error response from PayMongo:", err.response.data);
+    } else if (err.request) {
+      console.error("No response received from PayMongo:", err.request);
+    } else {
+      console.error("Error details:", err);
+    }
+
+    // Return error response
+    return res.status(500).json({ error: "Failed to create payment link" });
   }
 });
 
