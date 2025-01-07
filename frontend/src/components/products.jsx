@@ -129,8 +129,6 @@ const ProductList = () => {
           >
             Categories
           </button>
-
-          {/* Modal for small screens */}
           {isModalOpen && (
             <div className="modal-overlay">
               <div className="categories-modal">
