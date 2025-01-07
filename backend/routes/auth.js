@@ -33,7 +33,6 @@ router.post("/send-otp", async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000);
     otpStore[phone] = { otp, expiry: Date.now() + 300000 };
 
-    // Send OTP via Twilio with better error handling
     try {
       await twilioClient.messages.create({
         body: `Your OTP code is: ${otp}`,
