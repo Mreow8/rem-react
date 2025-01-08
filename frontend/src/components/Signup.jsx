@@ -17,14 +17,14 @@ const SignUp = () => {
     setError("");
   };
 
-  // Handle phone number input and automatically format it
-  const handlePhoneChange = (event) => {
-    let value = event.target.value.trim();
-    if (value.startsWith("09")) {
-      value = "+63" + value.slice(1); // Remove the '0' and add '+63'
-    }
-    setPhone(value); // Update the phone state
-  };
+  // // Handle phone number input and automatically format it
+  // const handlePhoneChange = (event) => {
+  //   let value = event.target.value.trim();
+  //   if (value.startsWith("09")) {
+  //     value = "+63" + value.slice(1); // Remove the '0' and add '+63'
+  //   }
+  //   setPhone(value); // Update the phone state
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -167,7 +167,6 @@ const SignUp = () => {
                 name="phoneInput"
                 placeholder="Enter your phone number"
                 value={phone} // Set the phone state as the value
-                onChange={handlePhoneChange} // Format the phone number on change
                 required
                 onFocus={clearErrorOnFocus} // Clear error on focus
               />

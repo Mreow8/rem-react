@@ -81,16 +81,40 @@ router.put("/:userId", authenticateUser, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+const { Pool } = require("pg");
+const pool = new Pool(); // Ensure to configure this to your PostgreSQL connection
 
 // Signup Route
 router.post("/signup", async (req, res) => {
-  const { phone, password, username } = req.body;
+  const { phone, email, password, username } = req.body;
 
-  if (!phone || !password || !username) {
+  // Validate input fields
+  if (!phone || !email || !password || !username) {
     return res.status(400).json({ message: "All fields are required." });
   }
 
+  // Check if the email is valid
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ message: "Invalid email format." });
+  }
+
+  // Validate phone number (check format)
+  const isValidPhoneNumber = (phone) => {
+    return (
+      (phone.startsWith("+63") &&
+        phone.length === 13 &&
+        /^\+63\d+$/.test(phone)) ||
+      (phone.startsWith("09") && phone.length === 11 && /^\d+$/.test(phone))
+    );
+  };
+
+  if (!isValidPhoneNumber(phone)) {
+    return res.status(400).json({ message: "Invalid phone number." });
+  }
+
   try {
+    // Check if username or phone already exists
     const checkUsernameQuery = "SELECT * FROM users WHERE username = $1";
     const { rows: usernameRows } = await pool.query(checkUsernameQuery, [
       username,
@@ -109,9 +133,10 @@ router.post("/signup", async (req, res) => {
       return res.status(409).json({ message: "Phone number already exists." });
     }
 
+    // Insert the new user into the database (no password hashing)
     const insertUserQuery =
-      "INSERT INTO users (phone, password, username) VALUES ($1, $2, $3)";
-    await pool.query(insertUserQuery, [phone, password, username]);
+      "INSERT INTO users (phone, email, password, username) VALUES ($1, $2, $3, $4)";
+    await pool.query(insertUserQuery, [phone, email, password, username]);
 
     res.status(201).json({ message: "User created successfully!" });
   } catch (error) {
