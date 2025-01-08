@@ -14,7 +14,7 @@ router.get("/:userId", authenticateUser, async (req, res) => {
 
   try {
     // Fetch user data from the database
-    const query = "SELECT user_id, phone, email FROM users WHERE user_id = $1";
+    const query = "SELECT * FROM users WHERE user_id = $1";
     const { rows } = await pool.query(query, [userId]);
 
     if (rows.length === 0) {

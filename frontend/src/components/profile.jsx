@@ -3,19 +3,17 @@ import Nav from "./nav";
 import "../css/profile.css";
 import Loading from "./loading";
 import noimage from "../assets/catno.png";
-import { FaEdit } from "react-icons/fa"; // Add FaEdit for the edit icon
+// Add FaEdit for the edit icon
 import { Link } from "react-router-dom";
 import OrderList from "./order_list";
 const App = () => {
   const [username, setUsername] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const [profileData, setProfileData] = useState({
+    username: "",
     phoneNumber: "",
     email: "",
-  });
-  const [isEditing, setIsEditing] = useState({
-    phoneNumber: false,
-    email: false,
   });
   const [addresses, setAddresses] = useState([]);
   const [notifications, setNotifications] = useState([]);
@@ -189,14 +187,6 @@ const App = () => {
     }));
   };
 
-  // Handle edit click
-  const handleEditClick = (field) => {
-    setIsEditing((prevState) => ({
-      ...prevState,
-      [field]: !prevState[field],
-    }));
-  };
-
   // Update profile
   const updateProfile = async () => {
     const userId = localStorage.getItem("userId");
@@ -334,7 +324,12 @@ const App = () => {
 
                 <div>
                   <label htmlFor="username">Username: </label>
-                  <input type="text" id="username" value={username} readOnly />
+                  <input
+                    type="text"
+                    id="username"
+                    value={profileData.username}
+                    readOnly
+                  />
                 </div>
 
                 <div>
@@ -344,11 +339,8 @@ const App = () => {
                     id="phoneNumber"
                     name="phoneNumber"
                     value={profileData.phoneNumber}
-                    onChange={handleProfileChange}
-                    readOnly={!isEditing.phoneNumber} // Make readOnly based on editing state
+                    readOnly // Make this read-only
                   />
-
-                  <FaEdit onClick={() => handleEditClick("phoneNumber")} />
                 </div>
 
                 <div>
@@ -358,16 +350,9 @@ const App = () => {
                     id="email"
                     name="email"
                     value={profileData.email}
-                    onChange={handleProfileChange}
-                    readOnly={!isEditing.email} // Read-only when not editing
+                    readOnly
                   />
-
-                  <FaEdit onClick={() => handleEditClick("email")} />
                 </div>
-
-                <button type="button" onClick={updateProfile}>
-                  Save Changes
-                </button>
               </div>
             </div>
           )}
