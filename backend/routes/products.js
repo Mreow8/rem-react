@@ -227,7 +227,7 @@ router.put("/:id", upload.single("product_image"), async (req, res) => {
     const query = `
       UPDATE products
       SET
-        store_id = $1,
+      
         product_name = $2,
         product_price = $3,
         stock = $4,
@@ -245,7 +245,6 @@ router.put("/:id", upload.single("product_image"), async (req, res) => {
 
     // Execute the update query
     const result = await pool.query(query, [
-      store_id,
       product_name,
       product_price,
       stock,
