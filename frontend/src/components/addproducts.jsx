@@ -10,7 +10,7 @@ function AddProductForm({ setShowAddProductForm }) {
     stock: "",
     product_author: "",
     product_description: "",
-    product_category: "",
+    category: "",
     product_publisher: "",
     product_dimensions: "",
     product_weight: "",
@@ -52,7 +52,7 @@ function AddProductForm({ setShowAddProductForm }) {
     productData.append("stock", formData.stock);
     productData.append("product_author", formData.product_author);
     productData.append("product_description", formData.product_description);
-    productData.append("category", formData.product_category);
+    productData.append("category", formData.category);
     productData.append("product_publisher", formData.product_publisher);
     productData.append("product_dimensions", formData.product_dimensions);
     productData.append("product_weight", formData.product_weight);
@@ -84,7 +84,7 @@ function AddProductForm({ setShowAddProductForm }) {
         stock: "",
         product_author: "",
         product_description: "",
-        product_category: "",
+        category: "",
         product_publisher: "",
         product_dimensions: "",
         product_weight: "",
@@ -154,14 +154,14 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_category">Product Category</label>
+            <label htmlFor="category">Product Category</label>
             <input
               type="text"
-              id="product_category"
-              name="product_category"
+              id="category"
+              name="category"
               className="form-control"
               placeholder="Product Category"
-              value={formData.product_category}
+              value={formData.category}
               onChange={handleChange}
             />
           </div>
