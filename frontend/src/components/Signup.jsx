@@ -10,6 +10,7 @@ const SignUp = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [phone, setPhone] = useState(""); // State to store formatted phone number
+  const [email, setEmail] = useState(""); // State to store email
   const navigate = useNavigate();
 
   // Function to clear error message when an input field is focused
@@ -17,20 +18,28 @@ const SignUp = () => {
     setError("");
   };
 
-  // // Handle phone number input and automatically format it
-  // const handlePhoneChange = (event) => {
-  //   let value = event.target.value.trim();
-  //   if (value.startsWith("09")) {
-  //     value = "+63" + value.slice(1); // Remove the '0' and add '+63'
-  //   }
-  //   setPhone(value); // Update the phone state
-  // };
+  // Handle email change
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value.trim());
+  };
+
+  // Validate email format
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const password = event.target.passwordInput.value.trim();
     const username = event.target.usernameInput.value.trim();
+
+    // Validate email
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
 
     // Validate phone number
     if (
@@ -60,7 +69,7 @@ const SignUp = () => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ phone, password, username }),
+          body: JSON.stringify({ phone, password, username, email }),
         }
       );
 
@@ -152,6 +161,22 @@ const SignUp = () => {
                 id="usernameInput"
                 name="usernameInput"
                 placeholder="Enter your username"
+                required
+                onFocus={clearErrorOnFocus} // Clear error on focus
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="emailInput" className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="emailInput"
+                name="emailInput"
+                placeholder="Enter your email"
+                value={email} // Set the email state as the value
+                onChange={handleEmailChange}
                 required
                 onFocus={clearErrorOnFocus} // Clear error on focus
               />
