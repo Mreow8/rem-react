@@ -95,11 +95,15 @@ app.post("/api/create-payment-link", async (req, res) => {
 
     console.log("PayMongo response:", response.data); // Log PayMongo response
 
-    res.json({ paymentLinkUrl: response.data.data.attributes.checkout_url });
-    console.log(
-      "Payment link created successfully:",
-      response.data.data.attributes.checkout_url
-    );
+    const paymentLinkUrl = response.data?.data?.attributes?.checkout_url;
+
+    if (paymentLinkUrl) {
+      console.log("Payment link created successfully:", paymentLinkUrl);
+      res.json({ paymentLinkUrl });
+    } else {
+      console.error("Payment link URL not found.");
+      res.status(500).json({ error: "Payment link URL not found" });
+    }
   } catch (err) {
     console.error(
       "Error creating payment link:",
