@@ -63,10 +63,13 @@ const ProductList = () => {
   if (error) {
     return <div className="error-message">Error: {error}</div>;
   }
-
+  const handleCategorySelect = (category) => {
+    console.log("Selected category:", category);
+    // Handle category selection logic here
+  };
   return (
     <div className="product-lists" style={{ fontFamily: "Roboto, sans-serif" }}>
-      <Nav />
+      <Nav onCategorySelect={handleCategorySelect} />
       <div className="products-main">
         <div>
           <p style={{ display: "inline-flex", marginTop: "8px" }}>Price</p>
