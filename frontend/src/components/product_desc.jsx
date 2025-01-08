@@ -240,9 +240,7 @@ const ProductDesc = () => {
 
           <div className="card">
             <p>Product Description</p>
-            <p style={{ fontSize: "20px" }}>
-              {product.product_description || "No synopsis available."}
-            </p>
+            <p>{product.product_description || "No synopsis available."}</p>
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ const Home = () => {
             />
           </Link>
           <p className="text-end mb-0">
-            <Link to="/help" className="text-decoration-none">
+            <Link to="/need" className="text-decoration-none">
               Need Help?
             </Link>
           </p>
