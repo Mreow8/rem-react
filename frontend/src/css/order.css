@@ -1,0 +1,16 @@
+.order-list {
+  display: inline-flex;
+  gap: 20px;
+  border: 2px solid #f0f0f0;
+}
+.order-box {
+  padding: 20px;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .order-list {
+    display: block;
+  }
+}

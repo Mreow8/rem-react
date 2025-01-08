@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../css/order.css";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
@@ -51,10 +52,14 @@ const OrderList = () => {
   return (
     <div style={{ padding: "20px" }}>
       <h2>Your Orders</h2>
-      <div>
+      <div className="order-list">
         {orders.length > 0 ? (
           orders.map((order) => (
-            <div key={order.order_id} style={{ marginBottom: "20px" }}>
+            <div
+              className="order-box"
+              key={order.order_id}
+              style={{ marginBottom: "20px" }}
+            >
               <h3>Order ID: {order.order_id}</h3>
               <p>Total Amount: Php {order.total_amount}</p>
               <p>
