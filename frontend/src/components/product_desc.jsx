@@ -205,15 +205,25 @@ const ProductDesc = () => {
             </div>
           </div>
         </div>
-        <div className="product-description">
+        <div className="product-descripstion">
           <div className="card">
-            <p>Product Description</p>
-            <p style={{ fontSize: "20px" }}>{product.product_dimensions}</p>
+            <p>Product Specifications</p>
+            <p style={{ fontSize: "20px" }}>
+              Dimensions {product.product_dimensions}
+            </p>
+            <p style={{ fontSize: "20px" }}>Weight {product.product_weight}</p>
+            <p style={{ fontSize: "20px" }}>Pages {product.product_pages}</p>
+            <p style={{ fontSize: "20px" }}>Stocks {product.stock}</p>
+            <p style={{ fontSize: "20px" }}>Author {product.product_author}</p>
+            <p style={{ fontSize: "20px" }}>
+              Publisher {product.product_publisher}
+            </p>
+            <p style={{ fontSize: "20px" }}>Category {product.category}</p>
           </div>
           <div className="card">
-            <p>Product Synopsis</p>
+            <p>Product Description</p>
             <p style={{ fontSize: "20px" }}>
-              {product.product_synopsis || "No synopsis available."}
+              {product.product_description || "No synopsis available."}
             </p>
           </div>
         </div>
