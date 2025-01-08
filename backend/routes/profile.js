@@ -81,10 +81,7 @@ router.put("/:userId", authenticateUser, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-const { Pool } = require("pg");
-const pool = new Pool(); // Ensure to configure this to your PostgreSQL connection
 
-// Signup Route
 router.post("/signup", async (req, res) => {
   const { phone, email, password, username } = req.body;
 
