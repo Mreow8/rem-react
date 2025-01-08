@@ -126,12 +126,6 @@ const Shop = () => {
           ) : (
             <div className="no-products">
               <p>No products available for this store.</p>
-              <button
-                onClick={() => setShowAddProductForm(true)}
-                className="buttones btn-primary"
-              >
-                Add Product
-              </button>
             </div>
           )}
         </div>

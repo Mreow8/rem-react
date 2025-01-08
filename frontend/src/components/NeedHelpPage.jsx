@@ -14,7 +14,7 @@ const NeedHelpPage = () => {
       <div style={styles.contactInfo}>
         <h3 style={styles.contactTitle}>Email:</h3>
         <p style={styles.contactDetails}>
-          <a href="mailto:support@example.com" style={styles.link}>
+          <a href="mailto:resourceExchange@gmail.com" style={styles.link}>
             <img src={email} alt="Email" style={styles.logo} />
             support@example.com
           </a>
