@@ -10,7 +10,7 @@ function EditProductForm({ setShowEditProductForm }) {
     product_image: null,
     product_name: "",
     product_price: "",
-    product_quantity: "",
+    stock: "", // Changed from product_quantity to stock
     product_author: "",
     product_description: "",
     product_category: "",
@@ -32,7 +32,7 @@ function EditProductForm({ setShowEditProductForm }) {
         setFormData({
           product_name: data.product_name,
           product_price: data.product_price,
-          product_quantity: data.product_quantity,
+          stock: data.stock, // Changed from product_quantity to stock
           product_author: data.product_author,
           product_description: data.product_description,
           product_category: data.product_category,
@@ -66,7 +66,7 @@ function EditProductForm({ setShowEditProductForm }) {
     if (
       !formData.product_name ||
       !formData.product_price ||
-      !formData.product_quantity
+      !formData.stock // Changed from product_quantity to stock
     ) {
       alert("Please fill in all required fields.");
       return;
@@ -76,7 +76,7 @@ function EditProductForm({ setShowEditProductForm }) {
     productData.append("product_image", formData.product_image);
     productData.append("product_name", formData.product_name);
     productData.append("product_price", formData.product_price);
-    productData.append("product_quantity", formData.product_quantity);
+    productData.append("stock", formData.stock); // Changed from product_quantity to stock
     productData.append("product_author", formData.product_author);
     productData.append("product_description", formData.product_description);
     productData.append("product_category", formData.product_category);
@@ -149,13 +149,14 @@ function EditProductForm({ setShowEditProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_quantity">Product Quantity</label>
+            <label htmlFor="stock">Product Stock</label>{" "}
+            {/* Changed from product_quantity to stock */}
             <input
               type="number"
-              id="product_quantity"
-              name="product_quantity"
+              id="stock"
+              name="stock"
               className="form-control"
-              value={formData.product_quantity}
+              value={formData.stock}
               onChange={handleChange}
             />
           </div>

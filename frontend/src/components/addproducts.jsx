@@ -7,7 +7,7 @@ function AddProductForm({ setShowAddProductForm }) {
     product_image: null,
     product_name: "",
     product_price: "",
-    product_quantity: "",
+    stock: "",
     product_author: "",
     product_description: "",
     product_category: "",
@@ -39,7 +39,7 @@ function AddProductForm({ setShowAddProductForm }) {
       !formData.product_image ||
       !formData.product_name ||
       !formData.product_price ||
-      !formData.product_quantity
+      !formData.stock
     ) {
       alert("Please fill in all required fields.");
       return;
@@ -49,7 +49,7 @@ function AddProductForm({ setShowAddProductForm }) {
     productData.append("product_image", formData.product_image);
     productData.append("product_name", formData.product_name);
     productData.append("product_price", formData.product_price);
-    productData.append("product_quantity", formData.product_quantity);
+    productData.append("stock", formData.stock);
     productData.append("product_author", formData.product_author);
     productData.append("product_description", formData.product_description);
     productData.append("category", formData.product_category);
@@ -81,7 +81,7 @@ function AddProductForm({ setShowAddProductForm }) {
         product_image: null,
         product_name: "",
         product_price: "",
-        product_quantity: "",
+        stock: "",
         product_author: "",
         product_description: "",
         product_category: "",
@@ -141,14 +141,14 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_quantity">Product Quantity</label>
+            <label htmlFor="stock">Product Quantity</label>
             <input
               type="number"
-              id="product_quantity"
-              name="product_quantity"
+              id="stock"
+              name="stock"
               className="form-control"
               placeholder="Product Quantity"
-              value={formData.product_quantity}
+              value={formData.stock}
               onChange={handleChange}
             />
           </div>

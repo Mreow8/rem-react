@@ -31,7 +31,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     store_id,
     product_name,
     product_price,
-    product_quantity,
+    stock,
     product_author,
     product_description,
     category,
@@ -43,7 +43,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
 
   const productImage = req.file ? req.file.path : null; // Cloudinary file URL
 
-  if (!store_id || !product_name || !product_price || !product_quantity) {
+  if (!store_id || !product_name || !product_price || !stock) {
     return res.status(400).json({ message: "Required fields are missing." });
   }
 
@@ -51,7 +51,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
     store_id,
     product_name,
     product_price,
-    product_quantity,
+    stock,
     product_author,
     product_description,
     category,
@@ -86,7 +86,7 @@ router.post("/", upload.single("product_image"), async (req, res) => {
       store_id,
       product_name,
       product_price,
-      product_quantity,
+      stock,
       product_author,
       product_description,
       category,
@@ -191,7 +191,7 @@ router.put("/:id", upload.single("product_image"), async (req, res) => {
     store_id,
     product_name,
     product_price,
-    product_quantity,
+    stock,
     product_author,
     product_description,
     category,
@@ -205,7 +205,7 @@ router.put("/:id", upload.single("product_image"), async (req, res) => {
   let productImage = req.file ? req.file.path : null;
 
   // Check if required fields are present
-  if (!product_name || !product_price || !product_quantity) {
+  if (!product_name || !product_price || !stock) {
     return res.status(400).json({ message: "Required fields are missing." });
   }
 
@@ -249,7 +249,7 @@ router.put("/:id", upload.single("product_image"), async (req, res) => {
       store_id,
       product_name,
       product_price,
-      product_quantity,
+      stock,
       product_author,
       product_description,
       category,
