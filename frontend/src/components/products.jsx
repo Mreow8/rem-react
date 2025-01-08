@@ -11,6 +11,7 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(""); // State for selected category
   const navigate = useNavigate();
 
   const handlePriceSort = (order) => {
@@ -43,9 +44,19 @@ const ProductList = () => {
     fetchData();
   }, []);
 
+  // Handle category selection
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    console.log("Selected category:", category);
+  };
+
+  // Filter products based on search query and category
   const filteredProducts = products
     .filter((product) =>
       product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .filter((product) =>
+      selectedCategory ? product.category === selectedCategory : true
     )
     .sort((a, b) => {
       if (sortOrder === "lowToHigh") {
@@ -63,10 +74,7 @@ const ProductList = () => {
   if (error) {
     return <div className="error-message">Error: {error}</div>;
   }
-  const handleCategorySelect = (category) => {
-    console.log("Selected category:", category);
-    // Handle category selection logic here
-  };
+
   return (
     <div className="product-lists" style={{ fontFamily: "Roboto, sans-serif" }}>
       <Nav onCategorySelect={handleCategorySelect} />
