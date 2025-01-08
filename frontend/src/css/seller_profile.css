@@ -12,8 +12,8 @@ body {
   width: 100%;
   position: relative; /* Needed for absolute positioning of button */
 }
-.btn btn-secondary,
-.btn btn-danger {
+button.btn.btn-secondary,
+button.btn.btn-danger {
   font-size: 11px;
   padding: 5px;
 }

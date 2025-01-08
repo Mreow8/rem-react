@@ -6,13 +6,10 @@ import Loading from "./loading";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState("");
   const navigate = useNavigate();
 
@@ -30,15 +27,13 @@ const ProductList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [productRes, categoryRes] = await Promise.all([
-          fetch("https://rem-reacts.onrender.com/api/products"),
-          fetch("https://rem-reacts.onrender.com/api/products/categories"),
-        ]);
-        if (!productRes.ok || !categoryRes.ok) {
+        const productRes = await fetch(
+          "https://rem-reacts.onrender.com/api/products"
+        );
+        if (!productRes.ok) {
           throw new Error("Error fetching data");
         }
         setProducts(await productRes.json());
-        setCategories(await categoryRes.json());
       } catch (err) {
         setError(err.message);
       } finally {
@@ -49,10 +44,8 @@ const ProductList = () => {
   }, []);
 
   const filteredProducts = products
-    .filter(
-      (product) =>
-        (selectedCategory === "" || product.category === selectedCategory) &&
-        product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+    .filter((product) =>
+      product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .sort((a, b) => {
       if (sortOrder === "lowToHigh") {
@@ -71,98 +64,21 @@ const ProductList = () => {
     return <div className="error-message">Error: {error}</div>;
   }
 
-  const handleCategoryClick = (categoryName) => {
-    if (selectedCategory !== categoryName) {
-      setSelectedCategory(categoryName);
-      setIsModalOpen(false); // Close the modal after selecting a category
-    }
-  };
-
-  const handleShowAllClick = (e) => {
-    e.preventDefault(); // Prevent default anchor behavior
-    setSelectedCategory(""); // Reset category filter to show all products
-  };
-
   return (
     <div className="product-lists" style={{ fontFamily: "Roboto, sans-serif" }}>
       <Nav />
       <div className="products-main">
-        <div id="categories-container">
-          <ul className="categories-list">
-            <li>
-              <a
-                href="#"
-                onClick={handleShowAllClick}
-                className="category-item"
-              >
-                All Products
-              </a>
-            </li>
-            {categories.map((cat, idx) => (
-              <li
-                key={idx}
-                className="category-item"
-                onClick={() => handleCategoryClick(cat.name)}
-              >
-                {cat.name}
-              </li>
-            ))}
-          </ul>
-
-          {/* Modal button for small screens */}
-          <button
-            className="categories-modal-button"
-            onClick={() => setIsModalOpen(true)}
-            // Hide this for larger screens
+        <div>
+          <p style={{ display: "inline-flex", marginTop: "8px" }}>Price</p>
+          <select
+            className="price-sort-dropdown"
+            onChange={(e) => handlePriceSort(e.target.value)}
+            style={{ marginLeft: "10px" }}
           >
-            Categories
-          </button>
-
-          {/* Modal for small screens */}
-          {isModalOpen && (
-            <div className="modal-overlay">
-              <div className="categories-modal">
-                <button
-                  className="close-modal"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  &times;
-                </button>
-                <ul className="categories-list">
-                  <li>
-                    <a
-                      href="#"
-                      onClick={handleShowAllClick}
-                      className="category-item"
-                    >
-                      All Products
-                    </a>
-                  </li>
-                  {categories.map((cat, idx) => (
-                    <li
-                      key={idx}
-                      className="category-item"
-                      onClick={() => handleCategoryClick(cat.name)}
-                    >
-                      {cat.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
-          <div>
-            <p style={{ display: "inline-flex", marginTop: "8px" }}>Price</p>
-            <select
-              className="price-sort-dropdown"
-              onChange={(e) => handlePriceSort(e.target.value)}
-              style={{ marginLeft: "10px" }}
-            >
-              <option value="">Sort by</option>
-              <option value="lowToHigh">Low to High</option>
-              <option value="highToLow">High to Low</option>
-            </select>
-          </div>
+            <option value="">Sort by</option>
+            <option value="lowToHigh">Low to High</option>
+            <option value="highToLow">High to Low</option>
+          </select>
         </div>
 
         <div className="container">

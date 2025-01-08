@@ -20,8 +20,12 @@ const SuccessPage = () => {
       />
       <h1 style={{ marginTop: "20px" }}>Order Placed!.</h1>
       <button>
-        Order_List
-        <Link to="/order_list"></Link>
+        <Link
+          to="/profile"
+          onClick={() => setActiveContent("orders")} // Set orders as active content before navigation
+        >
+          Check Orders
+        </Link>
       </button>
     </div>
   );

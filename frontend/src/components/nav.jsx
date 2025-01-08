@@ -5,11 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
   faShoppingCart,
+  faBars,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import remLogo from "../assets/remlogo.png";
 
-const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
+const Nav = ({
+  handleLogout,
+  searchQuery,
+  handleSearchChange,
+  categories,
+  onCategorySelect,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [username, setUsername] = useState(null);
   const [sellerStoreName, setSellerStoreName] = useState(null);
   const [sellerStoreId, setSellerStoreId] = useState(null);
@@ -19,10 +28,8 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
     const storedUsername = localStorage.getItem("username");
     setUsername(storedUsername);
 
-    // Fetch seller data if the user is logged in
     if (storedUsername) {
       const userId = localStorage.getItem("sellerStoreId");
-      console.log("userId", userId);
       const fetchSellerData = async () => {
         try {
           const response = await fetch(
@@ -42,42 +49,20 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
 
       fetchSellerData();
     }
-
-    // Add event listener to close the menu if the user clicks anywhere on the page
-    const handleClickOutside = (event) => {
-      if (
-        event.target.closest("#menu") === null &&
-        event.target.id !== "btn_username"
-      ) {
-        setIsMenuOpen(false); // Close the menu if clicked outside
-      }
-    };
-
-    // Attach the event listener
-    document.addEventListener("click", handleClickOutside);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
   }, []);
 
   const handleLogoutClick = () => {
-    localStorage.removeItem("userId");
-    localStorage.removeItem("username");
-    localStorage.removeItem("sellerStoreName");
-    localStorage.removeItem("sellerStoreId");
+    localStorage.clear();
     setUsername(null);
+    navigate("/login");
   };
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
-  const handleLoginClick = () => {
-    if (!username) {
-      navigate("/login"); // Navigate to login if not logged in
-    }
+  const toggleCategoryModal = () => {
+    setIsCategoryModalOpen((prev) => !prev);
   };
 
   const renderSellerSection = () => {
@@ -96,6 +81,39 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
     }
   };
 
+  const renderCategories = () => (
+    <div className="modal-overlay">
+      <div className="categories-modal">
+        <button className="close-modal" onClick={toggleCategoryModal}>
+          <FontAwesomeIcon icon={faTimes} />
+        </button>
+        <ul className="categories-list">
+          <li
+            className="category-item"
+            onClick={() => {
+              onCategorySelect("");
+              toggleCategoryModal();
+            }}
+          >
+            All Products
+          </li>
+          {categories.map((cat, idx) => (
+            <li
+              key={idx}
+              className="category-item"
+              onClick={() => {
+                onCategorySelect(cat.name);
+                toggleCategoryModal();
+              }}
+            >
+              {cat.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+
   return (
     <nav className="navbar navbar-light bg-white shadow w-100 fixed-top">
       <div className="container-fluid">
@@ -110,12 +128,21 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
         </Link>
 
         <div className="auth-cart-container d-flex align-items-center justify-content-end">
+          <button
+            className="categories-button"
+            onClick={toggleCategoryModal}
+            aria-label="Open Categories"
+          >
+            <FontAwesomeIcon icon={faBars} style={{ fontSize: "20px" }} />
+          </button>
+
+          {isCategoryModalOpen && renderCategories()}
+
           {username ? (
             <div className="user-logout-container">
               <button onClick={toggleMenu} className="mb-0" id="btn_username">
                 {username}
               </button>
-
               {isMenuOpen && (
                 <div id="menu" className="floating-menu">
                   <Link to="/profile">
@@ -140,7 +167,7 @@ const Nav = ({ handleLogout, searchQuery, handleSearchChange }) => {
             <p className="login-sign mb-0" style={{ fontSize: "12px" }}>
               <span
                 className="text-dark cursor-pointer"
-                onClick={handleLoginClick}
+                onClick={() => navigate("/login")}
               >
                 Login
               </span>

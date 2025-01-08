@@ -120,7 +120,7 @@ const App = () => {
       province: e.target.value,
     });
   };
-  const [activeContent, setActiveContent] = useState("profile"); // Added state for activeContent
+  const [activeContent, setActiveContent] = useState("address"); // Added state for activeContent
 
   const showContent = (contentId) => {
     setActiveContent(contentId);
@@ -178,52 +178,7 @@ const App = () => {
 
   // Fetch notifications
 
-  // Handle profile changes
-  const handleProfileChange = (e) => {
-    const { name, value } = e.target;
-    setProfileData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  // Update profile
-  const updateProfile = async () => {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-      alert("User not logged in. Cannot update profile.");
-      return;
-    }
-
-    const updatedProfile = {};
-    if (profileData.phoneNumber)
-      updatedProfile.phoneNumber = profileData.phoneNumber;
-    if (profileData.email) updatedProfile.email = profileData.email;
-
-    try {
-      const response = await fetch(
-        `https://rem-reacts.onrender.com/api/profile/${userId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedProfile),
-        }
-      );
-
-      if (response.ok) {
-        alert("Profile updated successfully!");
-      } else {
-        const errorData = await response.json();
-        alert(`Failed to update profile: ${errorData.message}`);
-      }
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      alert("An error occurred while updating the profile. Please try again.");
-    }
-  };
-
+  // Handle profile
   // Handle address change
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
