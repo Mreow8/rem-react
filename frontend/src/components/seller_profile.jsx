@@ -1,137 +1,109 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import Nav from "./nav";
-import "../css/seller_profile.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import AddProductForm from "./addproducts";
-import ProductDesc from "./product_desc";
-import Loading from "./loading";
+import { Link } from "react-router-dom";
+import Nav from "./nav"; // Assuming you have a Nav component
+import "../css/seller_profile.css"; // Assuming you have a custom CSS file
 
-const Shop = () => {
-  const { id } = useParams(); // Store ID from URL params
-  const [storeData, setStoreData] = useState(null); // To hold seller data
-  const [productsData, setProductsData] = useState([]); // To hold product data
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const [showAddProductForm, setShowAddProductForm] = useState(false); // Add product form visibility
-  const navigate = useNavigate(); // Navigation handler
+const SellerProfile = () => {
+  const [sellerData, setSellerData] = useState(null);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const storedid = id || localStorage.getItem("sellerStoreId"); // Use URL param first, then fallback to localStorage
+    const fetchSellerData = async () => {
+      const storeId = localStorage.getItem("sellerStoreId");
+      if (!storeId) {
+        alert("Store ID not found!");
+        return;
+      }
 
-    if (!storedid) {
-      setError("Store ID not found.");
-      setLoading(false);
-      return;
-    }
-
-    // Fetch Seller Information
-    const fetchStoreData = async () => {
       try {
         const response = await fetch(
-          `https://rem-reacts.onrender.com/api/sellers/${storedid}`
+          `https://rem-reacts.onrender.com/api/sellers/${storeId}`
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch store data.");
+          throw new Error("Failed to fetch seller data.");
         }
         const data = await response.json();
-        setStoreData(data);
+        setSellerData(data);
       } catch (error) {
-        console.error("Error fetching store data:", error);
-        setError(error.message);
+        console.error("Error fetching seller data:", error);
+        alert("Error fetching seller data.");
       }
     };
 
-    // Fetch Products Information
-    const fetchProductsData = async () => {
+    const fetchProducts = async () => {
+      const storeId = localStorage.getItem("sellerStoreId");
       try {
         const response = await fetch(
-          `https://rem-reacts.onrender.com/api/sellers/product/${storedid}`
+          `https://rem-reacts.onrender.com/api/products?store_id=${storeId}`
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch product data.");
+          throw new Error("Failed to fetch products.");
         }
         const data = await response.json();
-        setProductsData(data.products || []); // Handle empty or missing products gracefully
+        setProducts(data);
       } catch (error) {
-        console.error("Error fetching product data:", error);
-        setError(error.message);
+        console.error("Error fetching products:", error);
+        alert("Error fetching products.");
       }
     };
 
-    // Fetch data and handle loading state
-    const fetchData = async () => {
-      setLoading(true);
-      await Promise.all([fetchStoreData(), fetchProductsData()]);
-      setLoading(false);
-    };
-
-    fetchData();
-  }, [id]); // Run every time the store ID changes
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <div className="error-message">Error: {error}</div>;
-  }
+    fetchSellerData();
+    fetchProducts();
+  }, []);
 
   return (
-    <div className="store-container">
+    <div className="seller-profile">
       <Nav />
-      {storeData && (
-        <div className="seller-info">
-          <img
-            src={storeData.image || "placeholder_seller_image.png"}
-            alt={storeData.store_name || "Seller"}
-            className="seller-image"
-          />
-          <h2 className="seller-name">{storeData.store_name}</h2>
-          <p>
-            {storeData.region}, {storeData.province}
-          </p>
-          <button
-            onClick={() => setShowAddProductForm(true)}
-            className="btn btn-primary"
-          >
-            Add Product
-          </button>
-        </div>
-      )}
-      {showAddProductForm && (
-        <AddProductForm setShowAddProductForm={setShowAddProductForm} />
-      )}
-      <div className="product-list">
-        <h3>Products</h3>
-        <div className="products-container">
-          {productsData.length > 0 ? (
-            productsData.map((product) => (
-              <div key={product.id} className="product-item">
-                <Link
-                  to={`/product_desc/${product.id}`}
-                  className="product-item-link"
-                >
-                  <img
-                    src={product.product_image || "placeholder_image.png"}
-                    alt={product.product_name || "Product Image"}
-                    className="product-image"
-                  />
-                  <h4 className="product-name">{product.product_name}</h4>
-                  <p className="product-price">Php {product.product_price}</p>
-                </Link>
-              </div>
-            ))
-          ) : (
-            <div className="no-products">
-              <p>No products available for this store.</p>
-            </div>
-          )}
+      <div className="profile-container">
+        {sellerData && (
+          <div className="profile-info">
+            <h2>{sellerData.store_name}</h2>
+            <p>{sellerData.store_description}</p>
+            <p>Email: {sellerData.email}</p>
+            <p>Phone: {sellerData.phone}</p>
+            <Link
+              to={`/edit-store/${sellerData.store_id}`}
+              className="btn btn-primary"
+            >
+              Edit Store
+            </Link>
+          </div>
+        )}
+
+        <div className="products-list">
+          <h3>Products</h3>
+          <Link to="/add-product" className="btn btn-success">
+            Add New Product
+          </Link>
+          <ul>
+            {products.length > 0 ? (
+              products.map((product) => (
+                <li key={product._id} className="product-item">
+                  <div className="product-details">
+                    <h4>{product.product_name}</h4>
+                    <p>Price: ${product.product_price}</p>
+                    <p>Stock: {product.product_quantity}</p>
+                    <p>Category: {product.product_category}</p>
+                    <p>Author: {product.product_author}</p>
+                  </div>
+                  <div className="product-actions">
+                    <Link
+                      to={`/edit-product/${product._id}`}
+                      className="btn btn-warning"
+                    >
+                      Edit
+                    </Link>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <p>No products found.</p>
+            )}
+          </ul>
         </div>
       </div>
     </div>
   );
 };
 
-export default Shop;
+export default SellerProfile;

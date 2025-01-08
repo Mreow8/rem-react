@@ -184,6 +184,108 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Error retrieving product" });
   }
 });
+// PUT Route to Update an Existing Product
+router.put("/:id", upload.single("product_image"), async (req, res) => {
+  const productId = parseInt(req.params.id);
+  const {
+    store_id,
+    product_name,
+    product_price,
+    product_quantity,
+    product_author,
+    product_description,
+    category,
+    product_publisher,
+    product_dimensions,
+    product_weight,
+    product_pages,
+  } = req.body;
+
+  // Use the existing image URL if no new image is provided
+  let productImage = req.file ? req.file.path : null;
+
+  // Check if required fields are present
+  if (!product_name || !product_price || !product_quantity) {
+    return res.status(400).json({ message: "Required fields are missing." });
+  }
+
+  try {
+    // Fetch existing product from the database
+    const existingProductQuery = `
+      SELECT * FROM products WHERE id = $1;
+    `;
+    const existingProduct = await pool.query(existingProductQuery, [productId]);
+
+    if (existingProduct.rows.length === 0) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    // If no new image was uploaded, use the existing image URL
+    if (!productImage) {
+      productImage = existingProduct.rows[0].product_image;
+    }
+
+    const query = `
+      UPDATE products
+      SET
+        store_id = $1,
+        product_name = $2,
+        product_price = $3,
+        stock = $4,
+        product_author = $5,
+        product_description = $6,
+        category = $7,
+        product_image = $8,
+        product_publisher = $9,
+        product_dimensions = $10,
+        product_weight = $11,
+        product_pages = $12
+      WHERE id = $13
+      RETURNING id;
+    `;
+
+    // Execute the update query
+    const result = await pool.query(query, [
+      store_id,
+      product_name,
+      product_price,
+      product_quantity,
+      product_author,
+      product_description,
+      category,
+      productImage,
+      product_publisher,
+      product_dimensions,
+      product_weight,
+      product_pages,
+      productId,
+    ]);
+
+    res.status(200).json({
+      message: "Product updated successfully!",
+      productId: result.rows[0].id,
+    });
+  } catch (error) {
+    console.error("Error updating product data:", error.message);
+
+    if (error.code === "23505") {
+      // Handle unique violation error
+      return res.status(409).json({
+        message: "Conflict: A product with this data already exists.",
+      });
+    }
+
+    if (error.code === "ECONNREFUSED") {
+      // Handle database connection error
+      return res.status(503).json({
+        message: "Database connection failed. Please try again later.",
+      });
+    }
+
+    // General server error
+    res.status(500).json({ message: "Error updating product data" });
+  }
+});
 
 // Export the Router
 module.exports = router;

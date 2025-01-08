@@ -16,6 +16,7 @@ import Failed from "./components/failed";
 import Order_list from "./components/order_list";
 import Payment from "./components/payment";
 import Need from "./components/NeedHelpPage";
+import EditProductForm from "./components/EditProductForm";
 
 const App = () => {
   return (
@@ -36,7 +37,8 @@ const App = () => {
         <Route path="/failed" element={<Failed />} />
         <Route path="/order_list" element={<Order_list />} />
         <Route path="/pay/:orderId" element={<Payment />} />
-        <Route path="/need" element={<Need />} />
+        <Route path="/need" element={<Need />} />{" "}
+        <Route path="/edit-product/:id" element={<EditProductForm />} />
       </Routes>
     </Router>
   );

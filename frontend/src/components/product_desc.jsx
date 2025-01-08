@@ -205,7 +205,7 @@ const ProductDesc = () => {
             </div>
           </div>
         </div>
-        <div className="product-descripstion">
+        <div className="product-description">
           <div className="card">
             <p>Product Specifications</p>
             <div className="specification">
