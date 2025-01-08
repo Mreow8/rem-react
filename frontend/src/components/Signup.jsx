@@ -11,6 +11,8 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [phone, setPhone] = useState(""); // State to store formatted phone number
   const [email, setEmail] = useState(""); // State to store email
+  const [username, setUsername] = useState(""); // State for username
+  const [password, setPassword] = useState(""); // State for password
   const navigate = useNavigate();
 
   // Function to clear error message when an input field is focused
@@ -23,6 +25,21 @@ const SignUp = () => {
     setEmail(event.target.value.trim());
   };
 
+  // Handle phone change
+  const handlePhoneChange = (event) => {
+    setPhone(event.target.value.trim());
+  };
+
+  // Handle username change
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value.trim());
+  };
+
+  // Handle password change
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value.trim());
+  };
+
   // Validate email format
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,9 +48,6 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const password = event.target.passwordInput.value.trim();
-    const username = event.target.usernameInput.value.trim();
 
     // Validate email
     if (!isValidEmail(email)) {
@@ -161,6 +175,8 @@ const SignUp = () => {
                 id="usernameInput"
                 name="usernameInput"
                 placeholder="Enter your username"
+                value={username}
+                onChange={handleUsernameChange}
                 required
                 onFocus={clearErrorOnFocus} // Clear error on focus
               />
@@ -175,7 +191,7 @@ const SignUp = () => {
                 id="emailInput"
                 name="emailInput"
                 placeholder="Enter your email"
-                value={email} // Set the email state as the value
+                value={email}
                 onChange={handleEmailChange}
                 required
                 onFocus={clearErrorOnFocus} // Clear error on focus
@@ -191,7 +207,8 @@ const SignUp = () => {
                 id="phoneInput"
                 name="phoneInput"
                 placeholder="Enter your phone number"
-                value={phone} // Set the phone state as the value
+                value={phone}
+                onChange={handlePhoneChange}
                 required
                 onFocus={clearErrorOnFocus} // Clear error on focus
               />
@@ -207,6 +224,8 @@ const SignUp = () => {
                   id="passwordInput"
                   name="passwordInput"
                   placeholder="Enter your password"
+                  value={password}
+                  onChange={handlePasswordChange}
                   required
                   onFocus={clearErrorOnFocus} // Clear error on focus
                 />
