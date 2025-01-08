@@ -1,4 +1,6 @@
 import React from "react";
+import fb from "../assets/facebook-logo.png";
+import email from "../assets/email-logo.png";
 
 const NeedHelpPage = () => {
   return (
@@ -13,11 +15,7 @@ const NeedHelpPage = () => {
         <h3 style={styles.contactTitle}>Email:</h3>
         <p style={styles.contactDetails}>
           <a href="mailto:support@example.com" style={styles.link}>
-            <img
-              src="/path/to/email-logo.png"
-              alt="Email"
-              style={styles.logo}
-            />
+            <img src={email} alt="Email" style={styles.logo} />
             support@example.com
           </a>
         </p>
@@ -30,29 +28,8 @@ const NeedHelpPage = () => {
             rel="noopener noreferrer"
             style={styles.link}
           >
-            <img
-              src="/path/to/facebook-logo.png"
-              alt="Facebook"
-              style={styles.logo}
-            />
+            <img src={fb} alt="Facebook" style={styles.logo} />
             Visit our Facebook page
-          </a>
-        </p>
-
-        <h3 style={styles.contactTitle}>Instagram:</h3>
-        <p style={styles.contactDetails}>
-          <a
-            href="https://www.instagram.com/yourpage"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.link}
-          >
-            <img
-              src="/path/to/instagram-logo.png"
-              alt="Instagram"
-              style={styles.logo}
-            />
-            Follow us on Instagram
           </a>
         </p>
       </div>
