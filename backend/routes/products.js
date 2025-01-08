@@ -225,22 +225,22 @@ router.put("/:id", upload.single("product_image"), async (req, res) => {
     }
 
     const query = `
-      UPDATE products
-      SET
-      
-        product_name = $2,
-        product_price = $3,
-        stock = $4,
-        product_author = $5,
-        product_description = $6,
-        category = $7,
-        product_image = $8,
-        product_publisher = $9,
-        product_dimensions = $10,
-        product_weight = $11,
-        product_pages = $12
-      WHERE id = $13
-      RETURNING id;
+   UPDATE products
+SET
+  product_name = $1,
+  product_price = $2,
+  stock = $3,
+  product_author = $4,
+  product_description = $5,
+  category = $6,
+  product_image = $7,
+  product_publisher = $8,
+  product_dimensions = $9,
+  product_weight = $10,
+  product_pages = $11
+WHERE id = $12
+RETURNING id;
+
     `;
 
     // Execute the update query
