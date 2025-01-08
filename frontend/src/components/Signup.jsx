@@ -56,14 +56,8 @@ const SignUp = () => {
     }
 
     // Validate phone number
-    if (
-      !phone.startsWith("+63") ||
-      phone.length !== 13 ||
-      !/^\+63\d+$/.test(phone)
-    ) {
-      setError(
-        "Please enter a valid phone number (starting with '+63' and 13 digits)."
-      );
+    if (!/^\d{11}$/.test(phone)) {
+      setError("Please enter a valid 11-digit phone number.");
       return;
     }
 
