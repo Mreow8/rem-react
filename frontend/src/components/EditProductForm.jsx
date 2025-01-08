@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/addproducts.css"; // Import custom CSS
-
+import Swal from "sweetalert2"; // Import SweetAlert2
 function EditProductForm({ setShowEditProductForm }) {
   const { id } = useParams(); // Get the product ID from URL
   const navigate = useNavigate();
@@ -98,8 +98,14 @@ function EditProductForm({ setShowEditProductForm }) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Something went wrong");
       }
+      // SweetAlert2 success notification
+      Swal.fire({
+        title: "Success!",
+        text: "Product updated successfully!",
+        icon: "success",
+        confirmButtonText: "Okay",
+      });
 
-      alert("Product updated successfully!");
       navigate(`/shop/${localStorage.getItem("sellerStoreId")}`); // Navigate to the seller's store page
     } catch (error) {
       console.error("Error updating product:", error);
