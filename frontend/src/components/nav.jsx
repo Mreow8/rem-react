@@ -54,7 +54,9 @@ const Nav = ({
     // Fetch categories from API
     const fetchCategories = async () => {
       try {
-        const response = await fetch("https://example.com/api/categories"); // Replace with actual API endpoint
+        const response = await fetch(
+          `https://rem-reacts.onrender.com/api/products/categories`
+        );
         if (response.ok) {
           const data = await response.json();
           setCategories(data); // Set categories once fetched
