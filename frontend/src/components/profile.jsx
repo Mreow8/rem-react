@@ -293,13 +293,7 @@ const App = () => {
         <div className="other-container">
           <p>{username}</p>
           <p>My Account</p>
-          <a
-            href="#"
-            onClick={() => showContent("profile")}
-            className={activeContent === "profile" ? "active" : ""}
-          >
-            Profile
-          </a>
+
           <a
             href="#"
             onClick={() => showContent("address")}
@@ -315,48 +309,6 @@ const App = () => {
             Order List
           </a>
         </div>
-        <div className="profile-container">
-          {activeContent === "profile" && (
-            <div className="img-prof-container">
-              <div className="content">
-                <p>Profile Information</p>
-                <p>Manage and protect your account</p>
-
-                <div>
-                  <label htmlFor="username">Username: </label>
-                  <input
-                    type="text"
-                    id="username"
-                    value={profileData.username}
-                    readOnly
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="phoneNumber">Phone Number: </label>
-                  <input
-                    type="text"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={profileData.phoneNumber}
-                    readOnly // Make this read-only
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email">Email: </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={profileData.email}
-                    readOnly
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
         {activeContent === "address" && (
           <div className="address-container">
             <div className="address-box">
@@ -370,6 +322,7 @@ const App = () => {
                     name="fullName"
                     value={addressData.fullName}
                     onChange={handleAddressChange}
+                    required
                   />
                 </div>
                 <div>
@@ -380,6 +333,7 @@ const App = () => {
                     name="phoneNumber"
                     value={addressData.phoneNumber}
                     onChange={handleAddressChange}
+                    required
                   />
                 </div>
                 <div>
@@ -389,6 +343,7 @@ const App = () => {
                     name="region"
                     value={addressData.region}
                     onChange={handleRegionChange}
+                    required
                   >
                     <option value="Luzon">Luzon</option>
                     <option value="Visayas">Visayas</option>
@@ -402,6 +357,7 @@ const App = () => {
                     name="province"
                     value={addressData.province}
                     onChange={handleProvinceChange}
+                    required
                   >
                     {regions[addressData.region]?.provinces.map(
                       (province, index) => (
@@ -421,6 +377,7 @@ const App = () => {
                     name="city"
                     value={addressData.city}
                     onChange={handleAddressChange}
+                    required
                   />
                 </div>
                 <div>
@@ -431,6 +388,7 @@ const App = () => {
                     name="barangay"
                     value={addressData.barangay}
                     onChange={handleAddressChange}
+                    required
                   />
                 </div>
                 <div>
@@ -441,6 +399,7 @@ const App = () => {
                     name="postalCode"
                     value={addressData.postalCode}
                     onChange={handleAddressChange}
+                    required
                   />
                 </div>
                 <button type="button" onClick={toggleAddressLabel}>
