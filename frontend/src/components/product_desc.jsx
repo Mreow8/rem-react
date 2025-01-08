@@ -208,18 +208,36 @@ const ProductDesc = () => {
         <div className="product-descripstion">
           <div className="card">
             <p>Product Specifications</p>
-            <p style={{ fontSize: "20px" }}>
-              Dimensions {product.product_dimensions}
-            </p>
-            <p style={{ fontSize: "20px" }}>Weight {product.product_weight}</p>
-            <p style={{ fontSize: "20px" }}>Pages {product.product_pages}</p>
-            <p style={{ fontSize: "20px" }}>Stocks {product.stock}</p>
-            <p style={{ fontSize: "20px" }}>Author {product.product_author}</p>
-            <p style={{ fontSize: "20px" }}>
-              Publisher {product.product_publisher}
-            </p>
-            <p style={{ fontSize: "20px" }}>Category {product.category}</p>
+            <div className="specification">
+              <span className="label">Dimensions:</span>
+              <span className="value">{product.product_dimensions}</span>
+            </div>
+            <div className="specification">
+              <span className="label">Weight:</span>
+              <span className="value">{product.product_weight}</span>
+            </div>
+            <div className="specification">
+              <span className="label">Pages:</span>
+              <span className="value">{product.product_pages}</span>
+            </div>
+            <div className="specification">
+              <span className="label">Stocks:</span>
+              <span className="value">{product.stock}</span>
+            </div>
+            <div className="specification">
+              <span className="label">Author:</span>
+              <span className="value">{product.product_author}</span>
+            </div>
+            <div className="specification">
+              <span className="label">Publisher:</span>
+              <span className="value">{product.product_publisher}</span>
+            </div>
+            <div className="specification">
+              <span className="label">Category:</span>
+              <span className="value">{product.category}</span>
+            </div>
           </div>
+
           <div className="card">
             <p>Product Description</p>
             <p style={{ fontSize: "20px" }}>
