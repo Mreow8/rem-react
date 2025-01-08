@@ -25,8 +25,7 @@ const PaymentPage = () => {
         );
         const data = await response.json();
 
-        console.log("Response from backend:", data); // Log backend response for debugging
-
+        console.log("Response from backend:", data);
         if (data.paymentLinkUrl) {
           setPaymentLink(data.paymentLinkUrl);
         } else {

@@ -95,8 +95,11 @@ app.post("/api/create-payment-link", async (req, res) => {
 
     console.log("PayMongo response:", response.data); // Log PayMongo response
 
-    // Send the generated payment link to the client
     res.json({ paymentLinkUrl: response.data.data.attributes.url });
+    console.log(
+      "Payment link created successfully:",
+      response.data.data.attributes.url
+    );
   } catch (err) {
     console.error(
       "Error creating payment link:",
