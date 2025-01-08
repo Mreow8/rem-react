@@ -94,7 +94,7 @@ const Shop = () => {
       if (result.isConfirmed) {
         try {
           const response = await fetch(
-            `https://rem-reacts.onrender.com/api/product/${productId}`,
+            `https://rem-reacts.onrender.com/api/products/${productId}`,
             {
               method: "DELETE",
             }
