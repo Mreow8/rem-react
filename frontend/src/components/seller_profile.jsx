@@ -7,7 +7,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import AddProductForm from "./addproducts";
 import ProductDesc from "./product_desc";
 import Loading from "./loading";
-
+import Swal from "sweetalert2"; // Import SweetAlert2
 const Shop = () => {
   const { id } = useParams(); // Store ID from URL params
   const [storeData, setStoreData] = useState(null); // To hold seller data
