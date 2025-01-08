@@ -19,6 +19,7 @@
   margin: 0;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 }
 .products-container::-webkit-scrollbar {
   width: 0px;
@@ -278,12 +279,15 @@
 /* General styles for categories list */
 .categories-list {
   list-style-type: none;
-  padding: 0;
+
   margin: 0;
 }
 
 .category-item {
   text-align: center;
+  text-decoration: none;
+  color: inherit;
+  background-color: transparent;
 }
 
 .category-item:hover {
