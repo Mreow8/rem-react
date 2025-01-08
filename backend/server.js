@@ -69,11 +69,10 @@ app.post("/api/create-payment-link", async (req, res) => {
       return res.status(404).json({ error: "Order not found" });
     }
 
-    const amount = orderQuery.rows[0].total_amount * 100; // Convert PHP to centavos
+    const amount = orderQuery.rows[0].total_amount * 100;
 
-    console.log("Creating payment link with amount:", amount); // Log amount
+    console.log("Creating payment link with amount:", amount);
 
-    // Make the request to PayMongo to create a payment link
     const response = await axios.post(
       "https://api.paymongo.com/v1/links",
       {
@@ -81,10 +80,6 @@ app.post("/api/create-payment-link", async (req, res) => {
           attributes: {
             amount,
             description,
-            redirect: {
-              success: `https://rem-react.onrender.com/success?orderId=${orderId}`,
-              failed: `https://rem-react.onrender.com/failed?orderId=${orderId}`,
-            },
           },
         },
       },

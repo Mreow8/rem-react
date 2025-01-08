@@ -11,7 +11,7 @@ const PaymentPage = () => {
     const fetchPaymentLink = async () => {
       try {
         const response = await fetch(
-          `https://rem-react.onrender.com/api/create-payment-link`,
+          `https://rem-reacts.onrender.com/api/create-payment-link`,
           {
             method: "POST",
             headers: {

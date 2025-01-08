@@ -14,7 +14,7 @@ import Checkout from "./components/checkout";
 import Success from "./components/successful";
 import Failed from "./components/failed";
 import Order_list from "./components/order_list";
-import Payment from "./components/payment";
+import Pay from "./components/PaymentLinkGenerator";
 
 const App = () => {
   return (
@@ -35,6 +35,7 @@ const App = () => {
         <Route path="/failed" element={<Failed />} />
         <Route path="/order_list" element={<Order_list />} />
         <Route path="/pay/:orderId" element={<Payment />} />
+        <Route path="/pays" element={<Pay />} />
       </Routes>
     </Router>
   );
