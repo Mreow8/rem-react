@@ -188,7 +188,6 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", upload.single("product_image"), async (req, res) => {
   const productId = parseInt(req.params.id);
   const {
-    store_id,
     product_name,
     product_price,
     stock,
