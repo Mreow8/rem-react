@@ -124,6 +124,7 @@ function AddProductForm({ setShowAddProductForm }) {
               placeholder="Product Name"
               value={formData.product_name}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -137,19 +138,21 @@ function AddProductForm({ setShowAddProductForm }) {
               placeholder="Product Price"
               value={formData.product_price}
               onChange={handleChange}
+              required
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="stock">Product Quantity</label>
+            <label htmlFor="stock">Stock</label>
             <input
               type="number"
               id="stock"
               name="stock"
               className="form-control"
-              placeholder="Product Quantity"
+              placeholder="Stcoks"
               value={formData.stock}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -163,6 +166,7 @@ function AddProductForm({ setShowAddProductForm }) {
               placeholder="Product Category"
               value={formData.category}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -176,6 +180,7 @@ function AddProductForm({ setShowAddProductForm }) {
               placeholder="Product Author"
               value={formData.product_author}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -189,6 +194,7 @@ function AddProductForm({ setShowAddProductForm }) {
               placeholder="Product Publisher"
               value={formData.product_publisher}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -202,6 +208,7 @@ function AddProductForm({ setShowAddProductForm }) {
               placeholder="Product Dimensions"
               value={formData.product_dimensions}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -215,6 +222,7 @@ function AddProductForm({ setShowAddProductForm }) {
               placeholder="Product Weight"
               value={formData.product_weight}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -228,6 +236,7 @@ function AddProductForm({ setShowAddProductForm }) {
               placeholder="Product Pages"
               value={formData.product_pages}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -240,6 +249,7 @@ function AddProductForm({ setShowAddProductForm }) {
               value={formData.product_description}
               onChange={handleChange}
               rows="4" // Adjust the number of rows as needed
+              required
             />
           </div>
 
