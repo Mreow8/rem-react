@@ -14,7 +14,6 @@ const Nav = ({
   handleLogout,
   searchQuery,
   handleSearchChange,
-  categories,
   onCategorySelect,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,8 +21,10 @@ const Nav = ({
   const [username, setUsername] = useState(null);
   const [sellerStoreName, setSellerStoreName] = useState(null);
   const [sellerStoreId, setSellerStoreId] = useState(null);
+  const [categories, setCategories] = useState([]); // State for categories
   const navigate = useNavigate();
 
+  // Fetch seller data and categories when the component mounts
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     setUsername(storedUsername);
@@ -49,22 +50,43 @@ const Nav = ({
 
       fetchSellerData();
     }
-  }, []);
 
+    // Fetch categories from API
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("https://example.com/api/categories"); // Replace with actual API endpoint
+        if (response.ok) {
+          const data = await response.json();
+          setCategories(data); // Set categories once fetched
+        } else {
+          console.error("Failed to fetch categories");
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories(); // Fetch categories when the component mounts
+  }, []); // Empty dependency array ensures the fetch runs only once on mount
+
+  // Handle logout
   const handleLogoutClick = () => {
     localStorage.clear();
     setUsername(null);
     navigate("/login");
   };
 
+  // Toggle menu
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
+  // Toggle category modal
   const toggleCategoryModal = () => {
     setIsCategoryModalOpen((prev) => !prev);
   };
 
+  // Render seller section if the seller data is available
   const renderSellerSection = () => {
     if (sellerStoreId && sellerStoreName) {
       return (
@@ -81,6 +103,7 @@ const Nav = ({
     }
   };
 
+  // Render categories in the modal
   const renderCategories = () => (
     <div className="modal-overlay">
       <div className="categories-modal">
