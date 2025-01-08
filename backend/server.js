@@ -95,10 +95,10 @@ app.post("/api/create-payment-link", async (req, res) => {
 
     console.log("PayMongo response:", response.data); // Log PayMongo response
 
-    res.json({ paymentLinkUrl: response.data.data.attributes.url });
+    res.json({ paymentLinkUrl: response.data.data.attributes.checkout_url });
     console.log(
       "Payment link created successfully:",
-      response.data.data.attributes.url
+      response.data.data.attributes.checkout_url
     );
   } catch (err) {
     console.error(
