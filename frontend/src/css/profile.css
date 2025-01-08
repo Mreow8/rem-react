@@ -1,7 +1,7 @@
 /* General Reset */
 body {
   margin: 0;
-  font-family: "Playfair Display", serif;
+  font-family: "Arial", sans-serif;
   background-color: #f7f7f7;
   color: #333;
   z-index: -1;
