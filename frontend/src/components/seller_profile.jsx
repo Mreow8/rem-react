@@ -81,6 +81,46 @@ const Shop = () => {
     navigate(`/edit-product/${productId}`);
   };
 
+  const handleDeleteProduct = (productId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await fetch(
+            `https://rem-reacts.onrender.com/api/product/${productId}`,
+            {
+              method: "DELETE",
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to delete product");
+          }
+
+          // Remove product from state if deletion is successful
+          setProductsData((prevProducts) =>
+            prevProducts.filter((product) => product.id !== productId)
+          );
+
+          Swal.fire("Deleted!", "Your product has been deleted.", "success");
+        } catch (error) {
+          console.error("Error deleting product:", error);
+          Swal.fire(
+            "Error!",
+            "There was an issue deleting the product.",
+            "error"
+          );
+        }
+      }
+    });
+  };
   return (
     <div className="store-container">
       <Nav />
@@ -130,6 +170,12 @@ const Shop = () => {
                     className="btn btn-secondary"
                   >
                     Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteProduct(product.id)}
+                    className="btn btn-danger"
+                  >
+                    Delete
                   </button>
                 </div>
               </div>

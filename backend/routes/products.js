@@ -284,6 +284,33 @@ RETURNING id;
     res.status(500).json({ message: "Error updating product data" });
   }
 });
+// DELETE Route to Delete a Product by ID
+router.delete("/:id", async (req, res) => {
+  const productId = parseInt(req.params.id);
+
+  try {
+    // Check if the product exists before attempting to delete it
+    const checkProductQuery = `
+      SELECT * FROM products WHERE id = $1;
+    `;
+    const existingProduct = await pool.query(checkProductQuery, [productId]);
+
+    if (existingProduct.rows.length === 0) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    // Proceed to delete the product from the database
+    const deleteQuery = `
+      DELETE FROM products WHERE id = $1;
+    `;
+    await pool.query(deleteQuery, [productId]);
+
+    res.status(200).json({ message: "Product deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting product:", error.message);
+    res.status(500).json({ message: "Error deleting product." });
+  }
+});
 
 // Export the Router
 module.exports = router;

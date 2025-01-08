@@ -106,7 +106,7 @@ function EditProductForm({ setShowEditProductForm }) {
         confirmButtonText: "Okay",
       });
 
-      navigate(`/shop/${localStorage.getItem("sellerStoreId")}`); // Navigate to the seller's store page
+      navigate(`/sellerprofile/${localStorage.getItem("sellerStoreId")}`);
     } catch (error) {
       console.error("Error updating product:", error);
       alert(`Error updating product: ${error.message}`);
@@ -257,7 +257,11 @@ function EditProductForm({ setShowEditProductForm }) {
 
           <button
             type="button"
-            onClick={() => setShowEditProductForm(false)}
+            onClick={() =>
+              navigate(
+                `/sellerprofile/${localStorage.getItem("sellerStoreId")}`
+              )
+            } // Directly navigate to the shop page
             className="btn btn-secondary btn-block mt-2"
           >
             Close
