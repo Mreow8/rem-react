@@ -140,8 +140,8 @@ const SignUp = () => {
             <img
               src={remLogo}
               alt="Logo"
-              width="60"
-              height="60"
+              width="50"
+              height="50"
               className="d-inline-block align-text-top"
             />
           </a>
