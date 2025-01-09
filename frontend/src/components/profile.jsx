@@ -5,11 +5,20 @@ import Loading from "./loading";
 import noimage from "../assets/catno.png";
 // Add FaEdit for the edit icon
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import OrderList from "./order_list";
 const App = () => {
   const [username, setUsername] = useState(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get("tab");
+    if (tab === "orders") {
+      setActiveContent("orders");
+    }
+  }, [location]);
   const [profileData, setProfileData] = useState({
     username: "",
     phoneNumber: "",
