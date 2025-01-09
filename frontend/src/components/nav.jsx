@@ -40,8 +40,6 @@ const Nav = ({
             const data = await response.json();
             setSellerStoreName(data.store_name);
             setSellerStoreId(data.store_id);
-          } else {
-            console.error("Failed to fetch seller data");
           }
         } catch (error) {
           console.error("Error fetching seller data:", error);
@@ -144,8 +142,12 @@ const Nav = ({
 
   // Handle cart click
   const handleCartClick = () => {
+    const userId = localStorage.getItem("userId"); // Get the latest userId from localStorage
     if (!userId) {
       navigate("/login");
+    } else {
+      // Proceed to cart if userId exists
+      navigate("/add_to_cart");
     }
   };
 
