@@ -55,12 +55,13 @@ const Login = () => {
 
       if (!response.ok) {
         const data = await response.json();
-        console.log(data);
+
         setError(data.message || "Login failed, please try again.");
         return;
       }
 
       const data = await response.json();
+      console.log(data);
       localStorage.setItem("username", data.username);
       localStorage.setItem("userId", data.user_id);
       localStorage.setItem("sellerStoreName", data.store_name);
