@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../css/nav.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
@@ -23,6 +23,7 @@ const Nav = ({
   const [sellerStoreId, setSellerStoreId] = useState(null);
   const [categories, setCategories] = useState([]); // State for categories
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Fetch seller data and categories when the component mounts
   useEffect(() => {
@@ -165,16 +166,19 @@ const Nav = ({
         </Link>
 
         <div className="auth-cart-container d-flex align-items-center justify-content-end">
-          <button
-            className="categories-button"
-            onClick={toggleCategoryModal}
-            aria-label="Open Categories"
-          >
-            <FontAwesomeIcon icon={faBars} style={{ fontSize: "20px" }} />
-          </button>
+          {location.pathname === "/products" && (
+            <>
+              <button
+                className="categories-button"
+                onClick={toggleCategoryModal}
+                aria-label="Open Categories"
+              >
+                <FontAwesomeIcon icon={faBars} style={{ fontSize: "20px" }} />
+              </button>
 
-          {isCategoryModalOpen && renderCategories()}
-
+              {isCategoryModalOpen && renderCategories()}
+            </>
+          )}
           {username ? (
             <div className="user-logout-container">
               <button onClick={toggleMenu} className="mb-0" id="btn_username">
@@ -216,7 +220,7 @@ const Nav = ({
           )}
 
           <div className="search-cart-container d-flex align-items-center ms-3">
-            <div className="search-container">
+            {/* <div className="search-container">
               <input
                 type="text"
                 placeholder="Search..."
@@ -230,7 +234,7 @@ const Nav = ({
                 style={{ fontSize: "20px", marginLeft: "10px" }}
                 aria-hidden="true"
               />
-            </div>
+            </div> */}
             <div onClick={handleCartClick}>
               <FontAwesomeIcon
                 icon={faShoppingCart}
