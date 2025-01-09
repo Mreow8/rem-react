@@ -94,6 +94,7 @@ const Login = () => {
       <nav className="navbar navbar-light bg-white shadow w-100 fixed-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
+            <Link to="/products"></Link>
             <img
               src={remLogo}
               alt="Logo"

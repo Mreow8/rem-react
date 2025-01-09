@@ -53,10 +53,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow on click */
 }
 
-.open-shop {
-  background-color: #e73ea6; /* Blue for "Shop" button */
-}
-
 .open-shop:hover {
   background-color: #2fee7f; /* Slightly darker blue on hover */
 }

@@ -21,7 +21,6 @@ const SuccessPage = () => {
       <h1 style={{ marginTop: "20px" }}>Order Placed!.</h1>
       <button>
         <Link to="/profile?tab=orders">Check Orders</Link>
-        Check Orders
       </button>
     </div>
   );

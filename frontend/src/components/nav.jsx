@@ -139,6 +139,14 @@ const Nav = ({
     </div>
   );
 
+  // Handle cart click
+  const handleCartClick = () => {
+    const userId = localStorage.getItem("userId"); // Assuming userId is stored in localStorage
+    if (!userId) {
+      navigate("/login");
+    }
+  };
+
   return (
     <nav className="navbar navbar-light bg-white shadow w-100 fixed-top">
       <div className="container-fluid">
@@ -219,7 +227,11 @@ const Nav = ({
                 aria-hidden="true"
               />
             </div>
-            <Link to="/add_to_cart" aria-label="View Cart">
+            <Link
+              to="/add_to_cart"
+              aria-label="View Cart"
+              onClick={handleCartClick}
+            >
               <FontAwesomeIcon
                 icon={faShoppingCart}
                 style={{
