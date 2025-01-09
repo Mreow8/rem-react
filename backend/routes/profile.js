@@ -153,7 +153,7 @@ router.post("/login", async (req, res) => {
   if (!identifier || !password) {
     return res
       .status(400)
-      .json({ message: "Username, email, phone, and password are required." });
+      .json({ message: "email, phone, and password are required." });
   }
 
   try {
@@ -180,6 +180,7 @@ router.post("/login", async (req, res) => {
       user_id: user.user_id,
       store_name: user.store_name,
       store_id: user.store_id,
+      username: user.username,
     });
   } catch (error) {
     console.error("Error in /login route:", error.message);
