@@ -55,6 +55,7 @@ const Login = () => {
 
       if (!response.ok) {
         const data = await response.json();
+        console.log(data);
         setError(data.message || "Login failed, please try again.");
         return;
       }
