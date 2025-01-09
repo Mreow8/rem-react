@@ -60,7 +60,7 @@ const Login = () => {
       }
 
       const data = await response.json();
-      localStorage.setItem("username", identifier);
+      localStorage.setItem("username", data.username);
       localStorage.setItem("userId", data.user_id);
       localStorage.setItem("sellerStoreName", data.store_name);
       localStorage.setItem("sellerStoreId", data.store_id);
