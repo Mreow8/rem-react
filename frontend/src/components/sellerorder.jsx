@@ -43,7 +43,7 @@ const SellerOrders = () => {
     <div>
       <h1>Seller Orders</h1>
       {orders.length > 0 ? (
-        <table>
+        <table className="orders-table">
           <thead>
             <tr>
               <th>Order ID</th>

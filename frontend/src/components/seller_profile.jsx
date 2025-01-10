@@ -136,8 +136,10 @@ const Shop = () => {
           <p>
             {storeData.region}, {storeData.province}
           </p>
-          <button onClick={() => setShowAddProductForm(true)}>
-            Add Product
+          <button onClick={() => setShowAddProductForm(true)}>Add Book</button>
+          <button>
+            {" "}
+            <Link to="/sellerorders">Orders</Link>
           </button>
         </div>
       )}
@@ -146,7 +148,7 @@ const Shop = () => {
       )}
       <div className="product-list">
         <h3 style={{ marginTop: "20px" }}>Books</h3>
-        <Link to="/sellerorders">Orders</Link>
+
         <div className="products-container">
           {productsData.length > 0 ? (
             productsData.map((product) => (
