@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../css/orderss.css";
 
 const SellerOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -67,7 +68,7 @@ const SellerOrders = () => {
                 <td>{order.product_name}</td>
                 <td>{order.quantity}</td>
                 <td>{order.customer_name}</td>
-                <td>{`${order.address_line}, ${order.city}, ${order.postal_code}`}</td>
+                <td>{`${order.region}, ${order.city}, ${order.postal_code}`}</td>
               </tr>
             ))}
           </tbody>
