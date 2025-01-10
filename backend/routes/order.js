@@ -58,27 +58,7 @@ router.get("/seller/:sellerId", async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT 
-         o.order_id,
-         o.created_at,
-         o.payment_method,
-         o.shipping_fee,
-         o.total_amount,
-         oi.product_id,
-         oi.quantity,
-         p.product_name AS product_name,
-         p.price AS product_price,
-         a.full_name AS customer_name,
-         a.region,
-         a.province,
-         a.city,
-         a.postal_code
-       FROM orders o
-       INNER JOIN orders_items oi ON o.order_id = oi.order_id
-       INNER JOIN products p ON oi.product_id = p.id
-       INNER JOIN addresses a ON o.address_id = a.id
-       WHERE p.seller_id = $1
-       ORDER BY o.created_at DESC`,
+      `SELECT o.order_id, o.created_at, o.payment_method, o.shipping_fee, o.total_amount, oi.product_id, oi.quantity, p.product_name AS product_name, p.product_price AS product_price, a.full_name AS customer_name, a.region, a.province, a.city, a.postal_code FROM orders o INNER JOIN orders_items oi ON o.order_id = oi.order_id INNER JOIN products p ON oi.product_id = p.id INNER JOIN addresses a ON o.address_id = a.id WHERE p.store_id = $1 ORDER BY o.created_at DESC; `,
       [sellerId]
     );
 
