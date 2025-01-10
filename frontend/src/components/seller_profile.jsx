@@ -3,7 +3,6 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import Nav from "./nav";
 import "../css/seller_profile.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SellerOrders from "./SellerOrders";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import AddProductForm from "./addproducts";
@@ -18,7 +17,7 @@ const Shop = () => {
   const [error, setError] = useState(null); // Error state
   const [showAddProductForm, setShowAddProductForm] = useState(false); // Add product form visibility
   const navigate = useNavigate(); // Navigation handler
-  const [showOrders, setShowOrders] = useState(false);
+
   useEffect(() => {
     const storedid = id || localStorage.getItem("sellerStoreId"); // Use URL param first, then fallback to localStorage
 
