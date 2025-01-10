@@ -66,10 +66,11 @@ router.get("/seller/:sellerId", async (req, res) => {
          o.total_amount,
          oi.product_id,
          oi.quantity,
-         p.name AS product_name,
+         p.product_name AS product_name,
          p.price AS product_price,
          a.full_name AS customer_name,
-         a.address_line,
+         a.region,
+         a.province,
          a.city,
          a.postal_code
        FROM orders o
