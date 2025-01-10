@@ -103,7 +103,7 @@ function AddProductForm({ setShowAddProductForm }) {
         <h2 className="text-center mb-4">Add New Product</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="product_image">Product Image</label>
+            <label htmlFor="product_image">Book Image</label>
             <input
               type="file"
               id="product_image"
@@ -115,13 +115,13 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_name">Product Name</label>
+            <label htmlFor="product_name">Book Name</label>
             <input
               type="text"
               id="product_name"
               name="product_name"
               className="form-control"
-              placeholder="Product Name"
+              placeholder="Book Name"
               value={formData.product_name}
               onChange={handleChange}
               required
@@ -129,13 +129,13 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_price">Product Price</label>
+            <label htmlFor="product_price">Book Price</label>
             <input
               type="number"
               id="product_price"
               name="product_price"
               className="form-control"
-              placeholder="Product Price"
+              placeholder="Book Price"
               value={formData.product_price}
               onChange={handleChange}
               required
@@ -149,7 +149,7 @@ function AddProductForm({ setShowAddProductForm }) {
               id="stock"
               name="stock"
               className="form-control"
-              placeholder="Stcoks"
+              placeholder="Stocks"
               value={formData.stock}
               onChange={handleChange}
               required
@@ -157,13 +157,13 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="category">Product Category</label>
+            <label htmlFor="category">Book Category</label>
             <input
               type="text"
               id="category"
               name="category"
               className="form-control"
-              placeholder="Product Category"
+              placeholder="Book Category"
               value={formData.category}
               onChange={handleChange}
               required
@@ -171,13 +171,13 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_author">Product Author</label>
+            <label htmlFor="product_author">Book Author</label>
             <input
               type="text"
               id="product_author"
               name="product_author"
               className="form-control"
-              placeholder="Product Author"
+              placeholder="Book Author"
               value={formData.product_author}
               onChange={handleChange}
               required
@@ -185,13 +185,13 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_publisher">Product Publisher</label>
+            <label htmlFor="product_publisher">Book Publisher</label>
             <input
               type="text"
               id="product_publisher"
               name="product_publisher"
               className="form-control"
-              placeholder="Product Publisher"
+              placeholder="Book Publisher"
               value={formData.product_publisher}
               onChange={handleChange}
               required
@@ -199,13 +199,13 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_dimensions">Product Dimensions</label>
+            <label htmlFor="product_dimensions">Book Dimensions</label>
             <input
               type="text"
               id="product_dimensions"
               name="product_dimensions"
               className="form-control"
-              placeholder="Product Dimensions"
+              placeholder="Book Dimensions"
               value={formData.product_dimensions}
               onChange={handleChange}
               required
@@ -213,13 +213,13 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_weight">Product Weight</label>
+            <label htmlFor="product_weight">Book Weight</label>
             <input
               type="number"
               id="product_weight"
               name="product_weight"
               className="form-control"
-              placeholder="Product Weight"
+              placeholder="Book Weight"
               value={formData.product_weight}
               onChange={handleChange}
               required
@@ -227,25 +227,25 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="product_pages">Product Pages</label>
+            <label htmlFor="product_pages">Book Pages</label>
             <input
               type="number"
               id="product_pages"
               name="product_pages"
               className="form-control"
-              placeholder="Product Pages"
+              placeholder="Book Pages"
               value={formData.product_pages}
               onChange={handleChange}
               required
             />
           </div>
           <div className="form-group">
-            <label htmlFor="product_description">Product Description</label>
+            <label htmlFor="product_description">Book Description</label>
             <textarea
               id="product_description"
               name="product_description"
               className="form-control"
-              placeholder="Product Description"
+              placeholder="Book Description"
               value={formData.product_description}
               onChange={handleChange}
               rows="4" // Adjust the number of rows as needed
@@ -254,7 +254,7 @@ function AddProductForm({ setShowAddProductForm }) {
           </div>
 
           <button type="submit" className="btns btn-primary btn-block">
-            Add Product
+            Add Book
           </button>
 
           <button
