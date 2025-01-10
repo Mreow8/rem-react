@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import Nav from "./nav";
 import "../css/seller_profile.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SellerOrders from "./sellerOrders";
+import SellerOrders from "./SellerOrders";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import AddProductForm from "./addproducts";
