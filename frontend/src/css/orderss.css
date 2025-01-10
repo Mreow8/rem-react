@@ -39,6 +39,9 @@
   font-size: 0.9rem;
   color: #555;
 }
+.order-link {
+  text-decoration: none;
+}
 
 .orders-table tr:hover {
   background-color: #f1f1f1;
