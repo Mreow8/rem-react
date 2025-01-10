@@ -146,7 +146,6 @@ const Shop = () => {
       )}
       <div className="product-list">
         <h3 style={{ marginTop: "20px" }}>Books</h3>
-        <Link to={`/seller/${id}/orders`}></Link>
 
         <div className="products-container">
           {productsData.length > 0 ? (
