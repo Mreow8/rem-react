@@ -135,10 +135,7 @@ const Shop = () => {
           <p>
             {storeData.region}, {storeData.province}
           </p>
-          <button
-            onClick={() => setShowAddProductForm(true)}
-            className="btn btn-primary"
-          >
+          <button onClick={() => setShowAddProductForm(true)}>
             Add Product
           </button>
         </div>
