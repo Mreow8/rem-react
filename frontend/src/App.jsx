@@ -14,6 +14,7 @@ import Checkout from "./components/checkout";
 import Success from "./components/successful";
 import Failed from "./components/failed";
 import Order_list from "./components/order_list";
+import SellerOrders from "./components/SellerOrders";
 import Payment from "./components/payment";
 import Need from "./components/NeedHelpPage";
 import EditProductForm from "./components/EditProductForm";
@@ -23,6 +24,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/seller/:id/orders" element={<SellerOrders />} />
         <Route path="/products" element={<Products />} />{" "}
         <Route path="/login" element={<Login />} />{" "}
         <Route path="/signup" element={<Signup />} />{" "}
