@@ -62,7 +62,7 @@ router.get("/seller/:sellerId", async (req, res) => {
       [sellerId]
     );
 
-    const orders = result.rows; // Extract the query result
+    const orders = result.rows;
     res.json({ orders }); // Respond with the orders in JSON format
   } catch (error) {
     console.error("Error fetching seller orders:", error);
