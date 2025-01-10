@@ -9,7 +9,7 @@ const SellerOrders = () => {
   const navigate = useNavigate();
 
   // Get sellerId from localStorage
-  const sellerId = localStorage.getItem("sellerId");
+  const sellerId = localStorage.getItem("sellerStoreId");
 
   useEffect(() => {
     if (sellerId) {
