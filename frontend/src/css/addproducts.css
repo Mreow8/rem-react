@@ -25,7 +25,7 @@
 }
 
 h2 {
-  font-family: "Playfair Display", serif; /* Use serif for the heading */
+  /* Use serif for the heading */
   font-weight: 700;
   font-size: 24px;
   color: #343a40; /* Dark grey for a modern look */

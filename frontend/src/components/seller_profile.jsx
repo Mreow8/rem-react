@@ -147,7 +147,7 @@ const Shop = () => {
         <AddProductForm setShowAddProductForm={setShowAddProductForm} />
       )}
       <div className="product-list">
-        <h3>Products</h3>
+        <h3 style={{ marginTop: "20px" }}>Products</h3>
         <div className="products-container">
           {productsData.length > 0 ? (
             productsData.map((product) => (

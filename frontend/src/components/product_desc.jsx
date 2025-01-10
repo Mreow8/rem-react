@@ -167,16 +167,27 @@ const ProductDesc = () => {
 
                 <div className="input-group">
                   <p id="quan">Quantity</p>
-                  <button id="butt" onClick={decreaseQuantity}>
+                  <button
+                    style={{
+                      borderRadius: "5px 0 0 5px",
+                    }}
+                    id="butt"
+                    onClick={decreaseQuantity}
+                  >
                     -
                   </button>
-                  <input type="text" value={quantity} readOnly />
+                  <input
+                    style={{ textAlign: "center" }}
+                    type="text"
+                    value={quantity}
+                    readOnly
+                  />
                   <button id="butt" onClick={increaseQuantity}>
                     +
                   </button>
                 </div>
                 <div className="button-group">
-                  <button onClick={handleAddToCart} className="addto">
+                  <button onClick={handleAddToCart} className="buy-now">
                     Add to Cart
                   </button>
                   <button onClick={handleBuyNow} className="buy-now">
