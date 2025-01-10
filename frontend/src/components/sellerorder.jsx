@@ -1,35 +1,77 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SellerOrders = () => {
   const [orders, setOrders] = useState([]);
-  const [sellerId, setSellerId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  // Fetch the sellerId from localStorage (for example)
+  // Get sellerId from localStorage
+  const sellerId = localStorage.getItem("sellerId");
+
   useEffect(() => {
-    const storedSellerId = localStorage.getItem("sellerId");
-    if (storedSellerId) {
-      setSellerId(storedSellerId);
+    if (sellerId) {
+      // Fetch orders for the seller using the sellerId
+      axios
+        .get(`https://rem-reacts.onrender.com/api/orders/seller/${sellerId}`)
+        .then((response) => {
+          setOrders(response.data.orders);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError("Error fetching orders");
+          setLoading(false);
+        });
+    } else {
+      setError("Seller ID is not available");
+      setLoading(false);
     }
-  }, []);
+  }, [sellerId]);
 
-  // Fetch and filter orders based on the sellerId
-  useEffect(() => {
-    const storedOrders = JSON.parse(localStorage.getItem("orders")) || [];
-    const sellerOrders = storedOrders.filter(
-      (order) => order.sellerId === sellerId
-    );
-    setOrders(sellerOrders);
-  }, [sellerId]); // Re-run when sellerId changes
+  if (loading) {
+    return <p>Loading orders...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div>
       <h1>Seller Orders</h1>
-      {sellerId && orders.length > 0 ? (
-        <ul>
-          {orders.map((order) => (
-            <li key={order.id}>{order.orderDetails}</li>
-          ))}
-        </ul>
+      {orders.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Created At</th>
+              <th>Payment Method</th>
+              <th>Shipping Fee</th>
+              <th>Total Amount</th>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Customer Name</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order.order_id}>
+                <td>{order.order_id}</td>
+                <td>{new Date(order.created_at).toLocaleDateString()}</td>
+                <td>{order.payment_method}</td>
+                <td>{order.shipping_fee}</td>
+                <td>{order.total_amount}</td>
+                <td>{order.product_name}</td>
+                <td>{order.quantity}</td>
+                <td>{order.customer_name}</td>
+                <td>{`${order.address_line}, ${order.city}, ${order.postal_code}`}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       ) : (
         <p>No orders found for this seller.</p>
       )}
